@@ -102,7 +102,7 @@
 
 % *** CITATION PACKAGES ***
 %
-%\usepackage{cite}
+\usepackage{cite}
 % cite.sty was written by Donald Arseneau
 % V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
 % \cite{} output to follow that of IEEE. Loading the cite package will
@@ -169,7 +169,7 @@
 
 % *** MATH PACKAGES ***
 %
-%\usepackage[cmex10]{amsmath}
+\usepackage[cmex10]{amsmath}
 % A popular package from the American Mathematical Society that provides
 % many useful and powerful commands for dealing with mathematics. If using
 % it, be sure to load this package with the cmex10 option to ensure that
@@ -264,7 +264,8 @@
 
 
 %\usepackage[caption=false]{caption}
-\usepackage[font=footnotesize]{subfig}
+%\usepackage{caption}
+%\usepackage[font=footnotesize, captions=false]{subfig}
 % subfig.sty, also written by Steven Douglas Cochran, is the modern
 % replacement for subfigure.sty. However, subfig.sty requires and
 % automatically loads Axel Sommerfeldt's caption.sty which will override
@@ -332,7 +333,8 @@
 % Read the url.sty source comments for usage information. Basically,
 % \url{my_url_here}.
 
-
+\usepackage{epsfig}
+\usepackage{graphicx}
 
 
 
@@ -457,7 +459,7 @@ Finally, we present our conclusions in section \ref{conclusion}
 
 
 \section{Related Work}\label{relatedwork}
-Content Distribution Networks with peer assist have been successfully deployed on the Internet, such as Akamai cite{Zhao:2013:PCD:2504730.2504752}, \cite{Huang:2008:UHC:1496046.1496064} and LiveSky \cite{Yin:2010:LEC:1823746.1823750}.  
+Content Distribution Networks with peer assist have been successfully deployed on the Internet, such as Akamai \cite{Zhao:2013:PCD:2504730.2504752}, \cite{Huang:2008:UHC:1496046.1496064} and LiveSky \cite{Yin:2010:LEC:1823746.1823750}.  
 The authors of \cite{Zhao:2013:PCD:2504730.2504752} examine the risks and benefits of peer-assisted content distribution in Akamai and measure the effectiveness of its peer-assisted. 
 The authors of \cite{Huang:2008:UHC:1496046.1496064} conclude from two real world traces that hybrid CDN-P2P can significantly reduce the cost of content distribution and can scale to cope with the exponential growth of Internet video content.  
 Yin et al. \cite{Yin:2010:LEC:1823746.1823750} described commercial operation of a peer-assisted CDN in China.  
@@ -489,17 +491,34 @@ Mathieu et al., \cite{6249305} work mostly based on empirical data from France t
 
 
 \section{Characterizing Internet VoD Popularity}\label{popularity}
-Before analyzing the system description and video caching, we first examine some characteristics of Internet VoD services.
+Before analyzing the system description and video caching, we first examine the popularity characteristics of Internet VoD services.
+We use YouTube as example of VoD service.
 The studies of content popularity evolution are mostly considered in short time periods.
 Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} measure the evolution of content popularity in long periods (36 weeks) in which view count statistics of Youtube. 
-We also did same thing as Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} for two months from October-November 2013.
-Our measurement is additional to Borghol's datasets and become basis of our popularity analysis.
+Complement with Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} work, we also did same measurement as Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} for eight weeks from October-November 2013.
+We collected number of views, upload time YouTube videos on a weekly basis.
+We use YouTube's API to sampling popular videos. 
+The API provides a call that returns details on 20 popular videos.
+Finally, we combine our datasets with Borghol et al., datasets. 
 
+In datasets, we have one-week spacing between consecutive snapshots.  
+We can get how many times the video was view during the one-week period since last week or since snapshot $(i-1)$. 
+As same Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} work, we define time-to-peak for a video as its age (time since upload) at which its weekly viewing rate is the highest during measurement (from the first week until end of measurement).
+The time-to-peak distributions is shown in fig.\ref{fig:timetopeak}.
+Figure \ref{fig:timetopeak} shows that around three-quarters of a large fraction videos peak within the first six weeks since their upload and beyond six weeks we have uniform distribution.
+We also observed that the time-to-peak is exponentially distributed. 
+Our finding coherence with Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717}.
+To estimate the the rata parameter of exponential part of time-to-peak distribution, we use Maximum Likelihood Estimation (MLE) \cite{clauset2009power}.
+With MLE we can get exponential parameter $\lambda = 0.61$.
 
-
-
-
-
+\begin{figure}[thb]
+\begin{center}
+\includegraphics[scale=0.6]{graphs/timetopeak.eps}
+\end{center}
+\caption{Time to peak empirical distribution.}
+\label{fig:timetopeak}
+\vspace{-2mm}
+\end{figure} 
 
 \section{System Description}\label{systemdescription}
 In this paper, we consider a peer-assisted CDN system. 
@@ -507,12 +526,115 @@ In such a system there are two main components: (1) the CDN server which at a mi
 (2) the client system which requests and downloads the videos.
 In addition, clients form a self-organized P2P overlay network.
 
+In peer-asssisted CDN, a peer caches the videos that it has downloaded.
+Peers independently manage their cache localy.
+When a peer join the system video replica is cached.
+When a peer leaves the systen video replicaed is evicted. 
+For both process, peer reports to CDN. 
+
+
+
+
+\begin{figure}[thb]
+\begin{center}
+\includegraphics[scale=0.6]{graphs/p2p-system-description.eps}
+\end{center}
+\caption{Peer Assisted CDN Overview.}
+\label{fig:p2pcdnoverview}
+\vspace{-2mm}
+\end{figure} 
+
+
 \subsection{Collection and Estimation}
 
 \subsection{Per cache strategy}
 
 
 \section{Evaluation}\label{evaluation}
+
+
+
+\begin{figure*}[!tb]
+\centering
+\begin{minipage}[b]{.45\linewidth}
+\centering
+\includegraphics[width=2.5in]{graphs/hit-model-original-500MB-cdf.eps}
+\end{minipage}%
+\hfill%
+\begin{minipage}[b]{.45\linewidth}
+\centering
+\centering
+\includegraphics[width=2.5in]{graphs/hit-model-original-1000MB-cdf.eps}
+\end{minipage}\\[-7pt]
+\begin{minipage}[t]{.45\linewidth}
+\caption{CDF percentage of contribution of peers where peer capacity 500MB.} 
+%Points in area 1 ($\rho$ value $<0.1$ and $p$ value $>0$) are the samples where a power-law with exponential cut-off is a more plausible model than a power-law. In area 3, a pure power-law may be more plausible than power-law with exponential cut-off, while in area 2 the results are ambiguous.}
+\label{fig:peer500MBcontributionCDN10G}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{.45\linewidth}
+\caption{CDF percentage of contribution of peers where peer capacity 1000MB.}
+\label{fig:peer1000MBcontributionCDN10G}
+\end{minipage}%
+\vspace{-2mm}
+\end{figure*}
+
+
+
+\begin{figure*}[!tb]
+\centering
+\begin{minipage}[b]{.45\linewidth}
+\centering
+\includegraphics[width=2.5in]{graphs/hit-model-original-500MB-replica-10hari-cdf.eps}
+\end{minipage}%
+\hfill%
+\begin{minipage}[b]{.45\linewidth}
+\centering
+\centering
+\includegraphics[width=2.5in]{graphs/hit-model-original-1000MB-replica-10hari-cdf.eps}
+\end{minipage}\\[-7pt]
+\begin{minipage}[t]{.45\linewidth}
+\caption{Replica at t=10day for peer capacity 500MB.} 
+%Points in area 1 ($\rho$ value $<0.1$ and $p$ value $>0$) are the samples where a power-law with exponential cut-off is a more plausible model than a power-law. In area 3, a pure power-law may be more plausible than power-law with exponential cut-off, while in area 2 the results are ambiguous.}
+\label{fig:peer500MBreplica10dayCDN10G}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{.45\linewidth}
+\caption{Replica at t=10day for peer capacity 1000MB.}
+\label{fig:peer1000MBreplica10dayCDN10G}
+\end{minipage}%
+\vspace{-2mm}
+\end{figure*}
+
+
+
+\begin{figure*}[!tb]
+\centering
+\begin{minipage}[b]{.45\linewidth}
+\centering
+\includegraphics[width=2.5in]{graphs/replica-500MB-10hari.eps}
+\end{minipage}%
+\hfill%
+\begin{minipage}[b]{.45\linewidth}
+\centering
+\centering
+\includegraphics[width=2.5in]{graphs/replica-1000MB-10hari.eps}
+\end{minipage}\\[-7pt]
+\begin{minipage}[t]{.45\linewidth}
+\caption{Replica by popularity at t=10day for peer capacity 500MB.} 
+%Points in area 1 ($\rho$ value $<0.1$ and $p$ value $>0$) are the samples where a power-law with exponential cut-off is a more plausible model than a power-law. In area 3, a pure power-law may be more plausible than power-law with exponential cut-off, while in area 2 the results are ambiguous.}
+\label{fig:peer1000MBreplica10dayCDN10G}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{.45\linewidth}
+\caption{Replica by popularity at t=10day for peer capacity 1000MB.}
+\label{fig:peer1000MBreplica10dayCDN10G}
+\end{minipage}%
+\vspace{-2mm}
+\end{figure*}
+
+
+
 
 % An example of a floating figure using the graphicx package.
 % Note that \label must occur AFTER (or within) \caption.
