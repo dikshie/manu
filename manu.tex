@@ -287,7 +287,7 @@
 
 % *** FLOAT PACKAGES ***
 %
-%\usepackage{fixltx2e}
+\usepackage{fixltx2e}
 % fixltx2e, the successor to the earlier fix2col.sty, was written by
 % Frank Mittelbach and David Carlisle. This package corrects a few problems
 % in the LaTeX2e kernel, the most notable of which is that in current
@@ -335,8 +335,11 @@
 
 \usepackage{epsfig}
 \usepackage{graphicx}
-
-
+%\usepackage{subfloat}
+%\usepackage{subcaption}
+\usepackage[T1]{fontenc}
+\usepackage{mwe}
+\usepackage{subfig}
 
 % *** Do not adjust lengths that control margins, column widths, etc. ***
 % *** Do not use packages that alter fonts (such as pslatex).         ***
@@ -451,8 +454,10 @@ In Peer assisted CDN, users can download content from CDN nodes from or other us
 A user may cache the content after download to serve requests from other users. 
 Due to the complexity of the behavior of peers, the process should be done in the home gateway user where the ISP can control it.
 
-In this paper, we present. 
-In summary this paper makes the following contributions:
+While in P2P assisted CDN for video on demand (VoD), most of reseacher assume the catalog of video is already established following zipf distribution for popularity thus the video rank is static. 
+In our work, our catalog is dynamic, every video has its own popularity evolution following beta distribution thus we are not realy on the popularity rank.  
+It's very natural that we can not rely on the popularity rank, since in VoD popularity can change every week moreover Internet wide scale VoD like Youtube serves many regions and users in each region has different preference to watch the video.
+In this paper, we present how the model of video popularity timing estimation can aid P2P assisted CDN.
 Finally, we present our conclusions in section \ref{conclusion}
 
 
@@ -485,9 +490,9 @@ Cha et al.,\cite{Cha:2008:NTP:1855641.1855646} performed trace analysis and foun
 Jiang et al. \cite{Jiang:2012:OMD:2413176.2413193} proposed scalable and adaptive content replication and request routing for CDN servers located in users' home gateways.  
 Maki et al.\cite{NaoyaMAKI2012} propose traffic engineering for peer-assisted CDN to control the behavior of clients, and present a solution for optimizing the selection of content files.
 Mathieu et al., \cite{6249305} are using data gathered from France telecom network to calculate reduction of network load if customers are employed as peer-assisted content delivery.
-Our work is same in system model architecture which uses different level of topologies  (Level-0 and Level-1), where in Mathieu et al., \cite{6249305} the authors use different names, which are regional and national. 
-We emphasize that compare to  Mathieu et al., \cite{6249305} our work provides completely different approach.
-Mathieu et al., \cite{6249305} work mostly based on empirical data from France telecom company thus the authors can directly calculate network load caused by video traffic and calculate network load reduction if peer-assisted is employed on customers side,  while our study focus on mathematical model of different admission policies for peers to join peer-assisted CDN and ISP payoff can get from employing peer-assisted CDN.
+%Our work is same in system model architecture which uses different level of topologies  (Level-0 and Level-1), where in Mathieu et al., \cite{6249305} the authors use different names, which are regional and national. 
+%We emphasize that compare to  Mathieu et al., \cite{6249305} our work provides completely different approach.
+%Mathieu et al., \cite{6249305} work mostly based on empirical data from France telecom company thus the authors can directly calculate network load caused by video traffic and calculate network load reduction if peer-assisted is employed on customers side,  while our study focus on mathematical model of different admission policies for peers to join peer-assisted CDN and ISP payoff can get from employing peer-assisted CDN.
 
 
 \section{Characterizing Internet VoD Popularity}\label{popularity}
@@ -505,13 +510,13 @@ In datasets, we have one-week spacing between consecutive snapshots.
 We can get how many times the video was view during the one-week period since last week or since snapshot $(i-1)$. 
 As same Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} work, we define time-to-peak for a video as its age (time since upload) at which its weekly viewing rate is the highest during measurement (from the first week until end of measurement).
 The time-to-peak distributions is shown in fig.\ref{fig:timetopeak}.
-Figure \ref{fig:timetopeak} shows that around three-quarters of a large fraction videos peak within the first six weeks since their upload and beyond six weeks we have uniform distribution.
-We also observed that the time-to-peak is exponentially distributed. 
+Figure \ref{fig:timetopeak} shows that around three-quarters of a large fraction videos peak within the first six weeks since their upload and beyond six weeks we have uniform distribution thus the time-to-peak is exponentially distributed mixture with uniform distribution. 
 Our finding coherence with Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717}.
 To estimate the the rata parameter of exponential part of time-to-peak distribution, we use Maximum Likelihood Estimation (MLE) \cite{clauset2009power}.
 Using MLE method, we can get exponential parameter $\lambda = 0.61$. 
 For video popularity evolution which is weekly view distribution, we follow Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} which use beta distribution. 
-Since we 
+
+
 
 \begin{figure}[thb]
 \begin{center}
@@ -545,6 +550,7 @@ If there are no peers have requested video, CDN will serve the video.
 A peer then can request the video to other peer and get the video (step 5 and step 6).
 From this description, we can see that deploying peer-assisted CDN can save some traffic since the clients which form P2P network can sharing the contents or videos. 
 
+
 \begin{figure}[thb]
 \begin{center}
 \includegraphics[scale=0.6]{graphs/p2p-system-description.eps}
@@ -555,41 +561,114 @@ From this description, we can see that deploying peer-assisted CDN can save some
 \end{figure} 
 
 
-\subsection{CDN caching strategy}
-As we mentioned in previous sect.\ref{systemdescription}, 
+\subsection{CDN caching strategy}\label{cdncachingstrategy}
+As we mentioned in previous sect.\ref{systemdescription}, the CDN collects metadata.
+The metadata will be used for assisting P2P clients for caching decision. 
+CDN collects the following parameters:
+\begin{itemize}
+\item $n_j^r$: total number of the times video $j$ has been requested.  
+\item $t_j^r$: the last time video $j$ was requested.
+\item $n_j^s$: total number of the time that video $j$ is served by CDN.
+\item $t_j^s$: the last time that video $j$ was served by CDN.
+\item $a_j$: the time that video $j$ was added to video server's catalog.
+\item $n_j^c$: total number of the times that video $j$ is served by CDN.
+\item $t_j^p$: the time that video  is added into peer's cache.
+\item $t$: the current time.
+\end{itemize}
 
+We use the method proposed in \cite{1613869} to estimate the popularity video as follows:
 
-\subsection{Peer caching strategy}
+\begin{equation}
+P_j = min\left\{\frac{n_j^r}{t_j^r - a_j}, \frac{1}{t - t_j^r}\right\}
+\label{eq:videopopularityestimation}
+\end{equation}
+
+The expression of $\frac{n_j^r}{t_j^r - a_j}$ reflects the long-term request rate of the video or probability of future access rate and the expression of $\frac{1}{t - t_j^r}$ reflects the approximation of the video's recent request rate.
+The video with the smallest popularity is chosen as the candidate to be replaced when the CDN cache is full. 
+Since above eq.\ref{eq:videopopularityestimation} considering both recent access and pass access information, the CDN can cache the most requested video for clients.
+
+\subsection{Peer caching strategy}\label{peercachingstrategy}
+In a peer side, we follow Guo et al., \cite{1613869} for cache replacement strategy. 
+We define the utility function for peer replacement as follows:
+
+\begin{equation}
+u = \frac{ (f(p)-f(p_{min})) \times  (f(p_{max})-f(p))}{r^{\alpha + \beta}}
+\label{eq:utilityfunction}
+\end{equation}
+
+$p$ represents popularity of the video, $p_{min}$ represents estimation of minimum popularity in P2P system, $p_{max}$ represents estimation of maximum popularity in P2P system, $r$ represents the number of replicas of the video in the system, and $f(p)$ is monotonic non-decreasing function.
+$\alpha$ and $\beta$ are the adjustment factor.
+
+The CDN can calculate $p_{min}$ and $p_{max}$ then propagate to the P2P system.
+We choose the video with the smallest $u$ value as the candidate to be replaced when a peer's cache capacity is full.
+In the next section (sect.\ref{evaluation}), we will show how popularity evolution knowledge is used to simplified our calculation for utility function.
+
 
 
 \section{Evaluation}\label{evaluation}
+In order to evaluate the proposed cache strategy using before-peak, at-peak, and after-peak information from VoD model, we have to compare our model to PROP model \cite{1613869}.
+
+\subsection{Simulation Design}\label{simulationdesign}
+An event driven simulator is developed using Python for this purpose and we use Youtube VoD model as video catalog of the simulated Internet VoD system in our experiment.
+
+\subsubsection{Catalog Generator}
+In catalog generator, we assume peer request a video to CDN following poisson process with a mean rate $\lambda=1.1$ \cite{4801529} and we made it 3600 videos per hour, finally we generate video request for 360 days of simulation thus we have 31104000 request by peers. 
+In our simulator, time is divided into rounds. 
+During a round, a peer request video according to popularity. 
+How a peer choice a video, we will explain in next paragraph.
+
+First of all, we calculate the number of videos at-peak time as follows: sample $N$ value from the time-to-peak distribution and determine the number of videos $n_j^{at}$ that peak at week $j$. 
+Total number of video $N = n_j^{before} + n_j^{at} + n_j^{after}$.\\
+Next, we determine view count terminus which the number of final view count of video.
+In view count terminus, we assume that a video will not get big additional view after at-peak phase.
+We assign view count terminus randomly from data sets.
+After determining view count terminus, we assign beta distribution parameter. 
+We need to know the beta distribution for a peer to choose requested video.  
+Since we know the time of at-peak phase for each video, we know the mode of beta distribution value and we can calculate $\alpha$ and $\beta$ value using the mode of distribution: $m=\frac{\alpha-1}{\alpha + \beta - 2}$.  
+We assign $\alpha$ value randomly between $1$ and $2$ thus we can calculate $\beta$ value.
+Lastly, we assign file size of video randomly between $1$MB and $200$MB.
+
+For video choice, we estimate that a peer will choose video proportionally considering view count and view rate of the video.   
+We can get view count and view rate from probability distribution function (pdf) and cumulative distribution function (cdf) of beta distribution above multiply by video's view count terminus.
+Finally, we have a catalog that consists of: video to be choosen, time when uploaded, view count terminus, at-peak week, and video size.
 
 
+\subsubsection{Utility Function}
+Equation \ref{eq:utilityfunction} express the utility function used by peer for cache replacement. 
+Since we can estimate before-peak week, at-peak week, and after-peak week of video, we modified the utility function as follows: (1) for before-peak and after-peak, we assume that requests to video are low thus we define utility function as:  $u = \frac{f(p)-f(p_{min})} {r^{\alpha+\beta}}$.\\
+(2) for at-peak, we assume that request to video are high thus we define utility function as:
+$u = \frac{f(p_{max})-f(p)}{r^{\alpha+\beta}}$.
 
-\begin{figure*}[!tb]
+\subsubsection{Simulation Parameters}
+The simulation parameters are follows:
+\begin{itemize}
+\item Length: 360 days
+\item Video size: 1MB~200MB
+\item Peer capacity: [500MB,1000MB]
+\item CDN capacity: 10000MB
+\item Number of peers: 100000
+\item Number of videos: 10000
+\end{itemize}
+We compare our proposed improvement of PROP to original PROP \cite{1613869} implementation.
+
+\subsection{Result and Discussion}\label{resultanddiscussion}
+
+\begin{figure*}[!th]
 \centering
-\begin{minipage}[b]{.45\linewidth}
-\centering
-\includegraphics[width=2.5in]{graphs/hit-model-original-1000MB-cdf.eps}
-\end{minipage}%
-\hfill%
-\begin{minipage}[b]{.45\linewidth}
-\centering
-\centering
-\includegraphics[width=2.5in]{graphs/hit-model-original-500MB-cdf.eps}
-\end{minipage}\\[-7pt]
-\begin{minipage}[t]{.45\linewidth}
-\caption{CDF percentage of contribution of peers where peer capacity 500MB.} 
-\label{fig:peer500MBcontributionCDN10G}
-\end{minipage}%
-\hfill%
-\begin{minipage}[t]{.45\linewidth}
-\caption{CDF percentage of contribution of peers where peer capacity 1000MB.}
-\label{fig:peer1000MBcontributionCDN10G}
-\end{minipage}%
-\vspace{-2mm}
+\subfloat[CDF percentage of contribution of peers where peer capacity 500MB.\label{fig:peer500MBcontributionCDN10G}]{
+\includegraphics[width=5.7cm]{graphs/hit-model-original-1000MB-cdf.eps}
+}
+\hfill
+\subfloat[CDF percentage of contribution of peers where peer capacity 1000MB.\label{fig:peer1000MBcontributionCDN10G}]{
+\includegraphics[width=5.7cm]{graphs/hit-model-original-500MB-cdf.eps}
+}
+\hfill
+\subfloat[CDF peer contribution percentage between peer with 500MB capacity and 1000MB capacity.\label{fig:peer500MB-vs-1000MBcontributionCDN10G}]{
+\includegraphics[width=5.7cm]{graphs/hit-model-500MBvs-1000MB-cdf.eps}
+}
+\caption{CDF peer contribution for peer capacity 500MB and 1000MB, CDN capacity 10000MB}
+\label{fig:peercontribution}
 \end{figure*}
-
 
 
 \begin{figure*}[!tb]
@@ -632,12 +711,12 @@ As we mentioned in previous sect.\ref{systemdescription},
 \end{minipage}\\[-7pt]
 \begin{minipage}[t]{.45\linewidth}
 \caption{Replica by popularity at t=10day for peer capacity 500MB.} 
-\label{fig:peer1000MBreplica10dayCDN10G}
+\label{fig:peer500MBreplica10dayCDN10Gpopularity}
 \end{minipage}%
 \hfill%
 \begin{minipage}[t]{.45\linewidth}
 \caption{Replica by popularity at t=10day for peer capacity 1000MB.}
-\label{fig:peer1000MBreplica10dayCDN10G}
+\label{fig:peer1000MBreplica10dayCDN10Gpopularity}
 \end{minipage}%
 \vspace{-2mm}
 \end{figure*}
