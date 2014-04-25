@@ -340,6 +340,9 @@
 \usepackage[T1]{fontenc}
 \usepackage{mwe}
 \usepackage{subfig}
+\usepackage{float}
+%\usepackage{subfloat}
+\usepackage[section]{placeins}
 
 % *** Do not adjust lengths that control margins, column widths, etc. ***
 % *** Do not use packages that alter fonts (such as pslatex).         ***
@@ -516,9 +519,7 @@ To estimate the the rata parameter of exponential part of time-to-peak distribut
 Using MLE method, we can get exponential parameter $\lambda = 0.61$. 
 For video popularity evolution which is weekly view distribution, we follow Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} which use beta distribution. 
 
-
-
-\begin{figure}[thb]
+\begin{figure}[th]
 \begin{center}
 \includegraphics[scale=0.6]{graphs/timetopeak.eps}
 \end{center}
@@ -551,7 +552,7 @@ A peer then can request the video to other peer and get the video (step 5 and st
 From this description, we can see that deploying peer-assisted CDN can save some traffic since the clients which form P2P network can sharing the contents or videos. 
 
 
-\begin{figure}[thb]
+\begin{figure}[th]
 \begin{center}
 \includegraphics[scale=0.6]{graphs/p2p-system-description.eps}
 \end{center}
@@ -559,6 +560,8 @@ From this description, we can see that deploying peer-assisted CDN can save some
 \label{fig:p2pcdnoverview}
 \vspace{-2mm}
 \end{figure} 
+
+
 
 
 \subsection{CDN caching strategy}\label{cdncachingstrategy}
@@ -605,8 +608,29 @@ In the next section (sect.\ref{evaluation}), we will show how popularity evoluti
 
 
 
+
 \section{Evaluation}\label{evaluation}
 In order to evaluate the proposed cache strategy using before-peak, at-peak, and after-peak information from VoD model, we have to compare our model to PROP model \cite{1613869}.
+
+\begin{figure*}[!ht]
+\centering
+\subfloat[CDF percentage of contribution of peers where peer capacity 500MB.\label{fig:peer500MBcontributionCDN10G}]{
+\includegraphics[width=5.7cm]{graphs/hit-model-original-1000MB-cdf.eps}
+}
+\hfill
+\subfloat[CDF percentage of contribution of peers where peer capacity 1000MB.\label{fig:peer1000MBcontributionCDN10G}]{
+\includegraphics[width=5.7cm]{graphs/hit-model-original-500MB-cdf.eps}
+}
+\hfill
+\subfloat[CDF peer contribution percentage between peer with 500MB capacity and 1000MB capacity.\label{fig:peer500MB-vs-1000MBcontributionCDN10G}]{
+\includegraphics[width=5.7cm]{graphs/hit-model-500MBvs-1000MB-cdf.eps}
+}
+\caption{CDF peer contribution for peer capacity 500MB and 1000MB, CDN capacity 10000MB. Model refers to our work and original refer to PROP \cite{1613869}.}
+\label{fig:peercontribution}
+\vspace{-2mm}
+\end{figure*}
+
+
 
 \subsection{Simulation Design}\label{simulationdesign}
 An event driven simulator is developed using Python for this purpose and we use Youtube VoD model as video catalog of the simulated Internet VoD system in our experiment.
@@ -642,38 +666,34 @@ $u = \frac{f(p_{max})-f(p)}{r^{\alpha+\beta}}$.
 \subsubsection{Simulation Parameters}
 The simulation parameters are follows:
 \begin{itemize}
-\item Length: 360 days
-\item Video size: 1MB~200MB
-\item Peer capacity: [500MB,1000MB]
-\item CDN capacity: 10000MB
-\item Number of peers: 100000
-\item Number of videos: 10000
+\item Length: 360 days.
+\item Video size: random between 1MB and 200MB.
+\item Peer capacity: [500MB,1000MB].
+\item CDN capacity: 10000MB.
+\item Number of peers: 100000.
+\item Number of videos: 10000.
 \end{itemize}
 We compare our proposed improvement of PROP to original PROP \cite{1613869} implementation.
 
+
+
 \subsection{Result and Discussion}\label{resultanddiscussion}
 
-\begin{figure*}[!th]
-\centering
-\subfloat[CDF percentage of contribution of peers where peer capacity 500MB.\label{fig:peer500MBcontributionCDN10G}]{
-\includegraphics[width=5.7cm]{graphs/hit-model-original-1000MB-cdf.eps}
-}
-\hfill
-\subfloat[CDF percentage of contribution of peers where peer capacity 1000MB.\label{fig:peer1000MBcontributionCDN10G}]{
-\includegraphics[width=5.7cm]{graphs/hit-model-original-500MB-cdf.eps}
-}
-\hfill
-\subfloat[CDF peer contribution percentage between peer with 500MB capacity and 1000MB capacity.\label{fig:peer500MB-vs-1000MBcontributionCDN10G}]{
-\includegraphics[width=5.7cm]{graphs/hit-model-500MBvs-1000MB-cdf.eps}
-}
-\caption{CDF peer contribution for peer capacity 500MB and 1000MB, CDN capacity 10000MB. Model refers to our work and original refer to PROP \cite{1613869}.}
-\label{fig:peercontribution}
-\vspace{-2mm}
-\end{figure*}
+Figure~\ref{fig:peercontribution} shows peer contribution for our model compare to PROP. 
+Moreover fig.~\ref{fig:peer500MBcontributionCDN10G} shows the comparison of CDF of peer contribution between our model and PROP for peer capacity 500MB. 
+Figure~\ref{fig:peer1000MBcontributionCDN10G} shows the comparison of CDF of peer contribution between our model and PROP for peer capacity 1000MB.
+Our model gain higher peer contribution than PROP. 
+Figure~\ref{fig:peer500MB-vs-1000MBcontributionCDN10G} we compare our model between peer capacity 500MB and peer capacity 1000MB.
+Peer capacity 1000MB gives higher peer contribution because additional space making peer can cache more videos.
+From fig.~\ref{fig:peer1000MBcontributionCDN10G} and fig.~\ref{fig:peer500MB-vs-1000MBcontributionCDN10G}, We can see that in our model peer contributions are higher than PROP.
+We do significance statistical testing if our model has significantly different from PROP.
+We use Kolmogorov-Smirnov (KS) test for this purpose.  
+KS-test tries to determine if two datasets differ significantly.  
+It has the advantage of making no asumption about the distribution of data. 
+Reject the null hypothesis of no difference between datasets if $p$-value is small.
 
 
-
-\begin{figure*}[!th]
+\begin{figure*}[!htb]
 \centering
 \subfloat[Replica at t=10day for peer capacity 500MB.\label{fig:peer500MBreplica10dayCDN10G}]{
 \includegraphics[width=8cm]{graphs/hit-model-original-500MB-replica-10hari-cdf.eps}
@@ -687,21 +707,33 @@ We compare our proposed improvement of PROP to original PROP \cite{1613869} impl
 \vspace{-2mm}
 \end{figure*}
 
+Figure~\ref{fig:replicaat10day} shows CDF the number of replica for model and PROP for peer capacity 500MB and 1000MB at snapshot $t=10$day.
+Figure~\ref{fig:peer500MBreplica10dayCDN10G} shows CDF the number of replica for peer capacity 500MB of model and PROP. 
+Figure~\ref{fig:peer1000MBreplica10dayCDN10G} shows CDF the number of replica fof peer capacity 1000MB of model and PROP.
 
-
-\begin{figure*}[!th]
+\begin{figure*}[!htb]
 \centering
 \subfloat[Replica by popularity at t=10day for peer capacity 500MB.\label{fig:peer500MBreplica10dayCDN10Gpopularity}]{
 \includegraphics[width=8cm]{graphs/replica-500MB-10hari.eps}
 }
 \hfill
-\subfloat[Replica by popularity at t=10day for peer capacity 1000MB.\label{ffig:peer1000MBreplica10dayCDN10Gpopularity}]{
+\subfloat[Replica by popularity at t=10day for peer capacity 1000MB.\label{fig:peer1000MBreplica10dayCDN10Gpopularity}]{
 \includegraphics[width=8cm]{graphs/replica-1000MB-10hari.eps}
 }
 \caption{Peer replica at $t=10$day for peer capacity 500MB and 1000MB.}
 \label{fig:replicaat10daybypopularity}
 \vspace{-2mm}
 \end{figure*}
+
+
+Figure~\ref{fig:replicaat10daybypopularity} shows distribution of the number of replicas with different popularities at snapshot $t=10$day.
+Figure~\ref{fig:peer500MBreplica10dayCDN10Gpopularity} shows distribution of the number of replicas for peer capacity 500MB with different popularities at snapshot $t=10$day.
+Figure~\ref{fig:peer1000MBreplica10dayCDN10Gpopularity} shows distribution of the number of replicas for peer capacity 1000MB with different popularities at snapshot $t=10$day.
+
+
+
+
+
 
 
 
@@ -711,6 +743,10 @@ We compare our proposed improvement of PROP to original PROP \cite{1613869} impl
 This paper presents a scheme for a ISP managed peer-assisted CDN model that 
 Some areas of improvement that we have identified for future are:
 We are also very interested to include energy trade off this peer-assisted CDN architecture in order to know how much energy saving by ISP and how much increase of energy at users home gateway side in this architecture.
+
+
+
+
 
 
 

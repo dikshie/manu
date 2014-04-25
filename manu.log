@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2014.4.17)  25 APR 2014 16:03
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2014.4.17)  25 APR 2014 19:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -322,79 +322,91 @@ t \footnotesize \hfil \box \@tempboxa \hfil }\else \hbox to\hsize {\normalfont
 \c@lotdepth=\count136
 \sf@top=\skip54
 \sf@bottom=\skip55
-) (./manu.aux)
+) (/usr/local/texlive/2013/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count137
+\float@exts=\toks23
+\float@box=\box30
+\@float@everytoks=\toks24
+\@floatcapt=\box31
+)
+(/usr/local/texlive/2013/texmf-dist/tex/latex/placeins/placeins.sty
+Package: placeins 2005/04/18  v 2.2
+)
+(./manu.aux)
 \openout1 = `manu.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 355.
-LaTeX Font Info:    ... okay on input line 355.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 355.
-LaTeX Font Info:    ... okay on input line 355.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 355.
-LaTeX Font Info:    ... okay on input line 355.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 355.
-LaTeX Font Info:    ... okay on input line 355.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 355.
-LaTeX Font Info:    ... okay on input line 355.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 355.
-LaTeX Font Info:    ... okay on input line 355.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 358.
+LaTeX Font Info:    ... okay on input line 358.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 358.
+LaTeX Font Info:    ... okay on input line 358.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 358.
+LaTeX Font Info:    ... okay on input line 358.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 358.
+LaTeX Font Info:    ... okay on input line 358.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 358.
+LaTeX Font Info:    ... okay on input line 358.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 358.
+LaTeX Font Info:    ... okay on input line 358.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <5> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 355.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 358.
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <5> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 355.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 358.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 355.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 358.
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <7> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 355.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 358.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <8> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 355.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 358.
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <8> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 355.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 358.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 355.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 358.
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <9> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 355.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 358.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 355.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 358.
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <10> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 355.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 358.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <11> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 355.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 358.
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <11> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 355.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 358.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 355.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 358.
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <12> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 355.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 358.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 355.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 358.
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <17> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 355.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 358.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <20> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 355.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 358.
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <20> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 355.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 358.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <24> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 355.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 358.
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <24> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 355.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 358.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
+Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Calculating math sizes for size <11> on input line 380.
+LaTeX Font Info:    Calculating math sizes for size <11> on input line 383.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <11> on input line 380.
+(Font)              <11> on input line 383.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7.69997> on input line 380.
+(Font)              <7.69997> on input line 383.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5.5> on input line 380.
+(Font)              <5.5> on input line 383.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 380.
+(Font)              <8> on input line 383.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 380.
+(Font)              <6> on input line 383.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 380.
+(Font)              <5> on input line 383.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 380.
+(Font)              <7> on input line 383.
  [1
 
 
@@ -404,7 +416,7 @@ File: graphs/timetopeak.eps Graphic file (type eps)
 File: graphs/p2p-system-description.eps Graphic file (type eps)
 
 <graphs/p2p-system-description.eps>
-Overfull \hbox (17.81073pt too wide) in paragraph at lines 556--557
+Overfull \hbox (17.81073pt too wide) in paragraph at lines 557--558
  [] 
  []
 
@@ -429,19 +441,13 @@ File: graphs/replica-500MB-10hari.eps Graphic file (type eps)
 
 <graphs/replica-500MB-10hari.eps>
 File: graphs/replica-1000MB-10hari.eps Graphic file (type eps)
- <graphs/replica-1000MB-10hari.eps>
-(./manu.bbl
+ <graphs/replica-1000MB-10hari.eps> [4]
+(./manu.bbl [5]
 Underfull \hbox (badness 10000) in paragraph at lines 33--35
 []\T1/ptm/m/n/8 Octoshape, ``Oc-toshape,'' $http : / / www . octoshape . com /
  []
 
-[4]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 1502) has occurred while \output is active []
-
- [5])
+)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -453,16 +459,14 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[6
-
-] (./manu.aux) ) 
+[6] (./manu.aux) ) 
 Here is how much of TeX's memory you used:
- 4396 strings out of 493309
- 66152 string characters out of 6137842
- 232732 words of memory out of 5000000
- 7814 multiletter control sequences out of 15000+600000
+ 4460 strings out of 493309
+ 67148 string characters out of 6137842
+ 236732 words of memory out of 5000000
+ 7870 multiletter control sequences out of 15000+600000
  100471 words of font info for 105 fonts, out of 8000000 for 9000
  960 hyphenation exceptions out of 8191
- 44i,14n,47p,438b,360s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 44i,14n,47p,438b,362s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on manu.dvi (6 pages, 38676 bytes).
+Output written on manu.dvi (6 pages, 40932 bytes).
