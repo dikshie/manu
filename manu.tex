@@ -666,58 +666,40 @@ We compare our proposed improvement of PROP to original PROP \cite{1613869} impl
 \subfloat[CDF peer contribution percentage between peer with 500MB capacity and 1000MB capacity.\label{fig:peer500MB-vs-1000MBcontributionCDN10G}]{
 \includegraphics[width=5.7cm]{graphs/hit-model-500MBvs-1000MB-cdf.eps}
 }
-\caption{CDF peer contribution for peer capacity 500MB and 1000MB, CDN capacity 10000MB}
+\caption{CDF peer contribution for peer capacity 500MB and 1000MB, CDN capacity 10000MB. Model refers to our work and original refer to PROP \cite{1613869}.}
 \label{fig:peercontribution}
-\end{figure*}
-
-
-\begin{figure*}[!tb]
-\centering
-\begin{minipage}[b]{.45\linewidth}
-\centering
-\includegraphics[width=2.5in]{graphs/hit-model-original-500MB-replica-10hari-cdf.eps}
-\end{minipage}%
-\hfill%
-\begin{minipage}[b]{.45\linewidth}
-\centering
-\centering
-\includegraphics[width=2.5in]{graphs/hit-model-original-1000MB-replica-10hari-cdf.eps}
-\end{minipage}\\[-7pt]
-\begin{minipage}[t]{.45\linewidth}
-\caption{Replica at t=10day for peer capacity 500MB.} 
-\label{fig:peer500MBreplica10dayCDN10G}
-\end{minipage}%
-\hfill%
-\begin{minipage}[t]{.45\linewidth}
-\caption{Replica at t=10day for peer capacity 1000MB.}
-\label{fig:peer1000MBreplica10dayCDN10G}
-\end{minipage}%
 \vspace{-2mm}
 \end{figure*}
 
 
 
-\begin{figure*}[!tb]
+\begin{figure*}[!th]
 \centering
-\begin{minipage}[b]{.45\linewidth}
+\subfloat[Replica at t=10day for peer capacity 500MB.\label{fig:peer500MBreplica10dayCDN10G}]{
+\includegraphics[width=8cm]{graphs/hit-model-original-500MB-replica-10hari-cdf.eps}
+}
+\hfill
+\subfloat[Replica at t=10day for peer capacity 1000MB.\label{fig:peer1000MBreplica10dayCDN10G}]{
+\includegraphics[width=8cm]{graphs/hit-model-original-1000MB-replica-10hari-cdf.eps}
+}
+\caption{Peer replica at $t=10$day for peer capacity 500MB and 1000MB.}
+\label{fig:replicaat10day}
+\vspace{-2mm}
+\end{figure*}
+
+
+
+\begin{figure*}[!th]
 \centering
-\includegraphics[width=2.5in]{graphs/replica-500MB-10hari.eps}
-\end{minipage}%
-\hfill%
-\begin{minipage}[b]{.45\linewidth}
-\centering
-\centering
-\includegraphics[width=2.5in]{graphs/replica-1000MB-10hari.eps}
-\end{minipage}\\[-7pt]
-\begin{minipage}[t]{.45\linewidth}
-\caption{Replica by popularity at t=10day for peer capacity 500MB.} 
-\label{fig:peer500MBreplica10dayCDN10Gpopularity}
-\end{minipage}%
-\hfill%
-\begin{minipage}[t]{.45\linewidth}
-\caption{Replica by popularity at t=10day for peer capacity 1000MB.}
-\label{fig:peer1000MBreplica10dayCDN10Gpopularity}
-\end{minipage}%
+\subfloat[Replica by popularity at t=10day for peer capacity 500MB.\label{fig:peer500MBreplica10dayCDN10Gpopularity}]{
+\includegraphics[width=8cm]{graphs/replica-500MB-10hari.eps}
+}
+\hfill
+\subfloat[Replica by popularity at t=10day for peer capacity 1000MB.\label{ffig:peer1000MBreplica10dayCDN10Gpopularity}]{
+\includegraphics[width=8cm]{graphs/replica-1000MB-10hari.eps}
+}
+\caption{Peer replica at $t=10$day for peer capacity 500MB and 1000MB.}
+\label{fig:replicaat10daybypopularity}
 \vspace{-2mm}
 \end{figure*}
 
