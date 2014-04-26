@@ -612,24 +612,6 @@ In the next section (sect.\ref{evaluation}), we will show how popularity evoluti
 \section{Evaluation}\label{evaluation}
 In order to evaluate the proposed cache strategy using before-peak, at-peak, and after-peak information from VoD model, we have to compare our model to PROP model \cite{1613869}.
 
-\begin{figure*}[!ht]
-\centering
-\subfloat[CDF percentage of contribution of peers where peer capacity 500MB.\label{fig:peer500MBcontributionCDN10G}]{
-\includegraphics[width=5.7cm]{graphs/hit-model-original-1000MB-cdf.eps}
-}
-\hfill
-\subfloat[CDF percentage of contribution of peers where peer capacity 1000MB.\label{fig:peer1000MBcontributionCDN10G}]{
-\includegraphics[width=5.7cm]{graphs/hit-model-original-500MB-cdf.eps}
-}
-\hfill
-\subfloat[CDF peer contribution percentage between peer with 500MB capacity and 1000MB capacity.\label{fig:peer500MB-vs-1000MBcontributionCDN10G}]{
-\includegraphics[width=5.7cm]{graphs/hit-model-500MBvs-1000MB-cdf.eps}
-}
-\caption{CDF peer contribution for peer capacity 500MB and 1000MB, CDN capacity 10000MB. Model refers to our work and original refer to PROP \cite{1613869}.}
-\label{fig:peercontribution}
-\vspace{-2mm}
-\end{figure*}
-
 
 
 \subsection{Simulation Design}\label{simulationdesign}
@@ -679,12 +661,32 @@ We compare our proposed improvement of PROP to original PROP \cite{1613869} impl
 
 \subsection{Result and Discussion}\label{resultanddiscussion}
 
+\begin{figure*}[!ht]
+\centering
+\subfloat[CDF percentage of contribution of peers where peer capacity 500MB. $x$ and $y$ axis in logscale.\label{fig:peer500MBcontributionCDN10G}]{
+\includegraphics[width=5.7cm]{graphs/hit-model-original-1000MB-cdf-log.eps}
+}
+\hfill
+\subfloat[CDF percentage of contribution of peers where peer capacity 1000MB. $x$ and $y$ axis in logscale.\label{fig:peer1000MBcontributionCDN10G}]{
+\includegraphics[width=5.7cm]{graphs/hit-model-original-500MB-cdf-log.eps}
+}
+\hfill
+\subfloat[CDF peer contribution percentage between peer with 500MB capacity and 1000MB capacity.\label{fig:peer500MB-vs-1000MBcontributionCDN10G}]{
+\includegraphics[width=5.7cm]{graphs/hit-model-500MBvs-1000MB-cdf.eps}
+}
+\caption{CDF peer contribution for peer capacity 500MB and 1000MB, CDN capacity 10000MB. Model refers to our work and original refer to PROP \cite{1613869}.}
+\label{fig:peercontribution}
+\vspace{-2mm}
+\end{figure*}
+
+
+
 Figure~\ref{fig:peercontribution} shows peer contribution for our model compare to PROP. 
 Moreover fig.~\ref{fig:peer500MBcontributionCDN10G} shows the comparison of CDF of peer contribution between our model and PROP for peer capacity 500MB. 
 Figure~\ref{fig:peer1000MBcontributionCDN10G} shows the comparison of CDF of peer contribution between our model and PROP for peer capacity 1000MB.
 Our model gain higher peer contribution than PROP. 
 Figure~\ref{fig:peer500MB-vs-1000MBcontributionCDN10G} we compare our model between peer capacity 500MB and peer capacity 1000MB.
-Peer capacity 1000MB gives higher peer contribution because additional space making peer can cache more videos.
+Peer capacity 1000MB gives higher peer contribution because additional space makes a peer can cache more videos.
 From fig.~\ref{fig:peer1000MBcontributionCDN10G} and fig.~\ref{fig:peer500MB-vs-1000MBcontributionCDN10G}, We can see that in our model peer contributions are higher than PROP.
 We do significance statistical testing if our model has significantly different from PROP.
 We use Kolmogorov-Smirnov (KS) test for this purpose.  
