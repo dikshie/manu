@@ -663,20 +663,22 @@ We compare our proposed improvement of PROP to original PROP \cite{1613869} impl
 
 \begin{figure*}[!ht]
 \centering
-\subfloat[CDF percentage of contribution of peers where peer capacity 500MB. $x$ and $y$ axis in logscale.\label{fig:peer500MBcontributionCDN10G}]{
+\subfloat[CDF percentage of contribution of peers where peer capacity 500MB and CDN capacity 10GB. $x$ and $y$ axis in logscale.\label{fig:peer500MBcontributionCDN10G}]{
 \includegraphics[width=5.7cm]{graphs/hit-model-original-1000MB-cdf-log.eps}
 }
 \hfill
-\subfloat[CDF percentage of contribution of peers where peer capacity 1000MB. $x$ and $y$ axis in logscale.\label{fig:peer1000MBcontributionCDN10G}]{
+\vspace{2mm}
+\subfloat[CDF percentage of contribution of peers where peer capacity 1000MB and CDN capacity 10GB. $x$ and $y$ axis in logscale.\label{fig:peer1000MBcontributionCDN10G}]{
 \includegraphics[width=5.7cm]{graphs/hit-model-original-500MB-cdf-log.eps}
 }
 \hfill
-\subfloat[CDF peer contribution percentage between peer with 500MB capacity and 1000MB capacity.\label{fig:peer500MB-vs-1000MBcontributionCDN10G}]{
+\subfloat[CDF peer contribution percentage between peer with 500MB capacity and 1000MB capacity and CDN capacity 10GB.\label{fig:peer500MB-vs-1000MBcontributionCDN10G}]{
 \includegraphics[width=5.7cm]{graphs/hit-model-500MBvs-1000MB-cdf.eps}
 }
+\vspace{2mm}
 \caption{CDF peer contribution for peer capacity 500MB and 1000MB, CDN capacity 10000MB. Model refers to our work and original refer to PROP \cite{1613869}.}
 \label{fig:peercontribution}
-\vspace{-2mm}
+\vspace{2mm}
 \end{figure*}
 
 
@@ -693,6 +695,8 @@ We use Kolmogorov-Smirnov (KS) test for this purpose.
 KS-test tries to determine if two datasets differ significantly.  
 It has the advantage of making no asumption about the distribution of data. 
 Reject the null hypothesis of no difference between datasets if $p$-value is small.
+For peer capacity 500MB when we compare our model and PROP, we get K-S statistic value 0.5 and $p$-value is 0.5e-005, while peer capacity 1000MB we get 63.34 and $p$-value is 0.46e-005.
+Since the the $p$-value is below $1\%$ we can reject null hypothesis that both data are the same.
 
 
 \begin{figure*}[!htb]
@@ -734,7 +738,58 @@ Figure~\ref{fig:peer1000MBreplica10dayCDN10Gpopularity} shows distribution of th
 
 
 
+\begin{figure*}[!ht]
+\centering
+\subfloat[CDF percentage of contribution of peers where peer capacity 500MB and CDN capacity 20GB.. $x$ and $y$ axis in logscale.\label{fig:peer500MBcontributionCDN20G}]{
+\includegraphics[width=5.7cm]{graphs/20G/hit-model-original-1000MB-20G-cdf-log.eps}
+}
+\hfill
+\vspace{2mm}
+\subfloat[CDF percentage of contribution of peers where peer capacity 1000MB and CDN capcity 20GB. $x$ and $y$ axis in logscale.\label{fig:peer1000MBcontributionCDN20G}]{
+\includegraphics[width=5.7cm]{graphs/20G/hit-model-original-500MB-20G-cdf-log.eps}
+}
+\hfill
+\subfloat[CDF peer contribution percentage between peer with 500MB capacity and 1000MB capacity and CDN capacity 20GB.\label{fig:peer500MB-vs-1000MBcontributionCDN20G}]{
+\includegraphics[width=5.7cm]{graphs/20G/hit-model-500MBvs-1000MB-20G-cdf.eps}
+}
+\vspace{2mm}
+\caption{CDF peer contribution for peer capacity 500MB and 1000MB, CDN capacity 20000MB. Model refers to our work and original refer to PROP \cite{1613869}.}
+\label{fig:peercontribution20G}
+\vspace{2mm}
+\end{figure*}
 
+
+
+\begin{figure*}[!htb]
+\centering
+\subfloat[Replica at t=10day for peer capacity 500MB.\label{fig:peer500MBreplica10dayCDN20G}]{
+\includegraphics[width=8cm]{graphs/20G/hit-model-original-500MB-20G-replica-total-cdf-log.eps}
+}
+\hfill
+\subfloat[Replica at t=10day for peer capacity 1000MB.\label{fig:peer1000MBreplica10dayCDN20G}]{
+\includegraphics[width=8cm]{graphs/20G/hit-model-original-1000MB-20G-replica-total-cdf-log.eps}
+}
+\caption{Peer replica at $t=10$day for peer capacity 500MB and 1000MB with CDN capacity 20GB.}
+\label{fig:replicaat10day20G}
+\vspace{-2mm}
+\end{figure*}
+
+
+
+
+\begin{figure*}[!htb]
+\centering
+\subfloat[Replica by popularity at t=10day for peer capacity 500MB and CDN capacity 20GB.\label{fig:peer500MBreplica10dayCDN20Gpopularity}]{
+\includegraphics[width=8cm]{graphs/20G/replica-500MB-20G-total-log.eps}
+}
+\hfill
+\subfloat[Replica by popularity at t=10day for peer capacity 1000MB and CDN capacity 20GB.\label{fig:peer1000MBreplica10dayCDN20Gpopularity}]{
+\includegraphics[width=8cm]{graphs/20G/replica-1000MB-20G-total-log.eps}
+}
+\caption{Peer replica at $t=10$day for peer capacity 500MB and 1000MB and CDN capacity 20GB.}
+\label{fig:replicaat10daybypopularity20G}
+\vspace{-2mm}
+\end{figure*}
 
 
 

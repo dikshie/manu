@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2014.4.17)  26 APR 2014 16:09
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2014.4.17)  27 APR 2014 15:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -442,7 +442,38 @@ File: graphs/replica-500MB-total-log.eps Graphic file (type eps)
 <graphs/replica-500MB-total-log.eps>
 File: graphs/replica-1000MB-total-log.eps Graphic file (type eps)
  <graphs/replica-1000MB-total-log.eps>
-[4] (./manu.bbl [5]
+File: graphs/20G/hit-model-original-1000MB-20G-cdf-log.eps Graphic file (type e
+ps)
+
+<graphs/20G/hit-model-original-1000MB-20G-cdf-log.eps>
+File: graphs/20G/hit-model-original-500MB-20G-cdf-log.eps Graphic file (type ep
+s)
+
+<graphs/20G/hit-model-original-500MB-20G-cdf-log.eps>
+File: graphs/20G/hit-model-500MBvs-1000MB-20G-cdf.eps Graphic file (type eps)
+
+<graphs/20G/hit-model-500MBvs-1000MB-20G-cdf.eps> [4]
+File: graphs/20G/hit-model-original-500MB-20G-replica-total-cdf-log.eps Graphic
+ file (type eps)
+
+<graphs/20G/hit-model-original-500MB-20G-replica-total-cdf-log.eps>
+File: graphs/20G/hit-model-original-1000MB-20G-replica-total-cdf-log.eps Graphi
+c file (type eps)
+
+<graphs/20G/hit-model-original-1000MB-20G-replica-total-cdf-log.eps>
+File: graphs/20G/replica-500MB-20G-total-log.eps Graphic file (type eps)
+
+<graphs/20G/replica-500MB-20G-total-log.eps>
+File: graphs/20G/replica-1000MB-20G-total-log.eps Graphic file (type eps)
+
+<graphs/20G/replica-1000MB-20G-total-log.eps> [5]
+Overfull \vbox (10.99228pt too high) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [6]
+(./manu.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 33--35
 []\T1/ptm/m/n/8 Octoshape, ``Oc-toshape,'' $http : / / www . octoshape . com /
  []
@@ -459,14 +490,14 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[6] (./manu.aux) ) 
+[7] (./manu.aux) ) 
 Here is how much of TeX's memory you used:
- 4460 strings out of 493309
- 67188 string characters out of 6137842
- 236732 words of memory out of 5000000
- 7870 multiletter control sequences out of 15000+600000
+ 4492 strings out of 493309
+ 68493 string characters out of 6137842
+ 235732 words of memory out of 5000000
+ 7894 multiletter control sequences out of 15000+600000
  100471 words of font info for 105 fonts, out of 8000000 for 9000
  960 hyphenation exceptions out of 8191
  44i,14n,47p,438b,362s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on manu.dvi (6 pages, 41068 bytes).
+Output written on manu.dvi (7 pages, 43936 bytes).
