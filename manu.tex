@@ -342,7 +342,7 @@
 \usepackage{subfig}
 \usepackage{float}
 %\usepackage{subfloat}
-\usepackage[section]{placeins}
+%\usepackage[section]{placeins}
 
 % *** Do not adjust lengths that control margins, column widths, etc. ***
 % *** Do not use packages that alter fonts (such as pslatex).         ***
@@ -630,7 +630,7 @@ In view count terminus, we assume that a video will not get big additional view 
 We assign view count terminus randomly from data sets.
 After determining view count terminus, we assign beta distribution parameter. 
 We need to know the beta distribution for a peer to choose requested video.  
-Since we know the time of at-peak phase for each video, we know the mode of beta distribution value and we can calculate $\alpha$ and $\beta$ value using the mode of distribution: $m=\frac{\alpha-1}{\alpha + \beta - 2}$.  
+Since we can estimate the time of at-peak phase for each video, we know the mode of beta distribution value and we can calculate $\alpha$ and $\beta$ value using the mode of distribution: $m=\frac{\alpha-1}{\alpha + \beta - 2}$.  
 We assign $\alpha$ value randomly between $1$ and $2$ thus we can calculate $\beta$ value.
 Lastly, we assign file size of video randomly between $1$MB and $200$MB.
 
@@ -698,49 +698,9 @@ Reject the null hypothesis of no difference between datasets if $p$-value is sma
 For peer capacity 500MB when we compare our model and PROP, we get K-S statistic value 0.5 and $p$-value is 0.5e-005, while peer capacity 1000MB we get 63.34 and $p$-value is 0.46e-005.
 Since the the $p$-value is below $1\%$ we can reject null hypothesis that both data are the same.
 
-
-\begin{figure*}[!htb]
-\centering
-\subfloat[Replica at t=10day for peer capacity 500MB.\label{fig:peer500MBreplica10dayCDN10G}]{
-\includegraphics[width=8cm]{graphs/hit-model-original-500MB-replica-total-cdf-log.eps}
-}
-\hfill
-\subfloat[Replica at t=10day for peer capacity 1000MB.\label{fig:peer1000MBreplica10dayCDN10G}]{
-\includegraphics[width=8cm]{graphs/hit-model-original-1000MB-replica-total-cdf-log.eps}
-}
-\caption{Peer replica at $t=10$day for peer capacity 500MB and 1000MB.}
-\label{fig:replicaat10day}
-\vspace{-2mm}
-\end{figure*}
-
-Figure~\ref{fig:replicaat10day} shows CDF the number of replica for model and PROP for peer capacity 500MB and 1000MB at snapshot $t=10$day.
-Figure~\ref{fig:peer500MBreplica10dayCDN10G} shows CDF the number of replica for peer capacity 500MB of model and PROP. 
-Figure~\ref{fig:peer1000MBreplica10dayCDN10G} shows CDF the number of replica fof peer capacity 1000MB of model and PROP.
-
-\begin{figure*}[!htb]
-\centering
-\subfloat[Replica by popularity at t=10day for peer capacity 500MB.\label{fig:peer500MBreplica10dayCDN10Gpopularity}]{
-\includegraphics[width=8cm]{graphs/replica-500MB-total-log.eps}
-}
-\hfill
-\subfloat[Replica by popularity at t=10day for peer capacity 1000MB.\label{fig:peer1000MBreplica10dayCDN10Gpopularity}]{
-\includegraphics[width=8cm]{graphs/replica-1000MB-total-log.eps}
-}
-\caption{Peer replica at $t=10$day for peer capacity 500MB and 1000MB.}
-\label{fig:replicaat10daybypopularity}
-\vspace{-2mm}
-\end{figure*}
-
-
-Figure~\ref{fig:replicaat10daybypopularity} shows distribution of the number of replicas with different popularities at snapshot $t=10$day.
-Figure~\ref{fig:peer500MBreplica10dayCDN10Gpopularity} shows distribution of the number of replicas for peer capacity 500MB with different popularities at snapshot $t=10$day.
-Figure~\ref{fig:peer1000MBreplica10dayCDN10Gpopularity} shows distribution of the number of replicas for peer capacity 1000MB with different popularities at snapshot $t=10$day.
-
-
-
 \begin{figure*}[!ht]
 \centering
-\subfloat[CDF percentage of contribution of peers where peer capacity 500MB and CDN capacity 20GB.. $x$ and $y$ axis in logscale.\label{fig:peer500MBcontributionCDN20G}]{
+\subfloat[CDF percentage of contribution of peers where peer capacity 500MB and CDN capacity 20GB. $x$ and $y$ axis in logscale.\label{fig:peer500MBcontributionCDN20G}]{
 \includegraphics[width=5.7cm]{graphs/20G/hit-model-original-1000MB-20G-cdf-log.eps}
 }
 \hfill
@@ -758,38 +718,78 @@ Figure~\ref{fig:peer1000MBreplica10dayCDN10Gpopularity} shows distribution of th
 \vspace{2mm}
 \end{figure*}
 
+\begin{figure}[th]
+\begin{center}
+\includegraphics[scale=0.6]{graphs/hit-model-500MBvs-1000MB-10G-20G-cdf.eps}
+\end{center}
+\caption{Comparisan the model of CDN capacity 10GB vs. 20GB.}
+\label{fig:10Gvs20G}
+\vspace{-2mm}
+\end{figure} 
+
+
+%\begin{figure*}[!htb]
+%\centering
+%\subfloat[Replica at t=10day for peer capacity 500MB.\label{fig:peer500MBreplica10dayCDN10G}]{
+%\includegraphics[width=8cm]{graphs/hit-model-original-500MB-replica-total-cdf-log.eps}
+%}
+%\hfill
+%\subfloat[Replica at t=10day for peer capacity 1000MB.\label{fig:peer1000MBreplica10dayCDN10G}]{
+%\includegraphics[width=8cm]{graphs/hit-model-original-1000MB-replica-total-cdf-log.eps}
+%}
+%\caption{Peer replica at $t=10$day for peer capacity 500MB and 1000MB.}
+%\label{fig:replicaat10day}
+%\vspace{-2mm}
+%\end{figure*}
+
+%Figure~\ref{fig:replicaat10day} shows CDF the number of replica for model and PROP for peer capacity 500MB and 1000MB at snapshot %$t=10$day.
+%Figure~\ref{fig:peer500MBreplica10dayCDN10G} shows CDF the number of replica for peer capacity 500MB of model and PROP. 
+%Figure~\ref{fig:peer1000MBreplica10dayCDN10G} shows CDF the number of replica fof peer capacity 1000MB of model and PROP.
+
+\begin{figure*}[!htb]
+\centering
+\subfloat[Replica by popularity at t=10day for peer capacity 500MB.\label{fig:peer500MBvs1000MBreplica10dayCDN10Gpopularity}]{
+\includegraphics[width=5.7cm]{graphs/replica-10hari-500vs1000-log.eps}
+}
+\hfill
+\subfloat[Replica by popularity at t=10day for peer capacity 1000MB.\label{fig:peer500MBvs1000MBreplicaweek6CDN10Gpopularity}]{
+\includegraphics[width=5.7cm]{graphs/replica-minggu6-500vs1000-log.eps}
+}
+\subfloat[Replica by popularity at t=10day for peer capacity 1000MB.\label{fig:peer500MBvs1000MBreplica10week10CDN10Gpopularity}]{
+\includegraphics[width=5.7cm]{graphs/replica-minggu10-500vs1000-log.eps}
+}
+\caption{Peer replica at $t=10$day, $t=6$week, and $t=10$week for peer capacity 500MB and 1000MB.}
+\label{fig:replicaatbypopularity}
+\vspace{-2mm}
+\end{figure*}
+
+Figure~\ref{fig:replicaatbypopularity} shows distribution of the number of replicas with different popularities at snapshot $t=10$day.
+Figure~\ref{fig:peer500MBvs1000MBreplica10dayCDN10Gpopularity} shows distribution of the number of replicas comparison for peer capacity 500MB and 1000MB with different popularities rank at snapshot $t=10$day.
+Figure~\ref{fig:peer500MBvs1000MBreplicaweek6CDN10Gpopularity} shows distribution of the number of replicas comparison for peer capacity 500MB and 1000MB with different popularities at snapshot $t=6$week.
+Figure~\ref{fig:peer500MBvs1000MBreplica10week10CDN10Gpopularity} shows distribution of the number of replicas comparison for peer capacity 500MB and 1000MB with different popularities at snapshot $t=6$week.
+
 
 
 \begin{figure*}[!htb]
 \centering
-\subfloat[Replica at t=10day for peer capacity 500MB.\label{fig:peer500MBreplica10dayCDN20G}]{
-\includegraphics[width=8cm]{graphs/20G/hit-model-original-500MB-20G-replica-total-cdf-log.eps}
+\subfloat[Replica by popularity at t=10day for peer capacity 500MB and 1000MB, CDN capacity 20GB.\label{fig:peer500MBvs1000MBreplica10dayCDN20Gpopularity}]{
+\includegraphics[width=5.7cm]{graphs/20G/replica-10hari-500vs1000-20G-log.eps}
 }
 \hfill
-\subfloat[Replica at t=10day for peer capacity 1000MB.\label{fig:peer1000MBreplica10dayCDN20G}]{
-\includegraphics[width=8cm]{graphs/20G/hit-model-original-1000MB-20G-replica-total-cdf-log.eps}
+\subfloat[Replica by popularity at t=10day for peer capacity 500MB and 1000MB, CDN capacity 20GB.\label{fig:peer500MBvs1000MBreplicaweek6CDN20Gpopularity}]{
+\includegraphics[width=5.7cm]{graphs/20G/replica-minggu6-500vs1000-20G-log.eps}
 }
-\caption{Peer replica at $t=10$day for peer capacity 500MB and 1000MB with CDN capacity 20GB.}
-\label{fig:replicaat10day20G}
+\subfloat[Replica by popularity at t=10day for peer capacity 500MB and 1000MB., CDN capacity 20GB.\label{fig:peer500MBvs1000MBreplica10week10CDN20Gpopularity}]{
+\includegraphics[width=5.7cm]{graphs/20G/replica-minggu10-500vs1000-20G-log.eps}
+}
+\caption{Peer replica at $t=10$day, $t=6$week, and $t=10$week for peer capacity 500MB and 1000MB, CDN capacity 20GB.}
+\label{fig:replicaatbypopularity20G}
 \vspace{-2mm}
 \end{figure*}
 
 
 
 
-\begin{figure*}[!htb]
-\centering
-\subfloat[Replica by popularity at t=10day for peer capacity 500MB and CDN capacity 20GB.\label{fig:peer500MBreplica10dayCDN20Gpopularity}]{
-\includegraphics[width=8cm]{graphs/20G/replica-500MB-20G-total-log.eps}
-}
-\hfill
-\subfloat[Replica by popularity at t=10day for peer capacity 1000MB and CDN capacity 20GB.\label{fig:peer1000MBreplica10dayCDN20Gpopularity}]{
-\includegraphics[width=8cm]{graphs/20G/replica-1000MB-20G-total-log.eps}
-}
-\caption{Peer replica at $t=10$day for peer capacity 500MB and 1000MB and CDN capacity 20GB.}
-\label{fig:replicaat10daybypopularity20G}
-\vspace{-2mm}
-\end{figure*}
 
 
 

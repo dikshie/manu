@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2014.4.17)  27 APR 2014 15:57
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2014.4.17)  28 APR 2014 14:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -329,11 +329,7 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \float@box=\box30
 \@float@everytoks=\toks24
 \@floatcapt=\box31
-)
-(/usr/local/texlive/2013/texmf-dist/tex/latex/placeins/placeins.sty
-Package: placeins 2005/04/18  v 2.2
-)
-(./manu.aux)
+) (./manu.aux)
 \openout1 = `manu.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 358.
@@ -407,15 +403,15 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 383.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 383.
- [1
+
+[1
 
 
 ] [2]
 File: graphs/timetopeak.eps Graphic file (type eps)
  <graphs/timetopeak.eps>
 File: graphs/p2p-system-description.eps Graphic file (type eps)
-
-<graphs/p2p-system-description.eps>
+ <graphs/p2p-system-description.eps>
 Overfull \hbox (17.81073pt too wide) in paragraph at lines 557--558
  [] 
  []
@@ -429,19 +425,6 @@ File: graphs/hit-model-original-500MB-cdf-log.eps Graphic file (type eps)
 File: graphs/hit-model-500MBvs-1000MB-cdf.eps Graphic file (type eps)
 
 <graphs/hit-model-500MBvs-1000MB-cdf.eps>
-File: graphs/hit-model-original-500MB-replica-total-cdf-log.eps Graphic file (t
-ype eps)
-
-<graphs/hit-model-original-500MB-replica-total-cdf-log.eps>
-File: graphs/hit-model-original-1000MB-replica-total-cdf-log.eps Graphic file (
-type eps)
-
-<graphs/hit-model-original-1000MB-replica-total-cdf-log.eps>
-File: graphs/replica-500MB-total-log.eps Graphic file (type eps)
-
-<graphs/replica-500MB-total-log.eps>
-File: graphs/replica-1000MB-total-log.eps Graphic file (type eps)
- <graphs/replica-1000MB-total-log.eps>
 File: graphs/20G/hit-model-original-1000MB-20G-cdf-log.eps Graphic file (type e
 ps)
 
@@ -452,33 +435,34 @@ s)
 <graphs/20G/hit-model-original-500MB-20G-cdf-log.eps>
 File: graphs/20G/hit-model-500MBvs-1000MB-20G-cdf.eps Graphic file (type eps)
 
-<graphs/20G/hit-model-500MBvs-1000MB-20G-cdf.eps> [4]
-File: graphs/20G/hit-model-original-500MB-20G-replica-total-cdf-log.eps Graphic
- file (type eps)
+<graphs/20G/hit-model-500MBvs-1000MB-20G-cdf.eps>
+File: graphs/hit-model-500MBvs-1000MB-10G-20G-cdf.eps Graphic file (type eps)
 
-<graphs/20G/hit-model-original-500MB-20G-replica-total-cdf-log.eps>
-File: graphs/20G/hit-model-original-1000MB-20G-replica-total-cdf-log.eps Graphi
-c file (type eps)
+<graphs/hit-model-500MBvs-1000MB-10G-20G-cdf.eps>
+File: graphs/replica-10hari-500vs1000-log.eps Graphic file (type eps)
 
-<graphs/20G/hit-model-original-1000MB-20G-replica-total-cdf-log.eps>
-File: graphs/20G/replica-500MB-20G-total-log.eps Graphic file (type eps)
+<graphs/replica-10hari-500vs1000-log.eps>
+File: graphs/replica-minggu6-500vs1000-log.eps Graphic file (type eps)
 
-<graphs/20G/replica-500MB-20G-total-log.eps>
-File: graphs/20G/replica-1000MB-20G-total-log.eps Graphic file (type eps)
+<graphs/replica-minggu6-500vs1000-log.eps>
+File: graphs/replica-minggu10-500vs1000-log.eps Graphic file (type eps)
 
-<graphs/20G/replica-1000MB-20G-total-log.eps> [5]
-Overfull \vbox (10.99228pt too high) has occurred while \output is active []
+<graphs/replica-minggu10-500vs1000-log.eps>
+File: graphs/20G/replica-10hari-500vs1000-20G-log.eps Graphic file (type eps)
+
+<graphs/20G/replica-10hari-500vs1000-20G-log.eps>
+File: graphs/20G/replica-minggu6-500vs1000-20G-log.eps Graphic file (type eps)
+
+<graphs/20G/replica-minggu6-500vs1000-20G-log.eps>
+File: graphs/20G/replica-minggu10-500vs1000-20G-log.eps Graphic file (type eps)
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [6]
-(./manu.bbl
+<graphs/20G/replica-minggu10-500vs1000-20G-log.eps> [4] (./manu.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 33--35
 []\T1/ptm/m/n/8 Octoshape, ``Oc-toshape,'' $http : / / www . octoshape . com /
  []
 
-)
+[5] [6])
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -490,14 +474,16 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[7] (./manu.aux) ) 
+[7
+
+] (./manu.aux) ) 
 Here is how much of TeX's memory you used:
- 4492 strings out of 493309
- 68493 string characters out of 6137842
+ 4470 strings out of 493309
+ 67958 string characters out of 6137842
  235732 words of memory out of 5000000
- 7894 multiletter control sequences out of 15000+600000
+ 7877 multiletter control sequences out of 15000+600000
  100471 words of font info for 105 fonts, out of 8000000 for 9000
  960 hyphenation exceptions out of 8191
- 44i,14n,47p,438b,362s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 44i,14n,47p,438b,357s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on manu.dvi (7 pages, 43936 bytes).
+Output written on manu.dvi (7 pages, 43664 bytes).
