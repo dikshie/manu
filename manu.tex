@@ -458,14 +458,14 @@ In Peer assisted CDN, users can download content from CDN nodes from or other us
 A user may cache the content after download to serve requests from other users. 
 Due to the complexity of the behavior of peers, the process should be done in the home gateway user where the ISP can control it.
 
-While in P2P assisted CDN for video on demand (VoD), most of reseacher assume the catalog of video is already established following zipf distribution for popularity thus the video rank is static. 
-In our work, our catalog is dynamic, every video has its own popularity evolution following beta distribution thus we are not realy on the popularity rank.  
+While in P2P assisted CDN for video on demand (VoD), most of researcher assume the catalog of video is already established following zipf distribution for popularity thus the video rank is static. 
+In our work, our catalog is dynamic, every video has its own popularity evolution following beta distribution thus we are not rely on the popularity rank.  
 It's very natural that we can not rely on static the popularity rank, since in VoD popularity can change every week moreover Internet wide scale VoD like Youtube serves many regions and users in each region has different preference to watch the video thus every region has different popularity rank of videos. 
 In Youtube, Popularity evolution of a video has three phase which is before-peak, at-peak, and after-peak.
 This aspect will be explained in sect.\ref{popularity}.
 In this paper, we present how the model of video popularity evolution can help P2P assisted CDN ecosystem.  
 
-Our paper presentation as follows: (1) we describe related work in sect.\ref{relatedwork}; (2) we explain detail of Youtube popularity evolution model in sect.\ref{popularity}; (3) we explain the caching strategy for CDN and peer in sect.\ref{systemdescription}; (4) we explain our simulation design, simulator, and its evalution in sect.\ref{evaluation}.
+Our paper presentation as follows: (1) we describe related work in sect.\ref{relatedwork}; (2) we explain detail of Youtube popularity evolution model in sect.\ref{popularity}; (3) we explain the caching strategy for CDN and peer in sect.\ref{systemdescription}; (4) we explain our simulation design, simulator, and its evaluation in sect.\ref{evaluation}.
 Finally, we present our conclusions in section \ref{conclusion}.
 
 
@@ -526,7 +526,7 @@ As same Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} work, we define 
 The time-to-peak distributions is shown in fig.\ref{fig:timetopeak}.
 Figure \ref{fig:timetopeak} shows that around three-quarters of a large fraction videos peak within the first six weeks since their upload and beyond six weeks we have uniform distribution thus the time-to-peak is exponentially distributed mixture with uniform distribution. 
 Our finding coherence with Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717}.
-To estimate the the rata parameter of exponential part of time-to-peak distribution, we use Maximum Likelihood Estimation (MLE) \cite{clauset2009power}.
+To estimate the the rate parameter of exponential part of time-to-peak distribution, we use Maximum Likelihood Estimation (MLE) \cite{clauset2009power}.
 Using MLE method, we can get exponential parameter $\lambda = 0.61$. 
 For video popularity evolution which is weekly view distribution, we follow Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} which use beta distribution. 
 For weekly views distribution, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} found that beta distribution as good model to explain views evolution. 
@@ -549,10 +549,10 @@ There are two main components: (1) the CDN servers which at a minimum consist co
 In addition, clients form a self-organized P2P overlay network.
 
 The CDN servers are maintained by a CDN company or a content provider company (e.q Netflix) or an Internet service provider (ISP).
-In peer-asssisted CDN, a peer caches the videos that it has downloaded.
+In peer-assisted CDN, a peer caches the videos that it has downloaded.
 Peers independently manage their cache localy.
 When a peer join the system video replica is cached.
-When a peer leaves the systen video replicaed is evicted. 
+When a peer leaves the system video replica is evicted. 
 In both process, a peer always reports to CDN thus CDN knows the status of a peer.
 
 Figure~\ref{ig:p2pcdnoverview} shows example of Akamai's peer-assisted CDN system that in operation since 2010.
@@ -662,7 +662,7 @@ The knowledge of view count and view rate, will be used top generate a video cho
 For video choice, we estimate that a peer will choose video proportionally considering view count and view rate of the video.   
 We can get view count and view rate from probability distribution function (pdf) and cumulative distribution function (cdf) of beta distribution above multiply by video's view count terminus.
 In last step, we assign file size of video randomly between $1$MB and $200$MB.
-Finally, we have a catalog that consists of: video to be choosen, time when uploaded, view count terminus, at-peak week, and video size.
+Finally, we have a catalog that consists of: video to be chosen, time when uploaded, view count terminus, at-peak week, and video size.
 
 
 \begin{figure}[th]
@@ -729,7 +729,7 @@ From fig.~\ref{fig:peer1000MBcontributionCDN10G} and fig.~\ref{fig:peer500MB-vs-
 We do significance statistical testing if our model has significantly different from PROP.
 We use Kolmogorov-Smirnov (KS) test for this purpose.  
 KS-test tries to determine if two datasets differ significantly.  
-It has the advantage of making no asumption about the distribution of data. 
+It has the advantage of making no assumption about the distribution of data. 
 Reject the null hypothesis of no difference between datasets if $p$-value is small.
 For peer capacity 500MB when we compare our model and PROP, we get K-S statistic value 0.5 and $p$-value is 0.5e-005, while peer capacity 1000MB we get 63.34 and $p$-value is 0.46e-005.
 Since the the $p$-value is below $1\%$ we can reject null hypothesis that both data are the same.
