@@ -177,10 +177,12 @@ L.~Guo, S.~Chen, and X.~Zhang, ``Design and evaluation of a scalable and
   \emph{Knowledge and Data Engineering, IEEE Transactions on}, vol.~18, no.~5,
   pp. 669--682, May 2006.
 
-\bibitem{4801529}
-M.~Cha, H.~Kwak, P.~Rodriguez, Y.-Y. Ahn, and S.~Moon, ``Analyzing the video
-  popularity characteristics of large-scale user generated content systems,''
-  \emph{Networking, IEEE/ACM Transactions on}, vol.~17, no.~5, pp. 1357--1370,
-  Oct 2009.
+\bibitem{Zink:2009:CYN:1502814.1502987}
+\BIBentryALTinterwordspacing
+M.~Zink, K.~Suh, Y.~Gu, and J.~Kurose, ``Characteristics of youtube network
+  traffic at a campus network - measurements, models, and implications,''
+  \emph{Comput. Netw.}, vol.~53, no.~4, pp. 501--514, Mar. 2009. [Online].
+  Available: \url{http://dx.doi.org/10.1016/j.comnet.2008.09.022}
+\BIBentrySTDinterwordspacing
 
 \end{thebibliography}

@@ -15,42 +15,42 @@ Database file #1: manu.bib
 Done.
 You've used 24 entries,
             4024 wiz_defined-function locations,
-            976 strings with 12794 characters,
-and the built_in function-call counts, 20264 in all, are:
-= -- 1622
-> -- 520
-< -- 171
-+ -- 285
-- -- 98
-* -- 1037
-:= -- 3019
+            978 strings with 12884 characters,
+and the built_in function-call counts, 20216 in all, are:
+= -- 1624
+> -- 515
+< -- 170
++ -- 281
+- -- 97
+* -- 1038
+:= -- 3027
 add.period$ -- 53
 call.type$ -- 24
 change.case$ -- 27
-chr.to.int$ -- 399
+chr.to.int$ -- 396
 cite$ -- 24
-duplicate$ -- 1423
-empty$ -- 1588
-format.name$ -- 110
-if$ -- 4651
+duplicate$ -- 1418
+empty$ -- 1582
+format.name$ -- 109
+if$ -- 4633
 int.to.chr$ -- 0
 int.to.str$ -- 24
-missing$ -- 266
-newline$ -- 119
+missing$ -- 265
+newline$ -- 121
 num.names$ -- 23
-pop$ -- 611
+pop$ -- 607
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 1517
+skip$ -- 1513
 stack$ -- 0
-substring$ -- 962
-swap$ -- 1219
+substring$ -- 955
+swap$ -- 1214
 text.length$ -- 38
 text.prefix$ -- 0
 top$ -- 5
 type$ -- 24
 warning$ -- 0
-while$ -- 86
+while$ -- 87
 width$ -- 26
-write$ -- 290
+write$ -- 293

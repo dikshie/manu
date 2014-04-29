@@ -618,7 +618,7 @@ In order to evaluate the proposed cache strategy using before-peak, at-peak, and
 An event driven simulator is developed using Python for this purpose and we use Youtube VoD model as video catalog of the simulated Internet VoD system in our experiment.
 
 \subsubsection{Catalog Generator}
-In catalog generator, we assume peer request a video to CDN following poisson process with a mean rate $\lambda=1.1$ \cite{4801529} and we made it 3600 videos per hour, finally we generate video request for 360 days of simulation thus we have 31104000 request by peers. 
+In catalog generator, we assume peer request a video to CDN following poisson process with a mean rate $\lambda=1.1$ \cite{Zink:2009:CYN:1502814.1502987} and we made it 3600 videos per hour, finally we generate video request for 360 days of simulation thus we have 31104000 request by peers. 
 In our simulator, time is divided into rounds. 
 During a round, a peer request video according to popularity. 
 How a peer choice a video, we will explain in next paragraph.
