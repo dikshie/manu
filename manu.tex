@@ -459,11 +459,11 @@ A user may cache the content after download to serve requests from other users.
 Due to the complexity of the behavior of peers, the process should be done in the home gateway user where the ISP can control it.
 
 While in P2P assisted CDN for video on demand (VoD), most of researcher assume the catalog of video is already established following zipf distribution for popularity thus the video rank is static. 
-In our work, our catalog is dynamic, every video has its own popularity evolution following beta distribution thus we are not rely on the popularity rank.  
-It's very natural that we can not rely on static the popularity rank, since in VoD popularity can change every week moreover Internet wide scale VoD like Youtube serves many regions and users in each region has different preference to watch the video thus every region has different popularity rank of videos. 
-In Youtube, Popularity evolution of a video has three phase which is before-peak, at-peak, and after-peak.
+In our work, our catalog is dynamic, every video has its own popularity evolution.
+It's very natural that we can not rely the popularity rank, since in VoD popularity can change every week moreover Internet scale VoD like Youtube serves many regions and users in each region has different preference to watch the video thus every region has different popularity rank of videos. 
+In Youtube VoD model, video views evolution of a video has three phase which is before-peak, at-peak, and after-peak. 
 This aspect will be explained in sect.\ref{popularity}.
-In this paper, we present how the model of video popularity evolution can help P2P assisted CDN ecosystem.  
+In this paper, we present how the model of video views evolution can help P2P assisted CDN ecosystem.  
 
 Our paper presentation as follows: (1) we describe related work in sect.\ref{relatedwork}; (2) we explain detail of Youtube popularity evolution model in sect.\ref{popularity}; (3) we explain the caching strategy for CDN and peer in sect.\ref{systemdescription}; (4) we explain our simulation design, simulator, and its evaluation in sect.\ref{evaluation}.
 Finally, we present our conclusions in section \ref{conclusion}.
@@ -501,12 +501,12 @@ Mathieu et al., \cite{6249305} are using data gathered from France telecom netwo
 
 Guo et al., \cite{1613869} is closest with our work because we use that work as comparison.
 The author proposed local system (local counter) to calculate the segment popularity in peer-assisted proxy system. 
-
-
-%Our work is same in system model architecture which uses different level of topologies  (Level-0 and Level-1), where in Mathieu et al., \cite{6249305} the authors use different names, which are regional and national. 
-%We emphasize that compare to  Mathieu et al., \cite{6249305} our work provides completely different approach.
-%Mathieu et al., \cite{6249305} work mostly based on empirical data from France telecom company thus the authors can directly calculate network load caused by video traffic and calculate network load reduction if peer-assisted is employed on customers side,  while our study focus on mathematical model of different admission policies for peers to join peer-assisted CDN and ISP payoff can get from employing peer-assisted CDN.
-
+The author use popularity for proxy cache replacement strategy. 
+In peer side, the author use utility function for cache replacement strategy.  
+The utility function is also function from popularity.
+While the authors successfully show that the results are very good, the peer-assisted system behavior over time is not explain because the author focus on local properties such as proxy cache size variations and peer cache size variations.
+The explanation of the optimal number of replicas is not also clear because unavailable information when the snapshot is taken.  
+In our work, we complement Guo et al., \cite{1613869} work with VoD viewing popularity evolution model and describe the behavior of the peer-assisted CDN over the time.
 
 
 \section{Characterizing Internet VoD Popularity}\label{popularity}
@@ -555,7 +555,7 @@ When a peer join the system video replica is cached.
 When a peer leaves the system video replica is evicted. 
 In both process, a peer always reports to CDN thus CDN knows the status of a peer.
 
-Figure~\ref{ig:p2pcdnoverview} shows example of Akamai's peer-assisted CDN system that in operation since 2010.
+Figure~\ref{fig:p2pcdnoverview} shows example of Akamai's peer-assisted CDN system that in operation since 2010.
 In this architecture, Akamai expect that subtantial fraction of content should be delivered by the peers. 
 The peer-assisted QoS should be comparable to that traditional CDN system and the system should offer reliable accounting for services provided. 
 This is important because in commercial setting CDN company must be able to calculate customer's usage.

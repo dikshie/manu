@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2014.4.17)  29 APR 2014 19:29
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2014.4.17)  30 APR 2014 02:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -410,14 +410,11 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 ] [2]
 File: graphs/timetopeak.eps Graphic file (type eps)
  <graphs/timetopeak.eps>
-
-LaTeX Warning: Reference `ig:p2pcdnoverview' on page 3 undefined on input line 
-558.
-
 File: graphs/netsession.eps Graphic file (type eps)
-<graphs/netsession.eps> [3]
+ <graphs/netsession.eps> [3]
 File: graphs/p2p-system-description.eps Graphic file (type eps)
- <graphs/p2p-system-description.eps>
+
+<graphs/p2p-system-description.eps>
 Overfull \hbox (17.81073pt too wide) in paragraph at lines 670--671
  [] 
  []
@@ -485,21 +482,14 @@ Before submitting the final camera ready copy, remember to:
 
 [7
 
-] (./manu.aux)
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+] (./manu.aux) ) 
 Here is how much of TeX's memory you used:
- 4474 strings out of 493309
- 68068 string characters out of 6137842
- 238732 words of memory out of 5000000
- 7880 multiletter control sequences out of 15000+600000
+ 4473 strings out of 493309
+ 68049 string characters out of 6137842
+ 236732 words of memory out of 5000000
+ 7879 multiletter control sequences out of 15000+600000
  100471 words of font info for 105 fonts, out of 8000000 for 9000
  960 hyphenation exceptions out of 8191
- 44i,14n,47p,438b,357s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 44i,14n,47p,387b,357s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on manu.dvi (7 pages, 46552 bytes).
+Output written on manu.dvi (7 pages, 47380 bytes).
