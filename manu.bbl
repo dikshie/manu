@@ -159,6 +159,12 @@ B.~Mathieu and Y.~Levene, ``Impact of ftth deployment on live streaming
   delivery systems,'' in \emph{Computers and Communications (ISCC), 2012 IEEE
   Symposium on}, july 2012, pp. 000\,259 --000\,264.
 
+\bibitem{1613869}
+L.~Guo, S.~Chen, and X.~Zhang, ``Design and evaluation of a scalable and
+  reliable p2p assisted proxy for on-demand streaming media delivery,''
+  \emph{Knowledge and Data Engineering, IEEE Transactions on}, vol.~18, no.~5,
+  pp. 669--682, May 2006.
+
 \bibitem{Borghol:2011:CMP:2039452.2039717}
 \BIBentryALTinterwordspacing
 Y.~Borghol, S.~Mitra, S.~Ardon, N.~Carlsson, D.~Eager, and A.~Mahanti,
@@ -170,12 +176,6 @@ Y.~Borghol, S.~Mitra, S.~Ardon, N.~Carlsson, D.~Eager, and A.~Mahanti,
 \bibitem{clauset2009power}
 A.~Clauset, C.~R. Shalizi, and M.~E. Newman, ``Power-law distributions in
   empirical data,'' \emph{SIAM review}, vol.~51, no.~4, pp. 661--703, 2009.
-
-\bibitem{1613869}
-L.~Guo, S.~Chen, and X.~Zhang, ``Design and evaluation of a scalable and
-  reliable p2p assisted proxy for on-demand streaming media delivery,''
-  \emph{Knowledge and Data Engineering, IEEE Transactions on}, vol.~18, no.~5,
-  pp. 669--682, May 2006.
 
 \bibitem{Zink:2009:CYN:1502814.1502987}
 \BIBentryALTinterwordspacing

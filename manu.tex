@@ -359,7 +359,7 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{P2P CDN}
+\title{Peer-Assisted Content Distribution Aided by Video Popularity Evolution Model.}
 
 \author{\IEEEauthorblockN{Mohamad Dikshie Fauzie\IEEEauthorrefmark{1} \quad
 Achmad Husni Thamrin\IEEEauthorrefmark{1} \quad
@@ -385,7 +385,8 @@ dikshie@sfc.wide.ad.jp \quad\quad husni@ai3.net \quad\quad jun@wide.ad.jp}
 
 \begin{abstract}
 %\boldmath
-The abstract goes here.
+Generally content distribution network (CDN) have adopted two different architectures: client-server model that's is the most common architecture model and peer-assisted CDN.  
+In client-server model, clients download content dedicated and geographically managed servers while in peer-assisted model, clients download content from each other client.
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
 % This preserves the distinction between vectors and scalars. However,
@@ -407,7 +408,7 @@ The abstract goes here.
 %
 % For peerreview papers, this IEEEtran command inserts a page break and
 % creates the second title. It will be ignored for other modes.
-\IEEEpeerreviewmaketitle
+%\IEEEpeerreviewmaketitle
 
 
 
@@ -459,9 +460,13 @@ Due to the complexity of the behavior of peers, the process should be done in th
 
 While in P2P assisted CDN for video on demand (VoD), most of reseacher assume the catalog of video is already established following zipf distribution for popularity thus the video rank is static. 
 In our work, our catalog is dynamic, every video has its own popularity evolution following beta distribution thus we are not realy on the popularity rank.  
-It's very natural that we can not rely on the popularity rank, since in VoD popularity can change every week moreover Internet wide scale VoD like Youtube serves many regions and users in each region has different preference to watch the video.
-In this paper, we present how the model of video popularity timing estimation can aid P2P assisted CDN.
-Finally, we present our conclusions in section \ref{conclusion}
+It's very natural that we can not rely on static the popularity rank, since in VoD popularity can change every week moreover Internet wide scale VoD like Youtube serves many regions and users in each region has different preference to watch the video thus every region has different popularity rank of videos. 
+In Youtube, Popularity evolution of a video has three phase which is before-peak, at-peak, and after-peak.
+This aspect will be explained in sect.\ref{popularity}.
+In this paper, we present how the model of video popularity evolution can help P2P assisted CDN ecosystem.  
+
+Our paper presentation as follows: (1) we describe related work in sect.\ref{relatedwork}; (2) we explain detail of Youtube popularity evolution model in sect.\ref{popularity}; (3) we explain the caching strategy for CDN and peer in sect.\ref{systemdescription}; (4) we explain our simulation design, simulator, and its evalution in sect.\ref{evaluation}.
+Finally, we present our conclusions in section \ref{conclusion}.
 
 
 
@@ -493,9 +498,15 @@ Cha et al.,\cite{Cha:2008:NTP:1855641.1855646} performed trace analysis and foun
 Jiang et al. \cite{Jiang:2012:OMD:2413176.2413193} proposed scalable and adaptive content replication and request routing for CDN servers located in users' home gateways.  
 Maki et al.\cite{NaoyaMAKI2012} propose traffic engineering for peer-assisted CDN to control the behavior of clients, and present a solution for optimizing the selection of content files.
 Mathieu et al., \cite{6249305} are using data gathered from France telecom network to calculate reduction of network load if customers are employed as peer-assisted content delivery.
+
+Guo et al., \cite{1613869} is closest with our work because we use that work as comparison.
+The author proposed local system (local counter) to calculate the segment popularity in peer-assisted proxy system. 
+
+
 %Our work is same in system model architecture which uses different level of topologies  (Level-0 and Level-1), where in Mathieu et al., \cite{6249305} the authors use different names, which are regional and national. 
 %We emphasize that compare to  Mathieu et al., \cite{6249305} our work provides completely different approach.
 %Mathieu et al., \cite{6249305} work mostly based on empirical data from France telecom company thus the authors can directly calculate network load caused by video traffic and calculate network load reduction if peer-assisted is employed on customers side,  while our study focus on mathematical model of different admission policies for peers to join peer-assisted CDN and ISP payoff can get from employing peer-assisted CDN.
+
 
 
 \section{Characterizing Internet VoD Popularity}\label{popularity}
@@ -518,8 +529,9 @@ Our finding coherence with Borghol et al., \cite{Borghol:2011:CMP:2039452.203971
 To estimate the the rata parameter of exponential part of time-to-peak distribution, we use Maximum Likelihood Estimation (MLE) \cite{clauset2009power}.
 Using MLE method, we can get exponential parameter $\lambda = 0.61$. 
 For video popularity evolution which is weekly view distribution, we follow Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} which use beta distribution. 
+For weekly views distribution, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} found that beta distribution as good model to explain views evolution. 
 
-\begin{figure}[th]
+\begin{figure}[!th]
 \begin{center}
 \includegraphics[scale=0.6]{graphs/timetopeak.eps}
 \end{center}
@@ -527,6 +539,8 @@ For video popularity evolution which is weekly view distribution, we follow Borg
 \label{fig:timetopeak}
 \vspace{-2mm}
 \end{figure} 
+
+
 
 \section{System Description}\label{systemdescription}
 In this paper, we consider a peer-assisted CDN system. 
@@ -539,22 +553,17 @@ In peer-asssisted CDN, a peer caches the videos that it has downloaded.
 Peers independently manage their cache localy.
 When a peer join the system video replica is cached.
 When a peer leaves the systen video replicaed is evicted. 
-For both process, a peer always reports to CDN thus CDN knows the status of a peer.
+In both process, a peer always reports to CDN thus CDN knows the status of a peer.
 
-In fig.\ref{fig:p2pcdnoverview}, we describe the simple process of a peer that requests a video.  
-When a peer requests a video, it always goes to a CDN server (step 1). 
-The CDN provides the videos to the peer (step 2). 
-If there is another peer request same video, that request will go to CDN (step 3).  
-CDN will check its record to see if there are some peers cache that requested video.  
-If there are some peers cache that requested video, CDN will reply with redirect message that asking a peer to download requested video from other peer (step 4).
-If there are no peers have requested video, CDN will serve the video.   
-A peer then can request the video to other peer and get the video (step 5 and step 6).
-From this description, we can see that deploying peer-assisted CDN can save some traffic since the clients which form P2P network can sharing the contents or videos. 
+Figure~\ref{ig:p2pcdnoverview} shows example of Akamai's peer-assisted CDN system that in operation since 2010.
+In this architecture, Akamai expect that subtantial fraction of content should be delivered by the peers. 
+The peer-assisted QoS should be comparable to that traditional CDN system and the system should offer reliable accounting for services provided. 
+This is important because in commercial setting CDN company must be able to calculate customer's usage.
 
 
 \begin{figure}[th]
 \begin{center}
-\includegraphics[scale=0.6]{graphs/p2p-system-description.eps}
+\includegraphics[scale=0.3]{graphs/netsession.eps}
 \end{center}
 \caption{Peer Assisted CDN Overview.}
 \label{fig:p2pcdnoverview}
@@ -617,26 +626,53 @@ In order to evaluate the proposed cache strategy using before-peak, at-peak, and
 \subsection{Simulation Design}\label{simulationdesign}
 An event driven simulator is developed using Python for this purpose and we use Youtube VoD model as video catalog of the simulated Internet VoD system in our experiment.
 
+\subsection{Peer and CDN server interaction}
+In fig.\ref{fig:p2pcdnoverview}, we describe the process of a peer that requests a video in simulator.
+peer and cdn are implemented in object oriented model. 
+When a peer requests a video, it always goes to a CDN server (step 1). 
+The CDN provides the videos to the peer (step 2). 
+If there is another peer request same video, that request will go to CDN (step 3).  
+CDN will check its record to see if there are some peers cache that requested video.  
+If there are some peers cache that requested video, CDN will reply with redirect message that asking a peer to download requested video from other peer (step 4).
+If there are no peers have requested video, CDN will serve the video.   
+A peer then can request the video to other peer and get the video (step 5 and step 6).
+From this description, we can see that deploying peer-assisted CDN can save some traffic since the clients which form P2P network can sharing the contents or videos.
+
+
 \subsubsection{Catalog Generator}
 In catalog generator, we assume peer request a video to CDN following poisson process with a mean rate $\lambda=1.1$ \cite{Zink:2009:CYN:1502814.1502987} and we made it 3600 videos per hour, finally we generate video request for 360 days of simulation thus we have 31104000 request by peers. 
 In our simulator, time is divided into rounds. 
 During a round, a peer request video according to popularity. 
 How a peer choice a video, we will explain in next paragraph.
 
+%A peer will choose video proportionally considering view count and view rate of the video. 
+
 First of all, we calculate the number of videos at-peak time as follows: sample $N$ value from the time-to-peak distribution and determine the number of videos $n_j^{at}$ that peak at week $j$. 
 Total number of video $N = n_j^{before} + n_j^{at} + n_j^{after}$.\\
 Next, we determine view count terminus which the number of final view count of video.
 In view count terminus, we assume that a video will not get big additional view after at-peak phase.
-We assign view count terminus randomly from data sets.
-After determining view count terminus, we assign beta distribution parameter. 
-We need to know the beta distribution for a peer to choose requested video.  
-Since we can estimate the time of at-peak phase for each video, we know the mode of beta distribution value and we can calculate $\alpha$ and $\beta$ value using the mode of distribution: $m=\frac{\alpha-1}{\alpha + \beta - 2}$.  
+We assign view count terminus randomly from datasets.
+After determining view count terminus, we assign beta distribution parameter for every video. 
+
+Since we can estimate the time of at-peak phase for each video, we know the mode of beta distribution value and we can calculate $\alpha$ and $\beta$ value using the mode of distribution formula: $m=\frac{\alpha-1}{\alpha + \beta - 2}$.  
 We assign $\alpha$ value randomly between $1$ and $2$ thus we can calculate $\beta$ value.
-Lastly, we assign file size of video randomly between $1$MB and $200$MB.
+With the knowledge of beta distribution of every video and its view count terminus, we can know the view count and view rate of every video as function from time.
+The knowledge of view count and view rate, will be used top generate a video choice.  
 
 For video choice, we estimate that a peer will choose video proportionally considering view count and view rate of the video.   
 We can get view count and view rate from probability distribution function (pdf) and cumulative distribution function (cdf) of beta distribution above multiply by video's view count terminus.
+In last step, we assign file size of video randomly between $1$MB and $200$MB.
 Finally, we have a catalog that consists of: video to be choosen, time when uploaded, view count terminus, at-peak week, and video size.
+
+
+\begin{figure}[th]
+\begin{center}
+\includegraphics[scale=0.6]{graphs/p2p-system-description.eps}
+\end{center}
+\caption{Peer interaction in simulator.}
+\label{fig:p2pcdninteractioninsimulator}
+\vspace{-2mm}
+\end{figure} 
 
 
 \subsubsection{Utility Function}
