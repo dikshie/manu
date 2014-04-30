@@ -742,7 +742,7 @@ From this description, we can see that deploying peer-assisted CDN can save some
 
 
 \subsubsection{Catalog Generator}
-In catalog generator, we assume peer request a video to CDN following poisson process with a mean rate $\lambda=1.1$ \cite{Zink:2009:CYN:1502814.1502987} and we made it 3600 videos per hour, finally we generate video request for 360 days of simulation thus we have 31104000 request by peers. 
+In catalog generator, we assume peer request a video to CDN following poisson process with a mean rate $\lambda=1.1$ \cite{Zink:2009:CYN:1502814.1502987} and we made it 3600 videos per hour, finally we generate video request for 360 days of simulation thus we have 31104000 requests by peers. 
 How a peer choice a video, we will explain in next paragraph.
 
 First of all, we calculate the number of videos at-peak time as follows: sample $N$ value from the time-to-peak distribution and determine the number of videos $n_j^{at}$ that peak at week $j$. 
@@ -758,7 +758,7 @@ With the knowledge of beta distribution of every video and its view count termin
 The knowledge of view count and view rate, will be used top generate a video choice.  
 
 For video choice, we estimate that a peer will choose video proportionally considering view count and view rate of the video.   
-We can get view count and view rate from probability distribution function (pdf) and cumulative distribution function (cdf) of beta distribution above multiply by video's view count terminus.
+We can get view count and view rate from probability distribution function (PDF) and cumulative distribution function (CDF) of beta distribution above multiply by video's view count terminus.
 In last step, we assign file size of video randomly between $1$MB and $200$MB.
 Finally, we have a catalog that consists of: video to be chosen, time when uploaded, view count terminus, at-peak week, and video size.
 
@@ -801,20 +801,21 @@ We compare our proposed improvement of PROP to original PROP \cite{1613869} impl
 
 \subsection{Result and Discussion}\label{resultanddiscussion}
 
-Figure~\ref{fig:peercontribution} shows peer contribution for our model compare to PROP. 
+Figure~\ref{fig:peercontribution} shows CDF peer contribution for our model compare to PROP. 
+One dot in a figure means how many percentage a video delivered by peers during simulation.z
 Moreover fig.~\ref{fig:peer500MBcontributionCDN10G} shows the comparison of CDF of peer contribution between our model and PROP for peer capacity 500MB. 
 Figure~\ref{fig:peer1000MBcontributionCDN10G} shows the comparison of CDF of peer contribution between our model and PROP for peer capacity 1000MB.
-Our model gain higher peer contribution than PROP. 
 Figure~\ref{fig:peer500MB-vs-1000MBcontributionCDN10G} we compare our model between peer capacity 500MB and peer capacity 1000MB.
 Peer capacity 1000MB gives higher peer contribution because additional space makes a peer can cache more videos.
-From fig.~\ref{fig:peer1000MBcontributionCDN10G} and fig.~\ref{fig:peer500MB-vs-1000MBcontributionCDN10G}, We can see that in our model peer contributions are higher than PROP.
+From fig.~\ref{fig:peer1000MBcontributionCDN10G} and fig.~\ref{fig:peer500MB-vs-1000MBcontributionCDN10G}, We can see that our model can gain higher peer contributions than PROP.
 We do significance statistical testing if our model has significantly different from PROP.
 We use Kolmogorov-Smirnov (KS) test for this purpose.  
-KS-test tries to determine if two datasets differ significantly.  
+KS-test tries to determine if two datasets differ significantly.
 It has the advantage of making no assumption about the distribution of data. 
-Reject the null hypothesis of no difference between datasets if $p$-value is small.
-For peer capacity 500MB when we compare our model and PROP, we get K-S statistic value 0.5 and $p$-value is 0.5e-005, while peer capacity 1000MB we get 63.34 and $p$-value is 0.46e-005.
-Since the the $p$-value is below $1\%$ we can reject null hypothesis that both data are the same.
+KS-test reject the null hypothesis of no difference between datasets if $p$-value is small.
+For peer capacity 500MB when we compare our model and PROP, we get $p$-value $0.5e-005$.
+In peer capacity 1000MB case, we get $p$-value $0.46e-005$.
+Because both $p$-values are below $1\%$, we can reject null hypothesis that both data are the same thus our results are significant.
 
 
 
