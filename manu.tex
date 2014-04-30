@@ -630,7 +630,7 @@ In the next section (sect.\ref{evaluation}), we will show how popularity evoluti
 \end{figure} 
 
 
-
+%%%contribution 500MB vs 1000MB CDN 10GB
 \begin{figure*}[!t]
 \centering
 \subfloat[CDF percentage of contribution of peers where peer capacity 500MB and CDN capacity 10GB. $x$ and $y$ axis in logscale.\label{fig:peer500MBcontributionCDN10G}]{
@@ -650,6 +650,8 @@ In the next section (sect.\ref{evaluation}), we will show how popularity evoluti
 \label{fig:peercontribution}
 \end{figure*}
 
+
+%%%contribution 500MB vs 1000MB CDN 20GB
 \begin{figure*}[!t]
 \centering
 \subfloat[CDF percentage of contribution of peers where peer capacity 500MB and CDN capacity 20GB. $x$ and $y$ axis in logscale.\label{fig:peer500MBcontributionCDN20G}]{
@@ -801,9 +803,9 @@ We compare our proposed improvement of PROP to original PROP \cite{1613869} impl
 
 \subsection{Result and Discussion}\label{resultanddiscussion}
 
-Figure~\ref{fig:peercontribution} shows CDF peer contribution for our model compare to PROP. 
+Figure~\ref{fig:peercontribution} shows CDF peer contribution for our model compare to PROP for peer capacity 500MB and 1000MB, with CDN capacity 20GB. 
 One dot in a figure means how many percentage a video delivered by peers during simulation.z
-Moreover fig.~\ref{fig:peer500MBcontributionCDN10G} shows the comparison of CDF of peer contribution between our model and PROP for peer capacity 500MB. 
+Moreover fig.~\ref{fig:peer500MBcontributionCDN10G} shows the comparison of CDF of peer contributions between our model and PROP for peer capacity 500MB. 
 Figure~\ref{fig:peer1000MBcontributionCDN10G} shows the comparison of CDF of peer contribution between our model and PROP for peer capacity 1000MB.
 Figure~\ref{fig:peer500MB-vs-1000MBcontributionCDN10G} we compare our model between peer capacity 500MB and peer capacity 1000MB.
 Peer capacity 1000MB gives higher peer contribution because additional space makes a peer can cache more videos.
@@ -816,6 +818,19 @@ KS-test reject the null hypothesis of no difference between datasets if $p$-valu
 For peer capacity 500MB when we compare our model and PROP, we get $p$-value $0.5e-005$.
 In peer capacity 1000MB case, we get $p$-value $0.46e-005$.
 Because both $p$-values are below $1\%$, we can reject null hypothesis that both data are the same thus our results are significant.
+
+
+Figure~\ref{fig:peercontribution20G} shows CDF peer contribution for our model compare to PROP for peer capacity 500MB and 1000MB, with CDN capacity 20GB.
+Figure~\ref{fig:peer500MBcontributionCDN20G} shows the comparison of CDF of peer contributions between our model and PROP for peer capacity 500MB.
+Figure~\ref{fig:peer1000MBcontributionCDN20G} shows the comparison of CDF of peer contributions between our model and PROP for peer capacity 1000MB.
+From fig.~\ref{fig:peercontribution20G} and fig.~\ref{fig:peer500MBcontributionCDN20G} show that our model can gain higher peer contributions than PROP.
+We also do significance statistical testing for both cases.  
+We get $p$-value $0.5e-005$ for peer capacity 500MB case and $p$-value $0.47e-005$ for peer capacity 1000MB case.
+Because the $p$-values less than $1\%$, therefore the results are signifincant.
+Finally, fig.~\ref{fig:peer500MB-vs-1000MBcontributionCDN20G} shows the comparison between peer capacity 500MB and peer capacity 1000MB in our model. 
+This figure shows that peer capacity 1000MB gives more contributions than peer capacity 500MB because additional space in peer makes a peer can cache more videos.  
+Lastly, we compare our model peer capacity 500MB and 1000MB with CDN capacity 10GB and 20GB in fig.~\ref{fig:10Gvs20G}.
+
 
 
 
