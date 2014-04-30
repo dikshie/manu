@@ -630,6 +630,16 @@ In the next section (sect.\ref{evaluation}), we will show how popularity evoluti
 \end{figure} 
 
 
+\section{Evaluation}\label{evaluation}
+In order to evaluate the proposed cache strategy using before-peak, at-peak, and after-peak information from VoD model, we have to compare our model to PROP model \cite{1613869}.
+
+\subsection{Simulation Design}\label{simulationdesign}
+An event driven simulator is developed using Python for this purpose and we use Youtube VoD model as video catalog of the simulated Internet VoD system in our experiment.
+In our simulator, time is divided into rounds. 
+During a round, a peer request a video.
+
+
+
 %%%contribution 500MB vs 1000MB CDN 10GB
 \begin{figure*}[!t]
 \centering
@@ -714,21 +724,6 @@ In the next section (sect.\ref{evaluation}), we will show how popularity evoluti
 \vspace{-2mm}
 \end{figure*}
 
-
-
-
-
-
-
-\section{Evaluation}\label{evaluation}
-In order to evaluate the proposed cache strategy using before-peak, at-peak, and after-peak information from VoD model, we have to compare our model to PROP model \cite{1613869}.
-
-
-
-\subsection{Simulation Design}\label{simulationdesign}
-An event driven simulator is developed using Python for this purpose and we use Youtube VoD model as video catalog of the simulated Internet VoD system in our experiment.
-In our simulator, time is divided into rounds. 
-During a round, a peer request a video.
 
 \subsection{Peer and CDN server interaction}
 In fig.\ref{fig:p2pcdnoverview}, we describe the process of a peer that requests a video in simulator.
@@ -830,8 +825,7 @@ Because the $p$-values less than $1\%$, therefore the results are signifincant.
 Finally, fig.~\ref{fig:peer500MB-vs-1000MBcontributionCDN20G} shows the comparison between peer capacity 500MB and peer capacity 1000MB in our model. 
 This figure shows that peer capacity 1000MB gives more contributions than peer capacity 500MB because additional space in peer makes a peer can cache more videos.  
 Lastly, we compare our model peer capacity 500MB and 1000MB with CDN capacity 10GB and 20GB in fig.~\ref{fig:10Gvs20G}.
-
-
+We found that there are no many different thus CDN capacity does not affect peer contributions. 
 
 
 
