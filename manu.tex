@@ -581,7 +581,7 @@ In both process, a peer always reports to CDN thus CDN knows the status of a pee
 \subsection{CDN caching strategy}\label{cdncachingstrategy}
 As we mentioned in previous sect.\ref{systemdescription}, the CDN collects metadata.
 The metadata will be used for assisting P2P clients for caching decision. 
-CDN collects the following parameters:
+The metadata that CDN collects are the following parameters:
 \begin{itemize}
 \item $n_j^r$: total number of the times video $j$ has been requested.  
 \item $t_j^r$: the last time video $j$ was requested.
@@ -692,34 +692,34 @@ During a round, a peer request a video.
 
 \begin{figure*}[!t]
 \centering
-\subfloat[Replica by popularity at t=10day for peer capacity 500MB.\label{fig:peer500MBvs1000MBreplica10dayCDN10Gpopularity}]{
+\subfloat[Number of replicas by popularity at $t=10$day for peer capacity 500MB.\label{fig:peer500MBvs1000MBreplica10dayCDN10Gpopularity}]{
 \includegraphics[width=5.7cm]{graphs/replica-10hari-500vs1000-log.eps}
 }
 \hfill
-\subfloat[Replica by popularity at t=10day for peer capacity 1000MB.\label{fig:peer500MBvs1000MBreplicaweek6CDN10Gpopularity}]{
+\subfloat[Number of replicas by popularity at $t=6$week for peer capacity 1000MB.\label{fig:peer500MBvs1000MBreplicaweek6CDN10Gpopularity}]{
 \includegraphics[width=5.7cm]{graphs/replica-minggu6-500vs1000-log.eps}
 }
-\subfloat[Replica by popularity at t=10day for peer capacity 1000MB.\label{fig:peer500MBvs1000MBreplica10week10CDN10Gpopularity}]{
+\subfloat[Number of replicas by popularity at $t=10$week for peer capacity 1000MB.\label{fig:peer500MBvs1000MBreplica10week10CDN10Gpopularity}]{
 \includegraphics[width=5.7cm]{graphs/replica-minggu10-500vs1000-log.eps}
 }
-\caption{Peer replica at $t=10$day, $t=6$week, and $t=10$week for peer capacity 500MB and 1000MB.}
+\caption{Distribution number of video replicas at snapshot $t=10$day, $t=6$week, and $t=10$week for peer capacity 500MB and 1000MB, CDN capacity 10GB.}
 \label{fig:replicaatbypopularity}
 \vspace{-2mm}
 \end{figure*}
 
 \begin{figure*}[!ht]
 \centering
-\subfloat[Replica by popularity at t=10day for peer capacity 500MB and 1000MB, CDN capacity 20GB.\label{fig:peer500MBvs1000MBreplica10dayCDN20Gpopularity}]{
+\subfloat[Number of replicas by popularity at $t=10$day for peer capacity 500MB and 1000MB, CDN capacity 20GB.\label{fig:peer500MBvs1000MBreplica10dayCDN20Gpopularity}]{
 \includegraphics[width=5.7cm]{graphs/20G/replica-10hari-500vs1000-20G-log.eps}
 }
 \hfill
-\subfloat[Replica by popularity at t=10day for peer capacity 500MB and 1000MB, CDN capacity 20GB.\label{fig:peer500MBvs1000MBreplicaweek6CDN20Gpopularity}]{
+\subfloat[Number of replicas by popularity at $t=6$week for peer capacity 500MB and 1000MB, CDN capacity 20GB.\label{fig:peer500MBvs1000MBreplicaweek6CDN20Gpopularity}]{
 \includegraphics[width=5.7cm]{graphs/20G/replica-minggu6-500vs1000-20G-log.eps}
 }
-\subfloat[Replica by popularity at t=10day for peer capacity 500MB and 1000MB., CDN capacity 20GB.\label{fig:peer500MBvs1000MBreplica10week10CDN20Gpopularity}]{
+\subfloat[Number of replicas by popularity at $t=10$week for peer capacity 500MB and 1000MB., CDN capacity 20GB.\label{fig:peer500MBvs1000MBreplica10week10CDN20Gpopularity}]{
 \includegraphics[width=5.7cm]{graphs/20G/replica-minggu10-500vs1000-20G-log.eps}
 }
-\caption{Peer replica at $t=10$day, $t=6$week, and $t=10$week for peer capacity 500MB and 1000MB, CDN capacity 20GB.}
+\caption{Distribution number of replicas at snapshot $t=10$day, $t=6$week, and $t=10$week for peer capacity 500MB and 1000MB, CDN capacity 20GB.}
 \label{fig:replicaatbypopularity20G}
 \vspace{-2mm}
 \end{figure*}
@@ -829,10 +829,15 @@ We found that there are no many different thus CDN capacity does not affect peer
 
 
 
-Figure~\ref{fig:replicaatbypopularity} shows distribution of the number of replicas with different popularities at snapshot $t=10$day.
-Figure~\ref{fig:peer500MBvs1000MBreplica10dayCDN10Gpopularity} shows distribution of the number of replicas comparison for peer capacity 500MB and 1000MB with different popularities rank at snapshot $t=10$day.
-Figure~\ref{fig:peer500MBvs1000MBreplicaweek6CDN10Gpopularity} shows distribution of the number of replicas comparison for peer capacity 500MB and 1000MB with different popularities at snapshot $t=6$week.
-Figure~\ref{fig:peer500MBvs1000MBreplica10week10CDN10Gpopularity} shows distribution of the number of replicas comparison for peer capacity 500MB and 1000MB with different popularities at snapshot $t=6$week.
+Figure~\ref{fig:replicaatbypopularity} shows distribution of the number of replicas at snapshot $t=10$day, $t=6$week, and $t=10$week ranked by video popularity for peer capacity 500MB and 1000MB, CDN capacity 10GB between our model and PROP.
+Figure~\ref{fig:peer500MBvs1000MBreplica10dayCDN10Gpopularity} shows distribution of the number of replicas comparison for peer capacity 500MB and 1000MB and CDN capacity 10GB sorted by popularity rank at snapshot $t=10$day.
+This figure shows that on snapshot $t=10$day there are no many different for peer capacity 500MB between our model and PROP except for peer capacity 1000MB PROP has lower number of replicas than our model for popular video rank between $1$ until $1000$ beyond that the number of replicas is same.
+Figure~\ref{fig:peer500MBvs1000MBreplicaweek6CDN10Gpopularity} shows distribution of the number of replicas comparison for peer capacity 500MB and 1000MB and CDN capacity sorted by popularity rank at snapshot $t=6$week.
+Both peer capacity 500MB and 1000MB show that our model has lower number of replicas compare to PROP for popular video rank between $1$ and $1000$ for peer capacity 500MB while for peer capacity 1000MB our model gives lower replicas for popular video rank between $1$ and $400$.  
+Peer capacity 1000MB gives higher replicas than 500MB because additional capacity make more room for peer to cache videos.
+Figure~\ref{fig:peer500MBvs1000MBreplica10week10CDN10Gpopularity} shows distribution of the number of replicas comparison for peer capacity 500MB and 1000MB and CDN capacity 10GB sorted by popularity rank at snapshot $t=10$week.
+Again, our model gives lower number of replicas compare to PROP. 
+Snapshot $t=10$ weeks gives lower number of replicas than snapshot at $t=6$week because in our model the utility function knows that $t=10$week is at after-peak phase thus the model only considering minimum popularity for all videos. 
 
 
 
