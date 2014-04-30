@@ -62,7 +62,7 @@
 % should be used if it is desired that the figures are to be displayed in
 % draft mode.
 %
-\documentclass[conference]{IEEEtran}
+\documentclass[10pt,final,journal,a4paper]{IEEEtran}
 % Add the compsoc option for Computer Society conferences.
 %
 % If IEEEtran.cls has not been installed into the LaTeX system files,
@@ -214,7 +214,7 @@
 
 % *** ALIGNMENT PACKAGES ***
 %
-%\usepackage{array}
+\usepackage{array}
 % Frank Mittelbach's and David Carlisle's array.sty patches and improves
 % the standard LaTeX2e array and tabular environments to provide better
 % appearance and additional user controls. As the default LaTeX2e table
@@ -240,7 +240,7 @@
 % quality.
 
 
-%\usepackage{eqparbox}
+\usepackage{eqparbox}
 % Also of notable interest is Scott Pakin's eqparbox package for creating
 % (automatically sized) equal width boxes - aka "natural width parboxes".
 % Available at:
@@ -396,6 +396,10 @@ In client-server model, clients download content dedicated and geographically ma
 % math in the abstract anyway.
 
 % no keywords
+\begin{IEEEkeywords}
+P2P, CDN
+\end{IEEEkeywords}
+
 
 
 
@@ -458,6 +462,12 @@ In Peer assisted CDN, users can download content from CDN nodes from or other us
 A user may cache the content after download to serve requests from other users. 
 Due to the complexity of the behavior of peers, the process should be done in the home gateway user where the ISP can control it.
 
+Figure~\ref{fig:p2pcdnoverview} shows example of Akamai's peer-assisted CDN system that in operation since 2010.
+In this architecture, Akamai expect that subtantial fraction of content should be delivered by the peers. 
+The peer-assisted QoS should be comparable to that traditional CDN system and the system should offer reliable accounting for services provided. 
+This is important because in commercial setting CDN company must be able to calculate customer's usage.
+This realiable accounting is done in control-plane side while content delivery is done in geographically distributed edge-servers.
+
 While in P2P assisted CDN for video on demand (VoD), most of researcher assume the catalog of video is already established following zipf distribution for popularity thus the video rank is static. 
 In our work, our catalog is dynamic, every video has its own popularity evolution.
 It's very natural that we can not rely the popularity rank, since in VoD popularity can change every week moreover Internet scale VoD like Youtube serves many regions and users in each region has different preference to watch the video thus every region has different popularity rank of videos. 
@@ -467,6 +477,14 @@ In this paper, we present how the model of video views evolution can help P2P as
 
 Our paper presentation as follows: (1) we describe related work in sect.\ref{relatedwork}; (2) we explain detail of Youtube popularity evolution model in sect.\ref{popularity}; (3) we explain the caching strategy for CDN and peer in sect.\ref{systemdescription}; (4) we explain our simulation design, simulator, and its evaluation in sect.\ref{evaluation}.
 Finally, we present our conclusions in section \ref{conclusion}.
+
+\begin{figure}[!t]
+\begin{center}
+\includegraphics[scale=0.3]{graphs/netsession.eps}
+\end{center}
+\caption{Peer Assisted CDN Overview.}
+\label{fig:p2pcdnoverview}
+\end{figure} 
 
 
 
@@ -499,7 +517,7 @@ Jiang et al. \cite{Jiang:2012:OMD:2413176.2413193} proposed scalable and adaptiv
 Maki et al.\cite{NaoyaMAKI2012} propose traffic engineering for peer-assisted CDN to control the behavior of clients, and present a solution for optimizing the selection of content files.
 Mathieu et al., \cite{6249305} are using data gathered from France telecom network to calculate reduction of network load if customers are employed as peer-assisted content delivery.
 
-Guo et al., \cite{1613869} is closest with our work because we use that work as comparison.
+Guo et al., \cite{1613869} is closest with our work because we use that work as comparison and we use author's utility function.
 The author proposed local system (local counter) to calculate the segment popularity in peer-assisted proxy system. 
 The author use popularity for proxy cache replacement strategy. 
 In peer side, the author use utility function for cache replacement strategy.  
@@ -518,7 +536,7 @@ Complement with Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} work, we
 We collected number of views, upload time YouTube videos on a weekly basis.
 We use YouTube's API to sampling popular videos. 
 The API provides a call that returns details on 20 popular videos.
-Finally, we combine our datasets with Borghol et al., datasets. 
+Finally, we combine our datasets with Borghol et al.,\cite{Borghol:2011:CMP:2039452.2039717} datasets. 
 
 In datasets, we have one-week spacing between consecutive snapshots.  
 We can get how many times the video was view during the one-week period since last week or since snapshot $(i-1)$. 
@@ -528,16 +546,14 @@ Figure \ref{fig:timetopeak} shows that around three-quarters of a large fraction
 Our finding coherence with Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717}.
 To estimate the the rate parameter of exponential part of time-to-peak distribution, we use Maximum Likelihood Estimation (MLE) \cite{clauset2009power}.
 Using MLE method, we can get exponential parameter $\lambda = 0.61$. 
-For video popularity evolution which is weekly view distribution, we follow Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} which use beta distribution. 
-For weekly views distribution, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} found that beta distribution as good model to explain views evolution. 
+For weekly views distribution, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} found that beta distribution is a good model to explain video views evolution thus we follow Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} for  weekly views distribution model.
 
-\begin{figure}[!th]
+\begin{figure}[!t]
 \begin{center}
 \includegraphics[scale=0.6]{graphs/timetopeak.eps}
 \end{center}
 \caption{Time to peak empirical distribution.}
 \label{fig:timetopeak}
-\vspace{-2mm}
 \end{figure} 
 
 
@@ -555,20 +571,9 @@ When a peer join the system video replica is cached.
 When a peer leaves the system video replica is evicted. 
 In both process, a peer always reports to CDN thus CDN knows the status of a peer.
 
-Figure~\ref{fig:p2pcdnoverview} shows example of Akamai's peer-assisted CDN system that in operation since 2010.
-In this architecture, Akamai expect that subtantial fraction of content should be delivered by the peers. 
-The peer-assisted QoS should be comparable to that traditional CDN system and the system should offer reliable accounting for services provided. 
-This is important because in commercial setting CDN company must be able to calculate customer's usage.
 
 
-\begin{figure}[th]
-\begin{center}
-\includegraphics[scale=0.3]{graphs/netsession.eps}
-\end{center}
-\caption{Peer Assisted CDN Overview.}
-\label{fig:p2pcdnoverview}
-\vspace{-2mm}
-\end{figure} 
+
 
 
 
@@ -616,88 +621,17 @@ We choose the video with the smallest $u$ value as the candidate to be replaced 
 In the next section (sect.\ref{evaluation}), we will show how popularity evolution knowledge is used to simplified our calculation for utility function.
 
 
-
-
-\section{Evaluation}\label{evaluation}
-In order to evaluate the proposed cache strategy using before-peak, at-peak, and after-peak information from VoD model, we have to compare our model to PROP model \cite{1613869}.
-
-
-
-\subsection{Simulation Design}\label{simulationdesign}
-An event driven simulator is developed using Python for this purpose and we use Youtube VoD model as video catalog of the simulated Internet VoD system in our experiment.
-
-\subsection{Peer and CDN server interaction}
-In fig.\ref{fig:p2pcdnoverview}, we describe the process of a peer that requests a video in simulator.
-peer and cdn are implemented in object oriented model. 
-When a peer requests a video, it always goes to a CDN server (step 1). 
-The CDN provides the videos to the peer (step 2). 
-If there is another peer request same video, that request will go to CDN (step 3).  
-CDN will check its record to see if there are some peers cache that requested video.  
-If there are some peers cache that requested video, CDN will reply with redirect message that asking a peer to download requested video from other peer (step 4).
-If there are no peers have requested video, CDN will serve the video.   
-A peer then can request the video to other peer and get the video (step 5 and step 6).
-From this description, we can see that deploying peer-assisted CDN can save some traffic since the clients which form P2P network can sharing the contents or videos.
-
-
-\subsubsection{Catalog Generator}
-In catalog generator, we assume peer request a video to CDN following poisson process with a mean rate $\lambda=1.1$ \cite{Zink:2009:CYN:1502814.1502987} and we made it 3600 videos per hour, finally we generate video request for 360 days of simulation thus we have 31104000 request by peers. 
-In our simulator, time is divided into rounds. 
-During a round, a peer request video according to popularity. 
-How a peer choice a video, we will explain in next paragraph.
-
-%A peer will choose video proportionally considering view count and view rate of the video. 
-
-First of all, we calculate the number of videos at-peak time as follows: sample $N$ value from the time-to-peak distribution and determine the number of videos $n_j^{at}$ that peak at week $j$. 
-Total number of video $N = n_j^{before} + n_j^{at} + n_j^{after}$.\\
-Next, we determine view count terminus which the number of final view count of video.
-In view count terminus, we assume that a video will not get big additional view after at-peak phase.
-We assign view count terminus randomly from datasets.
-After determining view count terminus, we assign beta distribution parameter for every video. 
-
-Since we can estimate the time of at-peak phase for each video, we know the mode of beta distribution value and we can calculate $\alpha$ and $\beta$ value using the mode of distribution formula: $m=\frac{\alpha-1}{\alpha + \beta - 2}$.  
-We assign $\alpha$ value randomly between $1$ and $2$ thus we can calculate $\beta$ value.
-With the knowledge of beta distribution of every video and its view count terminus, we can know the view count and view rate of every video as function from time.
-The knowledge of view count and view rate, will be used top generate a video choice.  
-
-For video choice, we estimate that a peer will choose video proportionally considering view count and view rate of the video.   
-We can get view count and view rate from probability distribution function (pdf) and cumulative distribution function (cdf) of beta distribution above multiply by video's view count terminus.
-In last step, we assign file size of video randomly between $1$MB and $200$MB.
-Finally, we have a catalog that consists of: video to be chosen, time when uploaded, view count terminus, at-peak week, and video size.
-
-
-\begin{figure}[th]
+\begin{figure}[!t]
 \begin{center}
-\includegraphics[scale=0.6]{graphs/p2p-system-description.eps}
+\includegraphics[scale=0.5]{graphs/p2p-system-description.eps}
 \end{center}
 \caption{Peer interaction in simulator.}
 \label{fig:p2pcdninteractioninsimulator}
-\vspace{-2mm}
 \end{figure} 
 
 
-\subsubsection{Utility Function}
-Equation \ref{eq:utilityfunction} express the utility function used by peer for cache replacement. 
-Since we can estimate before-peak week, at-peak week, and after-peak week of video, we modified the utility function as follows: (1) for before-peak and after-peak, we assume that requests to video are low thus we define utility function as:  $u = \frac{f(p)-f(p_{min})} {r^{\alpha+\beta}}$.\\
-(2) for at-peak, we assume that request to video are high thus we define utility function as:
-$u = \frac{f(p_{max})-f(p)}{r^{\alpha+\beta}}$.
 
-\subsubsection{Simulation Parameters}
-The simulation parameters are follows:
-\begin{itemize}
-\item Length: 360 days.
-\item Video size: random between 1MB and 200MB.
-\item Peer capacity: [500MB,1000MB].
-\item CDN capacity: 10000MB.
-\item Number of peers: 100000.
-\item Number of videos: 10000.
-\end{itemize}
-We compare our proposed improvement of PROP to original PROP \cite{1613869} implementation.
-
-
-
-\subsection{Result and Discussion}\label{resultanddiscussion}
-
-\begin{figure*}[!ht]
+\begin{figure*}[!t]
 \centering
 \subfloat[CDF percentage of contribution of peers where peer capacity 500MB and CDN capacity 10GB. $x$ and $y$ axis in logscale.\label{fig:peer500MBcontributionCDN10G}]{
 \includegraphics[width=5.7cm]{graphs/hit-model-original-1000MB-cdf-log.eps}
@@ -714,27 +648,9 @@ We compare our proposed improvement of PROP to original PROP \cite{1613869} impl
 \vspace{2mm}
 \caption{CDF peer contribution for peer capacity 500MB and 1000MB, CDN capacity 10000MB. Model refers to our work and original refer to PROP \cite{1613869}.}
 \label{fig:peercontribution}
-\vspace{2mm}
 \end{figure*}
 
-
-
-Figure~\ref{fig:peercontribution} shows peer contribution for our model compare to PROP. 
-Moreover fig.~\ref{fig:peer500MBcontributionCDN10G} shows the comparison of CDF of peer contribution between our model and PROP for peer capacity 500MB. 
-Figure~\ref{fig:peer1000MBcontributionCDN10G} shows the comparison of CDF of peer contribution between our model and PROP for peer capacity 1000MB.
-Our model gain higher peer contribution than PROP. 
-Figure~\ref{fig:peer500MB-vs-1000MBcontributionCDN10G} we compare our model between peer capacity 500MB and peer capacity 1000MB.
-Peer capacity 1000MB gives higher peer contribution because additional space makes a peer can cache more videos.
-From fig.~\ref{fig:peer1000MBcontributionCDN10G} and fig.~\ref{fig:peer500MB-vs-1000MBcontributionCDN10G}, We can see that in our model peer contributions are higher than PROP.
-We do significance statistical testing if our model has significantly different from PROP.
-We use Kolmogorov-Smirnov (KS) test for this purpose.  
-KS-test tries to determine if two datasets differ significantly.  
-It has the advantage of making no assumption about the distribution of data. 
-Reject the null hypothesis of no difference between datasets if $p$-value is small.
-For peer capacity 500MB when we compare our model and PROP, we get K-S statistic value 0.5 and $p$-value is 0.5e-005, while peer capacity 1000MB we get 63.34 and $p$-value is 0.46e-005.
-Since the the $p$-value is below $1\%$ we can reject null hypothesis that both data are the same.
-
-\begin{figure*}[!ht]
+\begin{figure*}[!t]
 \centering
 \subfloat[CDF percentage of contribution of peers where peer capacity 500MB and CDN capacity 20GB. $x$ and $y$ axis in logscale.\label{fig:peer500MBcontributionCDN20G}]{
 \includegraphics[width=5.7cm]{graphs/20G/hit-model-original-1000MB-20G-cdf-log.eps}
@@ -748,41 +664,21 @@ Since the the $p$-value is below $1\%$ we can reject null hypothesis that both d
 \subfloat[CDF peer contribution percentage between peer with 500MB capacity and 1000MB capacity and CDN capacity 20GB.\label{fig:peer500MB-vs-1000MBcontributionCDN20G}]{
 \includegraphics[width=5.7cm]{graphs/20G/hit-model-500MBvs-1000MB-20G-cdf.eps}
 }
-\vspace{2mm}
 \caption{CDF peer contribution for peer capacity 500MB and 1000MB, CDN capacity 20000MB. Model refers to our work and original refer to PROP \cite{1613869}.}
 \label{fig:peercontribution20G}
-\vspace{2mm}
 \end{figure*}
 
-\begin{figure}[th]
+\begin{figure}[!t]
 \begin{center}
 \includegraphics[scale=0.6]{graphs/hit-model-500MBvs-1000MB-10G-20G-cdf.eps}
 \end{center}
 \caption{Comparisan the model of CDN capacity 10GB vs. 20GB.}
 \label{fig:10Gvs20G}
-\vspace{-2mm}
 \end{figure} 
 
 
-%\begin{figure*}[!htb]
-%\centering
-%\subfloat[Replica at t=10day for peer capacity 500MB.\label{fig:peer500MBreplica10dayCDN10G}]{
-%\includegraphics[width=8cm]{graphs/hit-model-original-500MB-replica-total-cdf-log.eps}
-%}
-%\hfill
-%\subfloat[Replica at t=10day for peer capacity 1000MB.\label{fig:peer1000MBreplica10dayCDN10G}]{
-%\includegraphics[width=8cm]{graphs/hit-model-original-1000MB-replica-total-cdf-log.eps}
-%}
-%\caption{Peer replica at $t=10$day for peer capacity 500MB and 1000MB.}
-%\label{fig:replicaat10day}
-%\vspace{-2mm}
-%\end{figure*}
 
-%Figure~\ref{fig:replicaat10day} shows CDF the number of replica for model and PROP for peer capacity 500MB and 1000MB at snapshot %$t=10$day.
-%Figure~\ref{fig:peer500MBreplica10dayCDN10G} shows CDF the number of replica for peer capacity 500MB of model and PROP. 
-%Figure~\ref{fig:peer1000MBreplica10dayCDN10G} shows CDF the number of replica fof peer capacity 1000MB of model and PROP.
-
-\begin{figure*}[!htb]
+\begin{figure*}[!t]
 \centering
 \subfloat[Replica by popularity at t=10day for peer capacity 500MB.\label{fig:peer500MBvs1000MBreplica10dayCDN10Gpopularity}]{
 \includegraphics[width=5.7cm]{graphs/replica-10hari-500vs1000-log.eps}
@@ -799,14 +695,7 @@ Since the the $p$-value is below $1\%$ we can reject null hypothesis that both d
 \vspace{-2mm}
 \end{figure*}
 
-Figure~\ref{fig:replicaatbypopularity} shows distribution of the number of replicas with different popularities at snapshot $t=10$day.
-Figure~\ref{fig:peer500MBvs1000MBreplica10dayCDN10Gpopularity} shows distribution of the number of replicas comparison for peer capacity 500MB and 1000MB with different popularities rank at snapshot $t=10$day.
-Figure~\ref{fig:peer500MBvs1000MBreplicaweek6CDN10Gpopularity} shows distribution of the number of replicas comparison for peer capacity 500MB and 1000MB with different popularities at snapshot $t=6$week.
-Figure~\ref{fig:peer500MBvs1000MBreplica10week10CDN10Gpopularity} shows distribution of the number of replicas comparison for peer capacity 500MB and 1000MB with different popularities at snapshot $t=6$week.
-
-
-
-\begin{figure*}[!htb]
+\begin{figure*}[!ht]
 \centering
 \subfloat[Replica by popularity at t=10day for peer capacity 500MB and 1000MB, CDN capacity 20GB.\label{fig:peer500MBvs1000MBreplica10dayCDN20Gpopularity}]{
 \includegraphics[width=5.7cm]{graphs/20G/replica-10hari-500vs1000-20G-log.eps}
@@ -829,6 +718,113 @@ Figure~\ref{fig:peer500MBvs1000MBreplica10week10CDN10Gpopularity} shows distribu
 
 
 
+\section{Evaluation}\label{evaluation}
+In order to evaluate the proposed cache strategy using before-peak, at-peak, and after-peak information from VoD model, we have to compare our model to PROP model \cite{1613869}.
+
+
+
+\subsection{Simulation Design}\label{simulationdesign}
+An event driven simulator is developed using Python for this purpose and we use Youtube VoD model as video catalog of the simulated Internet VoD system in our experiment.
+In our simulator, time is divided into rounds. 
+During a round, a peer request a video.
+
+\subsection{Peer and CDN server interaction}
+In fig.\ref{fig:p2pcdnoverview}, we describe the process of a peer that requests a video in simulator.
+peer and cdn are implemented in object oriented model. 
+When a peer requests a video, it always goes to a CDN server (step 1). 
+The CDN provides the videos to the peer (step 2). 
+If there is another peer request same video, that request will go to CDN (step 3).  
+CDN will check its record to see if there are some peers cache that requested video.  
+If there are some peers cache that requested video, CDN will reply with redirect message that asking a peer to download requested video from other peer (step 4).
+If there are no peers have requested video, CDN will serve the video.   
+A peer then can request the video to other peer and get the video (step 5 and step 6).
+From this description, we can see that deploying peer-assisted CDN can save some traffic since the clients which form P2P network can sharing the contents or videos.
+
+
+\subsubsection{Catalog Generator}
+In catalog generator, we assume peer request a video to CDN following poisson process with a mean rate $\lambda=1.1$ \cite{Zink:2009:CYN:1502814.1502987} and we made it 3600 videos per hour, finally we generate video request for 360 days of simulation thus we have 31104000 request by peers. 
+How a peer choice a video, we will explain in next paragraph.
+
+First of all, we calculate the number of videos at-peak time as follows: sample $N$ value from the time-to-peak distribution and determine the number of videos $n_j^{at}$ that peak at week $j$. 
+Total number of video $N = n_j^{before} + n_j^{at} + n_j^{after}$.\\
+Next, we determine view count terminus which the number of final view count of video.
+In view count terminus, we assume that a video will not get big additional view after at-peak phase.
+We assign view count terminus randomly from datasets.
+After determining view count terminus, we assign beta distribution parameter for every video. 
+
+Since we can estimate the time of at-peak phase for each video, we know the mode of beta distribution value and we can calculate $\alpha$ and $\beta$ value using the mode of distribution formula: $m=\frac{\alpha-1}{\alpha + \beta - 2}$.  
+We assign $\alpha$ value randomly between $1$ and $2$ thus we can calculate $\beta$ value.
+With the knowledge of beta distribution of every video and its view count terminus, we can know the view count and view rate of every video as function from time.
+The knowledge of view count and view rate, will be used top generate a video choice.  
+
+For video choice, we estimate that a peer will choose video proportionally considering view count and view rate of the video.   
+We can get view count and view rate from probability distribution function (pdf) and cumulative distribution function (cdf) of beta distribution above multiply by video's view count terminus.
+In last step, we assign file size of video randomly between $1$MB and $200$MB.
+Finally, we have a catalog that consists of: video to be chosen, time when uploaded, view count terminus, at-peak week, and video size.
+
+
+
+\subsubsection{Utility Function}
+Equation \ref{eq:utilityfunction} express the utility function used by peer for cache replacement. 
+Since we can estimate before-peak week, at-peak week, and after-peak week of video, we modified the utility function as follows: 
+
+\begin{equation}
+u = \frac{f(p)-f(p_{min})} {r^{\alpha+\beta}}.
+\label{eq:utilityfunctionbeforeafter}
+\end{equation}
+
+\begin{equation}
+u = \frac{f(p_{max})-f(p)}{r^{\alpha+\beta}}.
+\label{eq:utilityfunctionat}
+\end{equation}
+
+In before-peak and after-peak phases, we assume that requests to video are low thus we only consider minimum popularity.
+We use eq.\ref{eq:utilityfunctionbeforeafter} for before-peak and after-peak phase.
+In at-peak phase, we assume that request to video are high thus we only consider maximum popularity.   
+We use eq.\ref{eq:utilityfunctionat} for at-peak phase.
+
+
+
+\subsubsection{Simulation Parameters}
+The simulation parameters are follows:
+\begin{itemize}
+\item Length: 360 days.
+\item Video size: random between 1MB and 200MB.
+\item Peer capacity: [500MB,1000MB].
+\item CDN capacity: 10000MB.
+\item Number of peers: 100000.
+\item Number of videos: 10000.
+\end{itemize}
+We compare our proposed improvement of PROP to original PROP \cite{1613869} implementation.
+
+
+
+\subsection{Result and Discussion}\label{resultanddiscussion}
+
+Figure~\ref{fig:peercontribution} shows peer contribution for our model compare to PROP. 
+Moreover fig.~\ref{fig:peer500MBcontributionCDN10G} shows the comparison of CDF of peer contribution between our model and PROP for peer capacity 500MB. 
+Figure~\ref{fig:peer1000MBcontributionCDN10G} shows the comparison of CDF of peer contribution between our model and PROP for peer capacity 1000MB.
+Our model gain higher peer contribution than PROP. 
+Figure~\ref{fig:peer500MB-vs-1000MBcontributionCDN10G} we compare our model between peer capacity 500MB and peer capacity 1000MB.
+Peer capacity 1000MB gives higher peer contribution because additional space makes a peer can cache more videos.
+From fig.~\ref{fig:peer1000MBcontributionCDN10G} and fig.~\ref{fig:peer500MB-vs-1000MBcontributionCDN10G}, We can see that in our model peer contributions are higher than PROP.
+We do significance statistical testing if our model has significantly different from PROP.
+We use Kolmogorov-Smirnov (KS) test for this purpose.  
+KS-test tries to determine if two datasets differ significantly.  
+It has the advantage of making no assumption about the distribution of data. 
+Reject the null hypothesis of no difference between datasets if $p$-value is small.
+For peer capacity 500MB when we compare our model and PROP, we get K-S statistic value 0.5 and $p$-value is 0.5e-005, while peer capacity 1000MB we get 63.34 and $p$-value is 0.46e-005.
+Since the the $p$-value is below $1\%$ we can reject null hypothesis that both data are the same.
+
+
+
+
+Figure~\ref{fig:replicaatbypopularity} shows distribution of the number of replicas with different popularities at snapshot $t=10$day.
+Figure~\ref{fig:peer500MBvs1000MBreplica10dayCDN10Gpopularity} shows distribution of the number of replicas comparison for peer capacity 500MB and 1000MB with different popularities rank at snapshot $t=10$day.
+Figure~\ref{fig:peer500MBvs1000MBreplicaweek6CDN10Gpopularity} shows distribution of the number of replicas comparison for peer capacity 500MB and 1000MB with different popularities at snapshot $t=6$week.
+Figure~\ref{fig:peer500MBvs1000MBreplica10week10CDN10Gpopularity} shows distribution of the number of replicas comparison for peer capacity 500MB and 1000MB with different popularities at snapshot $t=6$week.
+
+
 
 
 
@@ -838,20 +834,9 @@ Some areas of improvement that we have identified for future are:
 We are also very interested to include energy trade off this peer-assisted CDN architecture in order to know how much energy saving by ISP and how much increase of energy at users home gateway side in this architecture.
 
 
-
-
-
-
-
-
-
-% conference papers do not normally have an appendix
-
-
 % use section* for acknowledgement
 \section*{Acknowledgment}
-
-The authors would like to thank...
+The authors would like to thank Internet research laboratory member at Keio University and anonymous reviewer.
 
 
 
@@ -881,8 +866,6 @@ The authors would like to thank...
 % (used to reserve space for the reference number labels box)
 \bibliographystyle{IEEEtran}
 \bibliography{manu}
-
-
 
 % that's all folks
 \end{document}
