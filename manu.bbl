@@ -98,6 +98,14 @@ O.~Project, ``Open content aware networks,'' 2013, available on
   \url{http://www.itc-ocean.eu}
 \BIBentrySTDinterwordspacing
 
+\bibitem{Borghol:2011:CMP:2039452.2039717}
+\BIBentryALTinterwordspacing
+Y.~Borghol, S.~Mitra, S.~Ardon, N.~Carlsson, D.~Eager, and A.~Mahanti,
+  ``Characterizing and modelling popularity of user-generated videos,''
+  \emph{Perform. Eval.}, vol.~68, no.~11, pp. 1037--1055, Nov. 2011. [Online].
+  Available: \url{http://dx.doi.org/10.1016/j.peva.2011.07.008}
+\BIBentrySTDinterwordspacing
+
 \bibitem{Zhao:2013:PCD:2504730.2504752}
 \BIBentryALTinterwordspacing
 M.~Zhao, P.~Aditya, A.~Chen, Y.~Lin, A.~Haeberlen, P.~Druschel, B.~Maggs,
@@ -164,14 +172,6 @@ L.~Guo, S.~Chen, and X.~Zhang, ``Design and evaluation of a scalable and
   reliable p2p assisted proxy for on-demand streaming media delivery,''
   \emph{Knowledge and Data Engineering, IEEE Transactions on}, vol.~18, no.~5,
   pp. 669--682, May 2006.
-
-\bibitem{Borghol:2011:CMP:2039452.2039717}
-\BIBentryALTinterwordspacing
-Y.~Borghol, S.~Mitra, S.~Ardon, N.~Carlsson, D.~Eager, and A.~Mahanti,
-  ``Characterizing and modelling popularity of user-generated videos,''
-  \emph{Perform. Eval.}, vol.~68, no.~11, pp. 1037--1055, Nov. 2011. [Online].
-  Available: \url{http://dx.doi.org/10.1016/j.peva.2011.07.008}
-\BIBentrySTDinterwordspacing
 
 \bibitem{clauset2009power}
 A.~Clauset, C.~R. Shalizi, and M.~E. Newman, ``Power-law distributions in

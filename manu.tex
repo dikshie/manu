@@ -468,12 +468,11 @@ The peer-assisted QoS should be comparable to that traditional CDN system and th
 This is important because in commercial setting CDN company must be able to calculate customer's usage.
 This realiable accounting is done in control-plane side while content delivery is done in geographically distributed edge-servers.
 
-While in P2P assisted CDN for video on demand (VoD), most of researcher assume the catalog of video is already established following zipf distribution for popularity thus the video rank is static. 
-In our work, our catalog is dynamic, every video has its own popularity evolution.
-It's very natural that we can not rely the popularity rank, since in VoD popularity can change every week moreover Internet scale VoD like Youtube serves many regions and users in each region has different preference to watch the video thus every region has different popularity rank of videos. 
-In Youtube VoD model, video views evolution of a video has three phase which is before-peak, at-peak, and after-peak. 
-This aspect will be explained in sect.\ref{popularity}.
-In this paper, we present how the model of video views evolution can help P2P assisted CDN ecosystem.  
+While in P2P assisted CDN for video on demand (VoD), most of researcher assume the catalog of video is already established following zipf distribution, our work is quit different.
+In Youtube video popularity has three phase which is before-peak, at-peak, and after-peak \cite{Borghol:2011:CMP:2039452.2039717} which we will explain later in sect.\ref{popularity}.
+We will use these phases to aid our simulation.
+It's very natural that we do not need to rely on the popularity rank, since in VoD popularity can change every week moreover Internet scale VoD like Youtube serves many regions and users in each region has different preference to watch the video thus every region has different popularity rank of videos. 
+In this paper, we present how the model of video popularity evolution can help P2P assisted CDN ecosystem.  
 
 Our paper presentation as follows: (1) we describe related work in sect.\ref{relatedwork}; (2) we explain detail of Youtube popularity evolution model in sect.\ref{popularity}; (3) we explain the caching strategy for CDN and peer in sect.\ref{systemdescription}; (4) we explain our simulation design, simulator, and its evaluation in sect.\ref{evaluation}.
 Finally, we present our conclusions in section \ref{conclusion}.
@@ -573,11 +572,6 @@ In both process, a peer always reports to CDN thus CDN knows the status of a pee
 
 
 
-
-
-
-
-
 \subsection{CDN caching strategy}\label{cdncachingstrategy}
 As we mentioned in previous sect.\ref{systemdescription}, the CDN collects metadata.
 The metadata will be used for assisting P2P clients for caching decision. 
@@ -619,6 +613,18 @@ $\alpha$ and $\beta$ are the adjustment factor.
 The CDN can calculate $p_{min}$ and $p_{max}$ then propagate to the P2P system.
 We choose the video with the smallest $u$ value as the candidate to be replaced when a peer's cache capacity is full.
 In the next section (sect.\ref{evaluation}), we will show how popularity evolution knowledge is used to simplified our calculation for utility function.
+
+\subsection{Peer caching strategy}\label{peercachingstrategyproposal}
+Our proposal for peer caching strategy as follows:
+\begin{itemize}
+\item In before-peak and after-peak phases, we assume that requests to video are low thus we only consider minimum popularity.
+\begin{equation}
+u = \frac{f(p)-f(p_{min})} {r^{\alpha+\beta}}.
+\label{eq:utilityfunctionbeforeafter}
+\end{equation}
+
+\item In at-peak phase, we assume that request to video are high thus we only consider maximum popularity.  
+\end{itemize}
 
 
 \begin{figure}[!t]
@@ -785,12 +791,12 @@ We use eq.\ref{eq:utilityfunctionat} for at-peak phase.
 \subsubsection{Simulation Parameters}
 The simulation parameters are follows:
 \begin{itemize}
-\item Length: 360 days.
-\item Video size: random between 1MB and 200MB.
+\item Length: $360$ days.
+\item Video size: random between $1$MB and $200$MB.
 \item Peer capacity: [500MB,1000MB].
-\item CDN capacity: 10000MB.
-\item Number of peers: 100000.
-\item Number of videos: 10000.
+\item CDN capacity: $10000$MB.
+\item Number of peers: $100000$.
+\item Number of videos: $10000$.
 \end{itemize}
 We compare our proposed improvement of PROP to original PROP \cite{1613869} implementation.
 
@@ -826,7 +832,6 @@ Finally, fig.~\ref{fig:peer500MB-vs-1000MBcontributionCDN20G} shows the comparis
 This figure shows that peer capacity 1000MB gives more contributions than peer capacity 500MB because additional space in peer makes a peer can cache more videos.  
 Lastly, we compare our model peer capacity 500MB and 1000MB with CDN capacity 10GB and 20GB in fig.~\ref{fig:10Gvs20G}.
 We found that there are no many different thus CDN capacity does not affect peer contributions. 
-
 
 
 Figure~\ref{fig:replicaatbypopularity} shows distribution of the number of replicas at snapshot $t=10$day, $t=6$week, and $t=10$week ranked by video popularity for peer capacity 500MB and 1000MB, CDN capacity 10GB between our model and PROP.
