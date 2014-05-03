@@ -615,8 +615,10 @@ We choose the video with the smallest $u$ value as the candidate to be replaced 
 In the next section (sect.\ref{evaluation}), we will show how popularity evolution knowledge is used to simplified our calculation for utility function.
 
 \subsection{Peer caching strategy}\label{peercachingstrategyproposal}
-Our proposal for peer caching strategy as follows:
+Equation \ref{eq:utilityfunction} express the utility function used by peer for cache replacement. 
+Since we can estimate before-peak week, at-peak week, and after-peak week of video, we modified the utility function as follows: 
 \begin{itemize}
+
 \item In before-peak and after-peak phases, we assume that requests to video are low thus we only consider minimum popularity.
 \begin{equation}
 u = \frac{f(p)-f(p_{min})} {r^{\alpha+\beta}}.
@@ -624,6 +626,13 @@ u = \frac{f(p)-f(p_{min})} {r^{\alpha+\beta}}.
 \end{equation}
 
 \item In at-peak phase, we assume that request to video are high thus we only consider maximum popularity.  
+
+\begin{equation}
+u = \frac{f(p_{max})-f(p)}{r^{\alpha+\beta}}.
+\label{eq:utilityfunctionat}
+\end{equation}
+
+
 \end{itemize}
 
 
@@ -766,35 +775,13 @@ In last step, we assign file size of video randomly between $1$MB and $200$MB.
 Finally, we have a catalog that consists of: video to be chosen, time when uploaded, view count terminus, at-peak week, and video size.
 
 
-
-\subsubsection{Utility Function}
-Equation \ref{eq:utilityfunction} express the utility function used by peer for cache replacement. 
-Since we can estimate before-peak week, at-peak week, and after-peak week of video, we modified the utility function as follows: 
-
-\begin{equation}
-u = \frac{f(p)-f(p_{min})} {r^{\alpha+\beta}}.
-\label{eq:utilityfunctionbeforeafter}
-\end{equation}
-
-\begin{equation}
-u = \frac{f(p_{max})-f(p)}{r^{\alpha+\beta}}.
-\label{eq:utilityfunctionat}
-\end{equation}
-
-In before-peak and after-peak phases, we assume that requests to video are low thus we only consider minimum popularity.
-We use eq.\ref{eq:utilityfunctionbeforeafter} for before-peak and after-peak phase.
-In at-peak phase, we assume that request to video are high thus we only consider maximum popularity.   
-We use eq.\ref{eq:utilityfunctionat} for at-peak phase.
-
-
-
 \subsubsection{Simulation Parameters}
 The simulation parameters are follows:
 \begin{itemize}
 \item Length: $360$ days.
 \item Video size: random between $1$MB and $200$MB.
 \item Peer capacity: [500MB,1000MB].
-\item CDN capacity: $10000$MB.
+\item CDN capacity: $10000$MB and $20000$MB.
 \item Number of peers: $100000$.
 \item Number of videos: $10000$.
 \end{itemize}
