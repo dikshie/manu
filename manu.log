@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2014.4.17)  6 MAY 2014 00:17
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2014.4.17)  6 MAY 2014 00:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -432,14 +432,17 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 ]
 File: graphs/netsession.eps Graphic file (type eps)
- <graphs/netsession.eps> [2]
+ <graphs/netsession.eps>
+Underfull \vbox (badness 2707) has occurred while \output is active []
+
+ [2]
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 541.
 File: graphs/timetopeak.eps Graphic file (type eps)
- <graphs/timetopeak.eps> [3]
-File: graphs/p2p-system-description.eps Graphic file (type eps)
 
-<graphs/p2p-system-description.eps>
+<graphs/timetopeak.eps> [3]
+File: graphs/p2p-system-description.eps Graphic file (type eps)
+ <graphs/p2p-system-description.eps>
 File: graphs/hit-model-original-1000MB-cdf-log.eps Graphic file (type eps)
 
 <graphs/hit-model-original-1000MB-cdf-log.eps>
@@ -497,10 +500,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 33--35
 Here is how much of TeX's memory you used:
  4617 strings out of 493309
  70494 string characters out of 6137842
- 237434 words of memory out of 5000000
+ 236434 words of memory out of 5000000
  8009 multiletter control sequences out of 15000+600000
  100471 words of font info for 105 fonts, out of 8000000 for 9000
  960 hyphenation exceptions out of 8191
  44i,10n,47p,387b,356s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on manu.dvi (7 pages, 51440 bytes).
+Output written on manu.dvi (7 pages, 50764 bytes).
