@@ -84,6 +84,16 @@ C.~Labovitz, S.~Iekel-Johnson, D.~McPherson, J.~Oberheide, and F.~Jahanian,
   \url{http://dl.acm.org/citation.cfm?id=2043164.1851194}
 \BIBentrySTDinterwordspacing
 
+\bibitem{Mori:2009:IDP:1811681.1811725}
+\BIBentryALTinterwordspacing
+T.~Mori, N.~Kamiyama, S.~Harada, H.~Hasegawa, and R.~Kawahara, ``Improving
+  deployability of peer-assisted cdn platform with incentive,'' in
+  \emph{Proceedings of the 28th IEEE Conference on Global Telecommunications},
+  ser. GLOBECOM'09.\hskip 1em plus 0.5em minus 0.4em\relax Piscataway, NJ, USA:
+  IEEE Press, 2009, pp. 2076--2082. [Online]. Available:
+  \url{http://dl.acm.org/citation.cfm?id=1811681.1811725}
+\BIBentrySTDinterwordspacing
+
 \bibitem{cdni}
 \BIBentryALTinterwordspacing
 IETF, ``Cdn interconnect ietf working group,'' 2013, available on

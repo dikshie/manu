@@ -457,34 +457,40 @@ created among more stable devices such as residential gateways.
 The residential gateway (i.e., a home gateway placed at the user's premises, serving several terminals within the home network but directly managed by ISP) is considered the central entity for a managed P2P infrastructure \cite{Misra:2010:IPS:1811099.1811064,Cha:2008:NTP:1855641.1855646}.
 Running on more stable and powerful devices, each gateway peer can contribute more bandwidth to the content swarm compared to the traditional end-user P2P systems.  Peer selection procedures can be managed directly by the ISP, with the goal of avoiding the traversal of multiple nodes across ISP boundaries.  
 Since P2P traffic is now decreasing and moving to the cloud \cite{Labovitz:2010:IIT:2043164.1851194}, there is plenty of headroom for the ISP to use the gateway in a peer-assisted CDN, and the always-on nature of the gateway makes it the perfect device to run peer-assisted applications.  
-ISPs may even be willing to give rebates to users who allow their gateways to be used, since the ISP benefits from incorporating the gateway into their CDN.  With the growing interest to interconnect CDNs \cite{cdni,oceanproject}, this architecture can benefit the ISP.
+ISPs may even be willing to give rebates to users who allow their gateways to be used, since the ISP benefits from incorporating the gateway into their CDN \cite{Mori:2009:IDP:1811681.1811725}.  
+With the growing interest to interconnect CDNs \cite{cdni,oceanproject}, this architecture can benefit the ISP.
 
 In Peer assisted CDN, users can download content from CDN nodes from or other users or peers. 
 A user may cache the content after download to serve requests from other users. 
 Due to the complexity of the behavior of peers, the process should be done in the home gateway user where the ISP can control it.
 
-Figure~\ref{fig:p2pcdnoverview} shows example of Akamai's peer-assisted CDN system that in operation since 2010.
-In this architecture, Akamai expect that subtantial fraction of content should be delivered by the peers. 
-The peer-assisted QoS should be comparable to that traditional CDN system and the system should offer reliable accounting for services provided. 
-This is important because in commercial setting CDN company must be able to calculate customer's usage.
-This realiable accounting is done in control-plane side while content delivery is done in geographically distributed edge-servers.
+%Figure~\ref{fig:p2pcdnoverview} shows example of Akamai's peer-assisted CDN system that in operation since 2010.
+%In this architecture, Akamai expect that subtantial fraction of content should be delivered by the peers. 
+%The peer-assisted QoS should be comparable to that traditional CDN system and the system should offer reliable accounting for services provided. 
+%This is important because in commercial setting CDN company must be able to calculate customer's usage.
+%This realiable accounting is done in control-plane side while content delivery is done in geographically distributed edge-servers.
 
 While in P2P assisted CDN for video on demand (VoD), most of researcher assume the catalog of video is already established following zipf distribution, our work is quit different.
 In Youtube video popularity has three phase which is before-peak, at-peak, and after-peak \cite{Borghol:2011:CMP:2039452.2039717} which we will explain later in sect.\ref{popularity}.
 We will use these phases to aid our simulation.
-It's very natural that we do not need to rely on the popularity rank, since in VoD popularity can change every week moreover Internet scale VoD like Youtube serves many regions and users in each region has different preference to watch the video thus every region has different popularity rank of videos. 
-In this paper, we present how the model of video popularity evolution can help P2P assisted CDN ecosystem.  
+%It's very natural that we do not need to rely on the popularity rank, since in VoD popularity can change every week moreover Internet scale VoD like Youtube serves many regions and users in each region has different preference to watch the video thus every region has different popularity rank of videos. 
+In this paper, we present how the model of video popularity evolution can help P2P assisted CDN ecosystem. 
+A twofold of our contributions as follows:
+\begin{itemize} 
+\item We use three phases of Youtube popularity in simulation.
+\item We run simulation over long time to explore the behavior of the system.
+\end{itemize}
 
 Our paper presentation as follows: (1) we describe related work in sect.\ref{relatedwork}; (2) we explain detail of Youtube popularity evolution model in sect.\ref{popularity}; (3) we explain the caching strategy for CDN and peer in sect.\ref{systemdescription}; (4) we explain our simulation design, simulator, and its evaluation in sect.\ref{evaluation}.
 Finally, we present our conclusions in section \ref{conclusion}.
 
-\begin{figure}[!t]
-\begin{center}
-\includegraphics[scale=0.3]{graphs/netsession.eps}
-\end{center}
-\caption{Peer Assisted CDN Overview.}
-\label{fig:p2pcdnoverview}
-\end{figure} 
+%\begin{figure}[!t]
+%\begin{center}
+%\includegraphics[scale=0.3]{graphs/netsession.eps}
+%\end{center}
+%\caption{Peer Assisted CDN Overview.}
+%\label{fig:p2pcdnoverview}
+%\end{figure} 
 
 
 
@@ -742,7 +748,7 @@ During a round, a peer request a video.
 
 
 \subsection{Peer and CDN server interaction}
-In fig.\ref{fig:p2pcdnoverview}, we describe the process of a peer that requests a video in simulator.
+In fig.\ref{fig:p2pcdninteractioninsimulator}, we describe the process of a peer that requests a video in simulator.
 peer and cdn are implemented in object oriented model. 
 When a peer requests a video, it always goes to a CDN server (step 1). 
 The CDN provides the videos to the peer (step 2). 
