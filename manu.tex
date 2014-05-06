@@ -514,6 +514,13 @@ While the authors successfully show that the results are very good, the peer-ass
 The explanation of the optimal number of replicas is not also clear because unavailable information when the snapshot is taken.  
 In our work, we complement Guo et al., \cite{1613869} work with VoD viewing popularity evolution model and describe the behavior of the peer-assisted CDN over the time.
 
+\begin{figure}[!t]
+\begin{center}
+\includegraphics[scale=0.6]{graphs/timetopeak.eps}
+\end{center}
+\caption{Time to peak empirical distribution.}
+\label{fig:timetopeak}
+\end{figure} 
 
 \section{Characterizing Internet VoD Popularity}\label{popularity}
 Before analyzing the system description and video caching, we first examine the popularity characteristics of Internet VoD services.
@@ -540,13 +547,7 @@ Using MLE method, we can get exponential parameter $\lambda = 0.59$ for Borghol 
 For weekly views distribution, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} found that beta distribution is a good model to explain video views evolution thus we follow Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} for  weekly views distribution model.
 %datanya youtube seperti ini.  view bisa dimodelkan dng beta.
 
-\begin{figure}[!t]
-\begin{center}
-\includegraphics[scale=0.6]{graphs/timetopeak.eps}
-\end{center}
-\caption{Time to peak empirical distribution.}
-\label{fig:timetopeak}
-\end{figure} 
+
 
 
 
@@ -597,12 +598,12 @@ We choose the video with the smallest $u$ value as the candidate to be replaced 
 %kenapa 2 metric ini dipilih.
 %bagaimana evaluasinya:  bikin simulator: a, b, c ,d 
 
-In order to evaluate the proposed peer-caching strategy using before-peak, at-peak, and after-peak information from VoD model, we have to compare our model to PROP model.
+In order to evaluate the proposed peer-caching strategy using before-peak, at-peak, and after-peak information from Youtube VoD view model, we have to compare our model to PROP model.
 We evaluate two metrics which is peer contribution to delivery contents during simulation and access frequency of cache.
 To evaluate these metrics, we developed peer-assisted CDN simulator. 
 
 \subsection{Simulation Design}\label{simulationdesign}
-An event driven simulator is developed using Python for this purpose and we use Youtube VoD model as video catalog of the simulated Internet VoD system in our experiment.
+An event driven simulator is developed using Python for this purpose.
 In our simulator, time is divided into rounds. 
 During a round, a peer request a video.
 
