@@ -551,20 +551,23 @@ For weekly views distribution, Borghol et al., \cite{Borghol:2011:CMP:2039452.20
 
 
 \section{System Description}\label{systemdescription}
+In our our, we use Youtube VoD view model to aid our model that based from PROP. 
+The Youtube VoD view model will be used in peer-caching strategy side to exploits the video popularity. 
+
 %memanfaatkan data global seperti borgghol.
 %mengapa?
 %bagaimana menyatukannya dng datalocal
-In this paper, we consider a peer-assisted CDN system. 
-There are two main components: (1) the CDN servers which at a minimum consist content delivery platform and control plane platform. 
-(2) Clients which request and downloads the videos.
-In addition, clients form a self-organized P2P overlay network.
+%In this paper, we consider a peer-assisted CDN system. 
+%There are two main components: (1) the CDN servers which at a minimum consist content delivery platform and control plane platform. 
+%(2) Clients which request and downloads the videos.
+%In addition, clients form a self-organized P2P overlay network.
 
-The CDN servers are maintained by a CDN company or a content provider company (e.q Netflix) or an Internet service provider (ISP).
-In peer-assisted CDN, a peer caches the videos that it has downloaded.
-Peers independently manage their cache localy.
-When a peer join the system video replica is cached.
-When a peer leaves the system video replica is evicted. 
-In both process, a peer always reports to CDN thus CDN knows the status of a peer.
+%The CDN servers are maintained by a CDN company or a content provider company (e.q Netflix) or an Internet service provider (ISP).
+%In peer-assisted CDN, a peer caches the videos that it has downloaded.
+%Peers independently manage their cache localy.
+%When a peer join the system video replica is cached.
+%When a peer leaves the system video replica is evicted. 
+%In both process, a peer always reports to CDN thus CDN knows the status of a peer.
 
 %cdn caching ini tdk relevan
 %\subsection{CDN caching strategy}\label{cdncachingstrategy}
@@ -594,6 +597,8 @@ In both process, a peer always reports to CDN thus CDN knows the status of a pee
 %Since above eq.\ref{eq:videopopularityestimation} considering both recent access and pass access information, the CDN can cache the most requested video for clients.
 
 \subsection{Peer caching strategy}\label{peercachingstrategy}
+
+
 %dari awal bilang beda.
 %bedanya apa?
 
