@@ -505,10 +505,10 @@ Jiang et al. \cite{Jiang:2012:OMD:2413176.2413193} proposed scalable and adaptiv
 Maki et al.\cite{NaoyaMAKI2012} propose traffic engineering for peer-assisted CDN to control the behavior of clients, and present a solution for optimizing the selection of content files.
 Mathieu et al., \cite{6249305} are using data gathered from France telecom network to calculate reduction of network load if customers are employed as peer-assisted content delivery.
 
-Guo et al., \cite{1613869} is closest with our work because we use that work as comparison and we use author's utility function.
-The author proposed local system (local counter) to calculate the segment popularity in peer-assisted proxy system. 
-The author use popularity for proxy cache replacement strategy. 
-In peer side, the author use utility function for cache replacement strategy.  
+Guo et al., \cite{1613869} work's PROP is closest with our work because we use that work as comparison and we use author's utility function.
+PROP uses local system (local counter) to calculate the segment popularity in peer-assisted proxy system. 
+PROP uses popularity for proxy cache replacement strategy. 
+In peer side, the author use utility function for cache replacement strategy.
 The utility function is also function from popularity.
 While the authors successfully show that the results are very good, the peer-assisted system behavior over time is not explain because the author focus on local properties such as proxy cache size variations and peer cache size variations.
 The explanation of the optimal number of replicas is not also clear because unavailable information when the snapshot is taken.  
@@ -559,7 +559,7 @@ The Youtube VoD view model will be used in peer-caching strategy side to exploit
 \subsection{Peer caching strategy}\label{peercachingstrategy}
 As we mentioned before, we use Youtube VoD view model in peer caching strategy side. 
 Our utility function is different from PROP.
-Since we can estimate before-peak week, at-peak week, and after-peak week of video, we modified the utility function as follows: 
+Since we can estimate before-peak week, at-peak week, and after-peak week of video, we modified the original utility function from PROP as follows: 
 \begin{itemize}
 
 \item In before-peak and after-peak phases, we assume that requests to video are low thus we only consider minimum popularity.
@@ -576,6 +576,10 @@ u = \frac{f(p_{max})-f(p)}{r^{\alpha+\beta}}.
 \end{equation}
 \end{itemize}
 
+$p$ represents popularity of the video, $p_{min}$ represents estimation of minimum popularity in P2P system, $p_{max}$ represents estimation of maximum popularity in P2P system, $r$ represents the number of replicas of the video in the system, and $f(p)$ is monotonic non-decreasing function.
+$\alpha$ and $\beta$ are the adjustment factor.
+The CDN can calculate $p_{min}$ and $p_{max}$ then propagate to the P2P system.
+We choose the video with the smallest $u$ value as the candidate to be replaced when a peer's cache capacity is full.
 
 \begin{figure}[!t]
 \begin{center}
@@ -584,9 +588,6 @@ u = \frac{f(p_{max})-f(p)}{r^{\alpha+\beta}}.
 \caption{Peer interaction in simulator.}
 \label{fig:p2pcdninteractioninsimulator}
 \end{figure} 
-
-
-
 
 
 
@@ -605,8 +606,19 @@ An event driven simulator is developed using Python for this purpose and we use 
 In our simulator, time is divided into rounds. 
 During a round, a peer request a video.
 
+In fig.\ref{fig:p2pcdninteractioninsimulator}, we describe the process of a peer that requests a video in simulator.
+peer and cdn are implemented in object oriented model. 
+When a peer requests a video, it always goes to a CDN server (step 1). 
+The CDN provides the videos to the peer (step 2). 
+If there is another peer request same video, that request will go to CDN (step 3).  
+CDN will check its record to see if there are some peers cache that requested video.  
+If there are some peers cache that requested video, CDN will reply with redirect message that asking a peer to download requested video from other peer (step 4).
+If there are no peers have requested video, CDN will serve the video.   
+A peer then can request the video to other peer and get the video (step 5 and step 6).
+From this description, we can see that deploying peer-assisted CDN can save some traffic since the clients which form P2P network can sharing the contents or videos.
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%contribution 500MB vs 1000MB CDN 10GB
 \begin{figure*}[!t]
 \centering
@@ -690,24 +702,13 @@ During a round, a peer request a video.
 \label{fig:replicaatbypopularity20G}
 \vspace{-2mm}
 \end{figure*}
+%%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-\subsection{Peer and CDN server interaction}
-In fig.\ref{fig:p2pcdninteractioninsimulator}, we describe the process of a peer that requests a video in simulator.
-peer and cdn are implemented in object oriented model. 
-When a peer requests a video, it always goes to a CDN server (step 1). 
-The CDN provides the videos to the peer (step 2). 
-If there is another peer request same video, that request will go to CDN (step 3).  
-CDN will check its record to see if there are some peers cache that requested video.  
-If there are some peers cache that requested video, CDN will reply with redirect message that asking a peer to download requested video from other peer (step 4).
-If there are no peers have requested video, CDN will serve the video.   
-A peer then can request the video to other peer and get the video (step 5 and step 6).
-From this description, we can see that deploying peer-assisted CDN can save some traffic since the clients which form P2P network can sharing the contents or videos.
 
 
 \subsubsection{Catalog Generator}
 In catalog generator, we assume peer request a video to CDN following poisson process with a mean rate $\lambda=1.1$ \cite{Zink:2009:CYN:1502814.1502987} and we made it 3600 videos per hour, finally we generate video request for 360 days of simulation thus we have 31104000 requests by peers. 
-How a peer choice a video, we will explain in next paragraph.
+%How a peer choice a video, we will explain in next paragraph.
 
 First of all, we calculate the number of videos at-peak time as follows: sample $N$ value from the time-to-peak distribution and determine the number of videos $n_j^{at}$ that peak at week $j$. 
 Total number of video $N = n_j^{before} + n_j^{at} + n_j^{after}$.\\
@@ -719,10 +720,9 @@ After determining view count terminus, we assign beta distribution parameter for
 Since we can estimate the time of at-peak phase for each video, we know the mode of beta distribution value and we can calculate $\alpha$ and $\beta$ value using the mode of distribution formula: $m=\frac{\alpha-1}{\alpha + \beta - 2}$.  
 We assign $\alpha$ value randomly between $1$ and $2$ thus we can calculate $\beta$ value.
 With the knowledge of beta distribution of every video and its view count terminus, we can know the view count and view rate of every video as function from time.
-The knowledge of view count and view rate, will be used top generate a video choice.  
-
-For video choice, we estimate that a peer will choose video proportionally considering view count and view rate of the video.   
-We can get view count and view rate from probability distribution function (PDF) and cumulative distribution function (CDF) of beta distribution above multiply by video's view count terminus.
+%The knowledge of view count and view rate, will be used top generate a video choice.  
+%For video choice, we estimate that a peer will choose video proportionally considering view count and view rate of the video.   
+%We can get view count and view rate from probability distribution function (PDF) and cumulative distribution function (CDF) of beta distribution above multiply by video's view count terminus.
 In last step, we assign file size of video randomly between $1$MB and $200$MB.
 Finally, we have a catalog that consists of: video to be chosen, time when uploaded, view count terminus, at-peak week, and video size.
 
