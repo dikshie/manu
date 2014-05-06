@@ -58,56 +58,6 @@ H.~Yin, X.~Liu, T.~Zhan, V.~Sekar, F.~Qiu, C.~Lin, H.~Zhang, and B.~Li,
   Available: \url{http://doi.acm.org/10.1145/1631272.1631279}
 \BIBentrySTDinterwordspacing
 
-\bibitem{Misra:2010:IPS:1811099.1811064}
-\BIBentryALTinterwordspacing
-V.~Misra, S.~Ioannidis, A.~Chaintreau, and L.~Massouli{\'e}, ``Incentivizing
-  peer-assisted services: a fluid shapley value approach,'' \emph{SIGMETRICS
-  Perform. Eval. Rev.}, vol.~38, no.~1, pp. 215--226, Jun. 2010. [Online].
-  Available: \url{http://doi.acm.org/10.1145/1811099.1811064}
-\BIBentrySTDinterwordspacing
-
-\bibitem{Cha:2008:NTP:1855641.1855646}
-\BIBentryALTinterwordspacing
-M.~Cha, P.~Rodriguez, S.~Moon, and J.~Crowcroft, ``On next-generation
-  telco-managed p2p tv architectures,'' in \emph{Proceedings of the 7th
-  international conference on Peer-to-peer systems}, ser. IPTPS'08.\hskip 1em
-  plus 0.5em minus 0.4em\relax Berkeley, CA, USA: USENIX Association, 2008, pp.
-  5--5. [Online]. Available:
-  \url{http://dl.acm.org/citation.cfm?id=1855641.1855646}
-\BIBentrySTDinterwordspacing
-
-\bibitem{Labovitz:2010:IIT:2043164.1851194}
-\BIBentryALTinterwordspacing
-C.~Labovitz, S.~Iekel-Johnson, D.~McPherson, J.~Oberheide, and F.~Jahanian,
-  ``Internet inter-domain traffic,'' \emph{SIGCOMM Comput. Commun. Rev.},
-  vol.~41, no.~4, pp.~--, Aug. 2010. [Online]. Available:
-  \url{http://dl.acm.org/citation.cfm?id=2043164.1851194}
-\BIBentrySTDinterwordspacing
-
-\bibitem{Mori:2009:IDP:1811681.1811725}
-\BIBentryALTinterwordspacing
-T.~Mori, N.~Kamiyama, S.~Harada, H.~Hasegawa, and R.~Kawahara, ``Improving
-  deployability of peer-assisted cdn platform with incentive,'' in
-  \emph{Proceedings of the 28th IEEE Conference on Global Telecommunications},
-  ser. GLOBECOM'09.\hskip 1em plus 0.5em minus 0.4em\relax Piscataway, NJ, USA:
-  IEEE Press, 2009, pp. 2076--2082. [Online]. Available:
-  \url{http://dl.acm.org/citation.cfm?id=1811681.1811725}
-\BIBentrySTDinterwordspacing
-
-\bibitem{cdni}
-\BIBentryALTinterwordspacing
-IETF, ``Cdn interconnect ietf working group,'' 2013, available on
-  \url{https://datatracker.ietf.org/wg/cdni/}. [Online]. Available:
-  \url{https://datatracker.ietf.org/wg/cdni/}
-\BIBentrySTDinterwordspacing
-
-\bibitem{oceanproject}
-\BIBentryALTinterwordspacing
-O.~Project, ``Open content aware networks,'' 2013, available on
-  \url{http://www.itc-ocean.eu}. [Online]. Available:
-  \url{http://www.itc-ocean.eu}
-\BIBentrySTDinterwordspacing
-
 \bibitem{Borghol:2011:CMP:2039452.2039717}
 \BIBentryALTinterwordspacing
 Y.~Borghol, S.~Mitra, S.~Ardon, N.~Carlsson, D.~Eager, and A.~Mahanti,
@@ -139,6 +89,14 @@ K.~Xu, Y.~Zhong, and H.~He, ``Can p2p technology benefit eyeball isps? a
   cooperative profit distribution answer,'' \emph{CoRR}, vol. abs/1212.4915,
   2012.
 
+\bibitem{Misra:2010:IPS:1811099.1811064}
+\BIBentryALTinterwordspacing
+V.~Misra, S.~Ioannidis, A.~Chaintreau, and L.~Massouli{\'e}, ``Incentivizing
+  peer-assisted services: a fluid shapley value approach,'' \emph{SIGMETRICS
+  Perform. Eval. Rev.}, vol.~38, no.~1, pp. 215--226, Jun. 2010. [Online].
+  Available: \url{http://doi.acm.org/10.1145/1811099.1811064}
+\BIBentrySTDinterwordspacing
+
 \bibitem{federation}
 Cisco, ``Cdn federation,'' 10 2012, available on
   \url{http://www.cisco.com/web/about/ac79/docs/sp/CDN-Federation_Phase-2-Pilot.pdf}.
@@ -153,8 +111,25 @@ N.~KAMIYAMA, T.~MORI, R.~KAWAHARA, and H.~HASEGAWA, ``Optimally designing
   isp-operated cdn,'' \emph{IEICE Transactions on Communications}, vol. E96.B,
   no.~3, pp. 790--801, March 2013.
 
+\bibitem{cdni}
+\BIBentryALTinterwordspacing
+IETF, ``Cdn interconnect ietf working group,'' 2013, available on
+  \url{https://datatracker.ietf.org/wg/cdni/}. [Online]. Available:
+  \url{https://datatracker.ietf.org/wg/cdni/}
+\BIBentrySTDinterwordspacing
+
 \bibitem{figaro}
 ``Figaro project,'' http://www.ict-figaro.eu/, 2012.
+
+\bibitem{Cha:2008:NTP:1855641.1855646}
+\BIBentryALTinterwordspacing
+M.~Cha, P.~Rodriguez, S.~Moon, and J.~Crowcroft, ``On next-generation
+  telco-managed p2p tv architectures,'' in \emph{Proceedings of the 7th
+  international conference on Peer-to-peer systems}, ser. IPTPS'08.\hskip 1em
+  plus 0.5em minus 0.4em\relax Berkeley, CA, USA: USENIX Association, 2008, pp.
+  5--5. [Online]. Available:
+  \url{http://dl.acm.org/citation.cfm?id=1855641.1855646}
+\BIBentrySTDinterwordspacing
 
 \bibitem{Jiang:2012:OMD:2413176.2413193}
 \BIBentryALTinterwordspacing

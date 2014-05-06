@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2014.4.17)  6 MAY 2014 01:18
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2014.4.17)  6 MAY 2014 10:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -426,16 +426,15 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 383.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 383.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 480.
 
 [1
 
 
 ]
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 480.
- [2]
 File: graphs/timetopeak.eps Graphic file (type eps)
- <graphs/timetopeak.eps> [3]
+ <graphs/timetopeak.eps> [2]
 File: graphs/p2p-system-description.eps Graphic file (type eps)
  <graphs/p2p-system-description.eps>
 File: graphs/hit-model-original-1000MB-cdf-log.eps Graphic file (type eps)
@@ -479,26 +478,23 @@ File: graphs/20G/replica-minggu6-500vs1000-20G-log.eps Graphic file (type eps)
 File: graphs/20G/replica-minggu10-500vs1000-20G-log.eps Graphic file (type eps)
 
 
-<graphs/20G/replica-minggu10-500vs1000-20G-log.eps> [4]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [5]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-(./manu.bbl [6]
+<graphs/20G/replica-minggu10-500vs1000-20G-log.eps> [3] [4] [5] (./manu.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 33--35
 []\T1/ptm/m/n/8 Octoshape, ``Oc-toshape,'' $http : / / www . octoshape . com /
  []
 
-) [7] (./manu.aux) ) 
+) [6] (./manu.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
  4615 strings out of 493309
  70470 string characters out of 6137842
- 239434 words of memory out of 5000000
+ 235434 words of memory out of 5000000
  8008 multiletter control sequences out of 15000+600000
  100471 words of font info for 105 fonts, out of 8000000 for 9000
  960 hyphenation exceptions out of 8191
  44i,10n,47p,387b,356s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on manu.dvi (7 pages, 50256 bytes).
+Output written on manu.dvi (6 pages, 43584 bytes).

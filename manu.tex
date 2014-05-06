@@ -441,24 +441,24 @@ Alternatively, video contents can be efficiently distributed on services offered
 The major issues of CDN are high deployment cost and good but not unlimited scalability in the long term.  
 Given the complementary features of P2P and CDN, in recent years some hybrid solutions have been proposed \cite{Huang:2008:UHC:1496046.1496064,4772628,Yin:2009:DDH:1631272.1631279} to take the best of both approaches.
 
-Broadband network access helps P2P applications to perform better. xDSL networks are deployed worldwide, and in some countries, such as Japan, even higher bandwidth fiber to the home (FTTH) already exceeds DSL in market penetration. 
-In the coming years, network operators throughout the world will massively deploy FTTH. 
-As access bandwidth increases, P2P systems may become more efficient since a peer can contribute much more.
+%Broadband network access helps P2P applications to perform better. 
+%xDSL networks are deployed worldwide, and in some countries, such as Japan, even higher bandwidth fiber to the home (FTTH) already exceeds DSL in market penetration. 
+%In the coming years, network operators throughout the world will massively deploy FTTH. 
+%As access bandwidth increases, P2P systems may become more efficient since a peer can contribute much more.
 
-In P2P world, swarm is all peers that sharing a content. 
-Typically, each end user device is involved directly in the P2P swarm, both to receive the benefits of P2P and to serve others.  
-In such cases, the installation of P2P software in every end device is necessary and the user is directly involved in the content's swarm.
-The disposition of peers may result in unstable behavior and the swarm can be affected by the rapid and frequent disconnections that are common for mobile devices.  
-Furthermore, users' devices usually can contribute to the swarm only with limited upload bandwidth.  
-In addition, techniques developed to select P2P neighboring peers are often unfriendly toward the ISP's routing policies.
+%In P2P world, swarm is all peers that sharing a content. 
+%Typically, each end user device is involved directly in the P2P swarm, both to receive the benefits of P2P and to serve others.  
+%In such cases, the installation of P2P software in every end device is necessary and the user is directly involved in the content's swarm.
+%The disposition of peers may result in unstable behavior and the swarm can be affected by the rapid and frequent disconnections that are common for mobile devices.  
+%Furthermore, users' devices usually can contribute to the swarm only with limited upload bandwidth.  
+%In addition, techniques developed to select P2P neighboring peers are often unfriendly toward the ISP's routing policies.
 
-Different topologies have been proposed in the literature, such as those where the collaborative mechanism for content distribution is
-created among more stable devices such as residential gateways.  
-The residential gateway (i.e., a home gateway placed at the user's premises, serving several terminals within the home network but directly managed by ISP) is considered the central entity for a managed P2P infrastructure \cite{Misra:2010:IPS:1811099.1811064,Cha:2008:NTP:1855641.1855646}.
-Running on more stable and powerful devices, each gateway peer can contribute more bandwidth to the content swarm compared to the traditional end-user P2P systems.  Peer selection procedures can be managed directly by the ISP, with the goal of avoiding the traversal of multiple nodes across ISP boundaries.  
-Since P2P traffic is now decreasing and moving to the cloud \cite{Labovitz:2010:IIT:2043164.1851194}, there is plenty of headroom for the ISP to use the gateway in a peer-assisted CDN, and the always-on nature of the gateway makes it the perfect device to run peer-assisted applications.  
-ISPs may even be willing to give rebates to users who allow their gateways to be used, since the ISP benefits from incorporating the gateway into their CDN \cite{Mori:2009:IDP:1811681.1811725}.  
-With the growing interest to interconnect CDNs \cite{cdni,oceanproject}, this architecture can benefit the ISP.
+%Different topologies have been proposed in the literature, such as those where the collaborative mechanism for content distribution is created among more stable devices such as residential gateways.  
+%The residential gateway (i.e., a home gateway placed at the user's premises, serving several terminals within the home network but directly managed by ISP) is considered the central entity for a managed P2P infrastructure \cite{Misra:2010:IPS:1811099.1811064,Cha:2008:NTP:1855641.1855646}.
+%Running on more stable and powerful devices, each gateway peer can contribute more bandwidth to the content swarm compared to the traditional end-user P2P systems.  Peer selection procedures can be managed directly by the ISP, with the goal of avoiding the traversal of multiple nodes across ISP boundaries.  
+%Since P2P traffic is now decreasing and moving to the cloud \cite{Labovitz:2010:IIT:2043164.1851194}, there is plenty of headroom for the ISP to use the gateway in a peer-assisted CDN, and the always-on nature of the gateway makes it the perfect device to run peer-assisted applications.  
+%ISPs may even be willing to give rebates to users who allow their gateways to be used, since the ISP benefits from incorporating the gateway into their CDN \cite{Mori:2009:IDP:1811681.1811725}.  
+%With the growing interest to interconnect CDNs \cite{cdni,oceanproject}, this architecture can benefit the ISP.
 
 In Peer assisted CDN, users can download content from CDN nodes from or other users or peers. 
 A user may cache the content after download to serve requests from other users. 
@@ -477,8 +477,8 @@ We will use these phases to aid our simulation.
 In this paper, we present how the model of video popularity evolution can help P2P assisted CDN ecosystem. 
 A twofold of our contributions as follows:
 \begin{itemize} 
-\item We use three phases of Youtube popularity in simulation.
-\item We run simulation over long time to explore the behavior of the system.
+\item We use three phases of Youtube popularity in simulation. (idea)
+\item We run simulation over long time to explore the behavior of the system. (hasil)
 \end{itemize}
 
 Our paper presentation as follows: (1) we describe related work in sect.\ref{relatedwork}; (2) we explain detail of Youtube popularity evolution model in sect.\ref{popularity}; (3) we explain the caching strategy for CDN and peer in sect.\ref{systemdescription}; (4) we explain our simulation design, simulator, and its evaluation in sect.\ref{evaluation}.
@@ -497,7 +497,7 @@ Finally, we present our conclusions in section \ref{conclusion}.
 
 \section{Related Work}\label{relatedwork}
 Content Distribution Networks with peer assist have been successfully deployed on the Internet, such as Akamai \cite{Zhao:2013:PCD:2504730.2504752}, \cite{Huang:2008:UHC:1496046.1496064} and LiveSky \cite{Yin:2010:LEC:1823746.1823750}.  
-The authors of \cite{Zhao:2013:PCD:2504730.2504752} examine the risks and benefits of peer-assisted content distribution in Akamai and measure the effectiveness of its peer-assisted. 
+The authors of \cite{Zhao:2013:PCD:2504730.2504752} examine the risks and benefits of peer-assisted content distribution in Akamai and measure the effectiveness of its peer-assisted approach. 
 The authors of \cite{Huang:2008:UHC:1496046.1496064} conclude from two real world traces that hybrid CDN-P2P can significantly reduce the cost of content distribution and can scale to cope with the exponential growth of Internet video content.  
 Yin et al. \cite{Yin:2010:LEC:1823746.1823750} described commercial operation of a peer-assisted CDN in China.  
 LiveSky solved several challenges in the system design, such as dynamic resource scaling of P2P, low startup latency, ease of P2P integration with the existing CDN infrastructure, and network friendliness and upload fairness in the P2P operation.  
@@ -553,6 +553,7 @@ Our finding coherence with Borghol et al., \cite{Borghol:2011:CMP:2039452.203971
 To estimate the the rate parameter of exponential part of time-to-peak distribution, we use Maximum Likelihood Estimation (MLE) \cite{clauset2009power}.
 Using MLE method, we can get exponential parameter $\lambda = 0.61$. 
 For weekly views distribution, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} found that beta distribution is a good model to explain video views evolution thus we follow Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} for  weekly views distribution model.
+%datanya youtube seperti ini.  view bisa dimodelkan dng beta.
 
 \begin{figure}[!t]
 \begin{center}
@@ -565,6 +566,9 @@ For weekly views distribution, Borghol et al., \cite{Borghol:2011:CMP:2039452.20
 
 
 \section{System Description}\label{systemdescription}
+%memanfaatkan data global seperti borgghol.
+%mengapa?
+%bagaimana menyatukannya dng datalocal
 In this paper, we consider a peer-assisted CDN system. 
 There are two main components: (1) the CDN servers which at a minimum consist content delivery platform and control plane platform. 
 (2) Clients which request and downloads the videos.
@@ -577,35 +581,38 @@ When a peer join the system video replica is cached.
 When a peer leaves the system video replica is evicted. 
 In both process, a peer always reports to CDN thus CDN knows the status of a peer.
 
+%cdn caching ini tdk relevan
+%\subsection{CDN caching strategy}\label{cdncachingstrategy}
+%As we mentioned in previous sect.\ref{systemdescription}, the CDN collects metadata.
+%The metadata will be used for assisting P2P clients for caching decision. 
+%The metadata that CDN collects are the following parameters:
+%\begin{itemize}
+%\item $n_j^r$: total number of the times video $j$ has been requested.  
+%\item $t_j^r$: the last time video $j$ was requested.
+%\item $n_j^s$: total number of the time that video $j$ is served by CDN.
+%\item $t_j^s$: the last time that video $j$ was served by CDN.
+%\item $a_j$: the time that video $j$ was added to video server's catalog.
+%\item $n_j^c$: total number of the times that video $j$ is served by CDN.
+%\item $t_j^p$: the time that video  is added into peer's cache.
+%\item $t$: the current time.
+%\end{itemize}
 
+%We use the method proposed in \cite{1613869} to estimate the popularity video as follows:
 
-\subsection{CDN caching strategy}\label{cdncachingstrategy}
-As we mentioned in previous sect.\ref{systemdescription}, the CDN collects metadata.
-The metadata will be used for assisting P2P clients for caching decision. 
-The metadata that CDN collects are the following parameters:
-\begin{itemize}
-\item $n_j^r$: total number of the times video $j$ has been requested.  
-\item $t_j^r$: the last time video $j$ was requested.
-\item $n_j^s$: total number of the time that video $j$ is served by CDN.
-\item $t_j^s$: the last time that video $j$ was served by CDN.
-\item $a_j$: the time that video $j$ was added to video server's catalog.
-\item $n_j^c$: total number of the times that video $j$ is served by CDN.
-\item $t_j^p$: the time that video  is added into peer's cache.
-\item $t$: the current time.
-\end{itemize}
+%\begin{equation}
+%P_j = min\left\{\frac{n_j^r}{t_j^r - a_j}, \frac{1}{t - t_j^r}\right\}
+%\label{eq:videopopularityestimation}
+%\end{equation}
 
-We use the method proposed in \cite{1613869} to estimate the popularity video as follows:
-
-\begin{equation}
-P_j = min\left\{\frac{n_j^r}{t_j^r - a_j}, \frac{1}{t - t_j^r}\right\}
-\label{eq:videopopularityestimation}
-\end{equation}
-
-The expression of $\frac{n_j^r}{t_j^r - a_j}$ reflects the long-term request rate of the video or probability of future access rate and the expression of $\frac{1}{t - t_j^r}$ reflects the approximation of the video's recent request rate.
-The video with the smallest popularity is chosen as the candidate to be replaced when the CDN cache is full. 
-Since above eq.\ref{eq:videopopularityestimation} considering both recent access and pass access information, the CDN can cache the most requested video for clients.
+%The expression of $\frac{n_j^r}{t_j^r - a_j}$ reflects the long-term request rate of the video or probability of future access rate and the expression of $\frac{1}{t - t_j^r}$ reflects the approximation of the video's recent request rate.
+%The video with the smallest popularity is chosen as the candidate to be replaced when the CDN cache is full. 
+%Since above eq.\ref{eq:videopopularityestimation} considering both recent access and pass access information, the CDN can cache the most requested video for clients.
 
 \subsection{Peer caching strategy}\label{peercachingstrategy}
+%dari awal bilang beda.
+%bedanya apa?
+
+
 In a peer side, we follow Guo et al., \cite{1613869} for cache replacement strategy. 
 We define the utility function for peer replacement as follows:
 
@@ -653,6 +660,11 @@ u = \frac{f(p_{max})-f(p)}{r^{\alpha+\beta}}.
 
 
 \section{Evaluation}\label{evaluation}
+%apa yng dievaluasi.
+%bandingkan 2 proposal ini dng 2 metric yng ada misalnya.
+%kenapa 2 metric ini dipilih.
+%bagaimana evaluasinya:  bikin simulator: a, b, c ,d 
+
 In order to evaluate the proposed cache strategy using before-peak, at-peak, and after-peak information from VoD model, we have to compare our model to PROP model \cite{1613869}.
 
 \subsection{Simulation Design}\label{simulationdesign}
@@ -702,13 +714,13 @@ During a round, a peer request a video.
 \label{fig:peercontribution20G}
 \end{figure*}
 
-\begin{figure}[!t]
-\begin{center}
-\includegraphics[scale=0.6]{graphs/hit-model-500MBvs-1000MB-10G-20G-cdf.eps}
-\end{center}
-\caption{Comparisan the model of CDN capacity 10GB vs. 20GB.}
-\label{fig:10Gvs20G}
-\end{figure} 
+%\begin{figure}[!t]
+%\begin{center}
+%\includegraphics[scale=0.6]{graphs/hit-model-500MBvs-1000MB-10G-20G-cdf.eps}
+%\end{center}
+%\caption{Comparisan the model of CDN capacity 10GB vs. 20GB.}
+%\label{fig:10Gvs20G}
+%\end{figure} 
 
 
 
