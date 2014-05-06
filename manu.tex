@@ -390,7 +390,7 @@ In client-server model, clients download content dedicated and geographically ma
 In this paper, we develop a peer-assisted CDN model based on previous work. 
 Our model is quite different from previous work.  
 We add Youtube VoD views popularity model aspect to our peer-assisted CDN model. 
-From simulation-based experiments driven by real-world Youtube data-sets, we find that peers in our model can contribute to deliver contents higher than previous work on the other hand number of access to cache in peer also higher than previous work.
+From simulation-based experiments driven by real-world Youtube datasets, we find that peers in our model can contribute to deliver contents higher than previous work on the other hand number of access to cache in peer also higher than previous work.
 We do significance test for both metrics (peer contributions and number of access to cache) and find that $p$-values are less than $1$\% thus the results are significant.
 
 \end{abstract}
@@ -451,7 +451,7 @@ A user may cache the content after download to serve requests from other users.
 Due to the complexity of the behavior of peers, the process should be done in the home gateway user where the ISP can control it.
 
 In this work, we will revisit Guo et al., \cite{1613869} work's PROP as basis to evaluate of the peer-assisted CDN and propose an improvement the model for the PROP.
-We also examine the characteristics of Internet VoD by investigating real-world data sets obtained from Youtube.
+We also examine the characteristics of Internet VoD by investigating real-world datasets obtained from Youtube.
 In P2P assisted CDN for video on demand (VoD), most of researcher assume that catalog of video popularity rank is already established following zipf distribution.  
 This become basis for P2P assisted CDN model in PROP \cite{1613869}.
 Our work is quite different whereas we will use VoD view popularity to aid the PROP model.
@@ -461,7 +461,6 @@ A twofold of our contributions as follows:
 (1) We use the idea of VoD view popularity model to aid the PROP model. 
 To our knowledge, the combination of PROP model and VoD view popularity model is the first.
 (2) From simulation-based experiments, we find that peer contributions become higher than the PROP model.
-
 
 Our paper presentation as follows: (1) we describe related work in sect.\ref{relatedwork}; (2) we explain detail of Youtube popularity evolution model in sect.\ref{popularity}; (3) we explain the caching strategy for CDN and peer in sect.\ref{systemdescription}; (4) we explain our simulation design, simulator, and its evaluation in sect.\ref{evaluation}.
 Finally, we present our conclusions in section \ref{conclusion}.
@@ -501,7 +500,7 @@ They argue that the current CDN architecture is not close enough to the users an
 
 The idea of utilizing the user's computation power to support ISP operation is not new.  
 The Figaro project \cite{figaro} proposed the residential gateway as an integrator of different networks and services, becoming an Internet-wide distributed content management for a proposed future Internet architecture \cite{figaro}.  
-Cha et al.,\cite{Cha:2008:NTP:1855641.1855646} performed trace analysis and found that an IPTV architecture powered by P2P can handle a much larger number of channels, with limited demand for infrastructure compare to IP multicast.  
+Cha et al.,\cite{Cha:2008:NTP:1855641.1855646} performed trace analysis and found that an IPTV architecture powered by P2P can handle a much larger number of channels, with lower demand for infrastructure compared to IP multicast.  
 Jiang et al. \cite{Jiang:2012:OMD:2413176.2413193} proposed scalable and adaptive content replication and request routing for CDN servers located in users' home gateways.  
 Maki et al.\cite{NaoyaMAKI2012} propose traffic engineering for peer-assisted CDN to control the behavior of clients, and present a solution for optimizing the selection of content files.
 Mathieu et al., \cite{6249305} are using data gathered from France telecom network to calculate reduction of network load if customers are employed as peer-assisted content delivery.
@@ -520,8 +519,8 @@ In our work, we complement Guo et al., \cite{1613869} work with VoD viewing popu
 Before analyzing the system description and video caching, we first examine the popularity characteristics of Internet VoD services.
 We use YouTube as example of VoD service.
 The studies of content popularity evolution are mostly considered in short time periods.
-Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} measure the evolution of content popularity in long periods (36 weeks) in which view count statistics of Youtube. 
-Complement with Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} work, we also did same measurement as Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} for eight weeks from October-November 2013.
+Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} measure the evolution of content popularity in long periods (36 weeks,from 3 August 2008 until 29 March 2009) in which view count statistics of Youtube. 
+Complement with Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} work, we also did same measurement as Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} for eight weeks from October to November 2013.
 We collected number of views, upload time YouTube videos on a weekly basis.
 We use YouTube's API to sampling popular videos. 
 The API provides a call that returns details on 20 popular videos.
@@ -529,12 +528,15 @@ Finally, we combine our datasets with Borghol et al.,\cite{Borghol:2011:CMP:2039
 
 In datasets, we have one-week spacing between consecutive snapshots.  
 We can get how many times the video was view during the one-week period since last week or since snapshot $(i-1)$. 
-As same Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} work, we define time-to-peak for a video as its age (time since upload) at which its weekly viewing rate is the highest during measurement (from the first week until end of measurement).
+Same as Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} work, we define time-to-peak for a video as its age (time since upload) at which its weekly viewing rate is the highest during measurement (from the first week until end of measurement).
 The time-to-peak distributions is shown in fig.\ref{fig:timetopeak}.
-Figure \ref{fig:timetopeak} shows that around three-quarters of a large fraction videos peak within the first six weeks since their upload and beyond six weeks we have uniform distribution thus the time-to-peak is exponentially distributed mixture with uniform distribution. 
+Figure \ref{fig:timetopeak} shows Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} work that around three-quarters of a large fraction videos peak within the first six weeks since their upload and beyond six weeks we have uniform distribution thus the time-to-peak is exponentially distributed mixture with uniform distribution. 
+Time-to-peak from our datasets is also showed in fig.~\ref{fig:timetopeak}.
+From our datasets, we get time-to-peak for video around $70$\% which is lower than Borghol et al., work. 
+This is because our measurement is shorter than Borghol et al.,\cite{Borghol:2011:CMP:2039452.2039717}.
 Our finding coherence with Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717}.
 To estimate the the rate parameter of exponential part of time-to-peak distribution, we use Maximum Likelihood Estimation (MLE) \cite{clauset2009power}.
-Using MLE method, we can get exponential parameter $\lambda = 0.61$. 
+Using MLE method, we can get exponential parameter $\lambda = 0.59$ for Borghol et al., work while for our datasets $\lambda=0.9$. 
 For weekly views distribution, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} found that beta distribution is a good model to explain video views evolution thus we follow Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} for  weekly views distribution model.
 %datanya youtube seperti ini.  view bisa dimodelkan dng beta.
 
