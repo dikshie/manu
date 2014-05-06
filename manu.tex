@@ -554,72 +554,11 @@ For weekly views distribution, Borghol et al., \cite{Borghol:2011:CMP:2039452.20
 In our work, we use Youtube VoD view model to aid our model that based from PROP. 
 The Youtube VoD view model will be used in peer-caching strategy side to exploits the video popularity. 
 
-%memanfaatkan data global seperti borgghol.
-%mengapa?
-%bagaimana menyatukannya dng datalocal
-%In this paper, we consider a peer-assisted CDN system. 
-%There are two main components: (1) the CDN servers which at a minimum consist content delivery platform and control plane platform. 
-%(2) Clients which request and downloads the videos.
-%In addition, clients form a self-organized P2P overlay network.
 
-%The CDN servers are maintained by a CDN company or a content provider company (e.q Netflix) or an Internet service provider (ISP).
-%In peer-assisted CDN, a peer caches the videos that it has downloaded.
-%Peers independently manage their cache localy.
-%When a peer join the system video replica is cached.
-%When a peer leaves the system video replica is evicted. 
-%In both process, a peer always reports to CDN thus CDN knows the status of a peer.
-
-%cdn caching ini tdk relevan
-%\subsection{CDN caching strategy}\label{cdncachingstrategy}
-%As we mentioned in previous sect.\ref{systemdescription}, the CDN collects metadata.
-%The metadata will be used for assisting P2P clients for caching decision. 
-%The metadata that CDN collects are the following parameters:
-%\begin{itemize}
-%\item $n_j^r$: total number of the times video $j$ has been requested.  
-%\item $t_j^r$: the last time video $j$ was requested.
-%\item $n_j^s$: total number of the time that video $j$ is served by CDN.
-%\item $t_j^s$: the last time that video $j$ was served by CDN.
-%\item $a_j$: the time that video $j$ was added to video server's catalog.
-%\item $n_j^c$: total number of the times that video $j$ is served by CDN.
-%\item $t_j^p$: the time that video  is added into peer's cache.
-%\item $t$: the current time.
-%\end{itemize}
-
-%We use the method proposed in \cite{1613869} to estimate the popularity video as follows:
-
-%\begin{equation}
-%P_j = min\left\{\frac{n_j^r}{t_j^r - a_j}, \frac{1}{t - t_j^r}\right\}
-%\label{eq:videopopularityestimation}
-%\end{equation}
-
-%The expression of $\frac{n_j^r}{t_j^r - a_j}$ reflects the long-term request rate of the video or probability of future access rate and the expression of $\frac{1}{t - t_j^r}$ reflects the approximation of the video's recent request rate.
-%The video with the smallest popularity is chosen as the candidate to be replaced when the CDN cache is full. 
-%Since above eq.\ref{eq:videopopularityestimation} considering both recent access and pass access information, the CDN can cache the most requested video for clients.
 
 \subsection{Peer caching strategy}\label{peercachingstrategy}
-
-
-%dari awal bilang beda.
-%bedanya apa?
-
-
-In a peer side, we follow Guo et al., \cite{1613869} for cache replacement strategy. 
-We define the utility function for peer replacement as follows:
-
-\begin{equation}
-u = \frac{ (f(p)-f(p_{min})) \times  (f(p_{max})-f(p))}{r^{\alpha + \beta}}
-\label{eq:utilityfunction}
-\end{equation}
-
-$p$ represents popularity of the video, $p_{min}$ represents estimation of minimum popularity in P2P system, $p_{max}$ represents estimation of maximum popularity in P2P system, $r$ represents the number of replicas of the video in the system, and $f(p)$ is monotonic non-decreasing function.
-$\alpha$ and $\beta$ are the adjustment factor.
-
-The CDN can calculate $p_{min}$ and $p_{max}$ then propagate to the P2P system.
-We choose the video with the smallest $u$ value as the candidate to be replaced when a peer's cache capacity is full.
-In the next section (sect.\ref{evaluation}), we will show how popularity evolution knowledge is used to simplified our calculation for utility function.
-
-\subsection{Peer caching strategy}\label{peercachingstrategyproposal}
-Equation \ref{eq:utilityfunction} express the utility function used by peer for cache replacement. 
+As we mentioned before, we use Youtube VoD view model in peer caching strategy side. 
+Our utility function is different from PROP.
 Since we can estimate before-peak week, at-peak week, and after-peak week of video, we modified the utility function as follows: 
 \begin{itemize}
 
@@ -635,18 +574,20 @@ u = \frac{f(p)-f(p_{min})} {r^{\alpha+\beta}}.
 u = \frac{f(p_{max})-f(p)}{r^{\alpha+\beta}}.
 \label{eq:utilityfunctionat}
 \end{equation}
-
-
 \end{itemize}
 
 
 \begin{figure}[!t]
 \begin{center}
-\includegraphics[scale=0.5]{graphs/p2p-system-description.eps}
+\includegraphics[scale=0.4]{graphs/p2p-system-description.eps}
 \end{center}
 \caption{Peer interaction in simulator.}
 \label{fig:p2pcdninteractioninsimulator}
 \end{figure} 
+
+
+
+
 
 
 \section{Evaluation}\label{evaluation}
@@ -655,7 +596,9 @@ u = \frac{f(p_{max})-f(p)}{r^{\alpha+\beta}}.
 %kenapa 2 metric ini dipilih.
 %bagaimana evaluasinya:  bikin simulator: a, b, c ,d 
 
-In order to evaluate the proposed cache strategy using before-peak, at-peak, and after-peak information from VoD model, we have to compare our model to PROP model \cite{1613869}.
+In order to evaluate the proposed peer-caching strategy using before-peak, at-peak, and after-peak information from VoD model, we have to compare our model to PROP model.
+We evaluate two metrics which is peer contribution to delivery contents during simulation and access frequency of cache.
+To evaluate these metrics, we developed peer-assisted CDN simulator. 
 
 \subsection{Simulation Design}\label{simulationdesign}
 An event driven simulator is developed using Python for this purpose and we use Youtube VoD model as video catalog of the simulated Internet VoD system in our experiment.
