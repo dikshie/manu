@@ -505,7 +505,8 @@ Jiang et al. \cite{Jiang:2012:OMD:2413176.2413193} proposed scalable and adaptiv
 Maki et al.\cite{NaoyaMAKI2012} propose traffic engineering for peer-assisted CDN to control the behavior of clients, and present a solution for optimizing the selection of content files.
 Mathieu et al., \cite{6249305} are using data gathered from France telecom network to calculate reduction of network load if customers are employed as peer-assisted content delivery.
 
-Guo et al., \cite{1613869} work's PROP is closest with our work because we use that work as comparison and we use author's utility function.
+Guo et al., \cite{1613869} work's PROP is closest with our work.
+%because we use that work as comparison and we use author's utility function.
 PROP uses local system (local counter) to calculate the segment popularity in peer-assisted proxy system. 
 PROP uses popularity for proxy cache replacement strategy. 
 In peer side, the author use utility function for cache replacement strategy.
@@ -608,13 +609,13 @@ In our simulator, time is divided into rounds.
 During a round, a peer request a video.
 
 In fig.\ref{fig:p2pcdninteractioninsimulator}, we describe the process of a peer that requests a video in simulator.
-peer and cdn are implemented in object oriented model. 
+A peer and a CDN are implemented in object oriented model. 
 When a peer requests a video, it always goes to a CDN server (step 1). 
 The CDN provides the videos to the peer (step 2). 
 If there is another peer request same video, that request will go to CDN (step 3).  
-CDN will check its record to see if there are some peers cache that requested video.  
-If there are some peers cache that requested video, CDN will reply with redirect message that asking a peer to download requested video from other peer (step 4).
-If there are no peers have requested video, CDN will serve the video.   
+A CDN will check its record to see if there are some peers cache that requested video.  
+If there are some peers cache that requested video, a CDN will reply with redirect message that asking a peer to download requested video from other peer (step 4).
+If there are no peers have requested video, a CDN will serve the video.   
 A peer then can request the video to other peer and get the video (step 5 and step 6).
 From this description, we can see that deploying peer-assisted CDN can save some traffic since the clients which form P2P network can sharing the contents or videos.
 
