@@ -546,7 +546,7 @@ This is because our measurement is shorter than Borghol et al.,\cite{Borghol:201
 Our finding coherence with Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717}.
 To estimate the the rate parameter of exponential part of time-to-peak distribution, we use Maximum Likelihood Estimation (MLE) \cite{clauset2009power}.
 Using MLE method, we can get exponential parameter $\lambda = 0.59$ for Borghol et al., work while for our datasets $\lambda=0.9$. 
-For weekly views distribution, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} found that beta distribution is a good model to explain video views evolution thus we follow Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} for  weekly views distribution model.
+For weekly views distribution, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} found that beta distribution is a good model to explain video views popularity evolution thus we follow Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} for  weekly views distribution model.
 %datanya youtube seperti ini.  view bisa dimodelkan dng beta.
 
 
@@ -554,7 +554,7 @@ For weekly views distribution, Borghol et al., \cite{Borghol:2011:CMP:2039452.20
 
 
 \section{System Description}\label{systemdescription}
-In our work, we use Youtube VoD view model to aid our model that based from PROP. 
+In our work, we use Youtube VoD view model to aid our work that based from PROP. 
 The Youtube VoD view model will be used in peer-caching strategy side to exploits the video popularity. 
 
 
@@ -582,6 +582,7 @@ u = \frac{f(p_{max})-f(p)}{r^{\alpha+\beta}}.
 $p$ represents popularity of the video, $p_{min}$ represents estimation of minimum popularity in P2P system, $p_{max}$ represents estimation of maximum popularity in P2P system, $r$ represents the number of replicas of the video in the system, and $f(p)$ is monotonic non-decreasing function.
 $\alpha$ and $\beta$ are the adjustment factor.
 The CDN can calculate $p_{min}$ and $p_{max}$ then propagate to the P2P system.
+To able to track the simulation, we use default value from PROP for $\alpha=\beta=1$ and $f(p)=log p$.
 We choose the video with the smallest $u$ value as the candidate to be replaced when a peer's cache capacity is full.
 
 \begin{figure}[!t]
@@ -713,7 +714,7 @@ From this description, we can see that deploying peer-assisted CDN can save some
 In catalog generator, we assume peer request a video to CDN following poisson process with a mean rate $\lambda=1.1$ \cite{Zink:2009:CYN:1502814.1502987} and we made it 3600 videos per hour, finally we generate video request for 360 days of simulation thus we have 31104000 requests by peers. 
 %How a peer choice a video, we will explain in next paragraph.
 
-First of all, we calculate the number of videos at-peak time as follows: sample $N$ value from the time-to-peak distribution and determine the number of videos $n_j^{at}$ that peak at week $j$. 
+We calculate the number of videos at-peak time as follows: sample $N$ value from the time-to-peak distribution and determine the number of videos $n_j^{at}$ that peak at week $j$. 
 Total number of video $N = n_j^{before} + n_j^{at} + n_j^{after}$.\\
 Next, we determine view count terminus which the number of final view count of video.
 In view count terminus, we assume that a video will not get big additional view after at-peak phase.
