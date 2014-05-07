@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2014.4.17)  7 MAY 2014 12:51
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2014.4.17)  7 MAY 2014 16:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -481,7 +481,10 @@ File: graphs/20G/replica-minggu10-500vs1000-20G-log.eps Graphic file (type eps)
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [4]
-(./manu.bbl [5]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [5]
+(./manu.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 33--35
 []\T1/ptm/m/n/8 Octoshape, ``Oc-toshape,'' $http : / / www . octoshape . com /
  []
@@ -490,10 +493,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 33--35
 Here is how much of TeX's memory you used:
  4612 strings out of 493309
  70259 string characters out of 6137842
- 238434 words of memory out of 5000000
+ 237434 words of memory out of 5000000
  8003 multiletter control sequences out of 15000+600000
  101383 words of font info for 108 fonts, out of 8000000 for 9000
  960 hyphenation exceptions out of 8191
  44i,10n,47p,387b,356s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on manu.dvi (6 pages, 42680 bytes).
+Output written on manu.dvi (6 pages, 43220 bytes).

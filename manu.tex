@@ -602,7 +602,12 @@ We choose the video with the smallest $u$ value as the candidate to be replaced 
 %bagaimana evaluasinya:  bikin simulator: a, b, c ,d 
 
 In order to evaluate the proposed peer-caching strategy using before-peak, at-peak, and after-peak information from Youtube VoD view model, we have to compare our model to PROP model.
-We evaluate two metrics which is peer contribution to delivery contents during simulation and access frequency of cache.
+We evaluate two metrics which is peer contribution to delivery contents during simulation and access frequency of cache during simulation.
+Peer contribution metric related to byte-hit-ratio. 
+Byte-hit-ratio is defined as the total bytes contents served by peers normalized by the total bytes of video all peers and CDN consume.
+It means more peer contributions, more byte-hit-ratio because peer can get content from another peers. 
+Access frequency of cache reflects the storage utilization. 
+More access means more peer storage utilization.  
 To evaluate these metrics, we developed peer-assisted CDN simulator. 
 
 \subsection{Simulation Design}\label{simulationdesign}
@@ -728,7 +733,7 @@ With the knowledge of beta distribution of every video and its view count termin
 %For video choice, we estimate that a peer will choose video proportionally considering view count and view rate of the video.   
 %We can get view count and view rate from probability distribution function (PDF) and cumulative distribution function (CDF) of beta distribution above multiply by video's view count terminus.
 In last step, we assign file size of video randomly between $1$MB and $200$MB.
-Finally, we have a catalog that consists of: video to be chosen, time when uploaded, view count terminus, at-peak week, and video size.
+Finally, we have a catalog that consists of: video-id to be chosen, time when uploaded, view count terminus, at-peak week, and video size.
 
 
 \subsubsection{Simulation Parameters}
