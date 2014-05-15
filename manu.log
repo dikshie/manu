@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2014.4.17)  15 MAY 2014 13:53
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2014.4.17)  15 MAY 2014 16:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -439,6 +439,11 @@ File: graphs/timetopeak.eps Graphic file (type eps)
  <graphs/timetopeak.eps> [2]
 File: graphs/datadistribution.eps Graphic file (type eps)
  <graphs/datadistribution.eps>
+File: graphs/transformasi.eps Graphic file (type eps)
+
+<graphs/transformasi.eps>
+File: graphs/transformasi2.eps Graphic file (type eps)
+ <graphs/transformasi2.eps> [3]
 File: graphs/p2p-system-description.eps Graphic file (type eps)
 
 <graphs/p2p-system-description.eps>
@@ -480,26 +485,31 @@ File: graphs/20G/replica-minggu6-500vs1000-20G-log.eps Graphic file (type eps)
 File: graphs/20G/replica-minggu10-500vs1000-20G-log.eps Graphic file (type eps)
 
 
-<graphs/20G/replica-minggu10-500vs1000-20G-log.eps> [3]
+<graphs/20G/replica-minggu10-500vs1000-20G-log.eps> [4]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [4]
-[5] (./manu.bbl
+ [5]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+(./manu.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 33--35
 []\T1/ptm/m/n/8 Octoshape, ``Oc-toshape,'' $http : / / www . octoshape . com /
  []
 
-) [6] (./manu.aux) ) 
+[6]) [7
+
+] (./manu.aux) ) 
 Here is how much of TeX's memory you used:
- 4615 strings out of 493309
- 70332 string characters out of 6137842
- 235434 words of memory out of 5000000
- 8005 multiletter control sequences out of 15000+600000
+ 4621 strings out of 493309
+ 70465 string characters out of 6137842
+ 237434 words of memory out of 5000000
+ 8009 multiletter control sequences out of 15000+600000
  101383 words of font info for 108 fonts, out of 8000000 for 9000
  960 hyphenation exceptions out of 8191
  44i,10n,47p,480b,356s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on manu.dvi (6 pages, 43412 bytes).
+Output written on manu.dvi (7 pages, 45668 bytes).

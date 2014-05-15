@@ -556,6 +556,22 @@ Every points lie in positive x-axis mean view rate of every videos in after-peak
 \end{figure} 
 
 
+\begin{figure}[!t]
+\begin{center}
+\includegraphics[scale=0.5]{graphs/transformasi.eps}
+\end{center}
+\caption{view rate distribution example. }
+\label{fig:viewratedistexample}
+\end{figure} 
+
+\begin{figure}[!t]
+\begin{center}
+\includegraphics[scale=0.5]{graphs/transformasi2.eps}
+\end{center}
+\caption{graph of view rate distributio and red}
+\label{fig:viewratedistexamplered}
+\end{figure} 
+
 
 
 \section{System Description}\label{systemdescription}
@@ -567,8 +583,18 @@ The Youtube VoD view model will be used in peer-caching strategy side to exploit
 As we mentioned before, we use Youtube VoD view model in peer caching strategy side. 
 Our utility function is different from PROP.
 Our utility function need the estimation of video position whether the requested video is in before-peak phase, at-peak phase, or after-peak phase.
-
-
+How we estimate the video position is shown in fig.~\ref{fig:viewratedistexample} and fig.~\ref{fig:viewratedistexamplered}.
+In fig.~\ref{fig:viewratedistexample}, we have view rate (y-axis) and relative week to peak (x-axis) which is view rate distribution versus week relative to at-peak phase as also shown completely in fig.~\ref{fig:viewratedistribution}.
+We transform these numbers by adding number of week and make number of week as x-axis, view rate 
+as y-axis, and relative week to peak as z-axis.
+This transformation is shown in fig.~\ref{fig:viewratedistexamplered} as blue dot.
+Assume there is a video in week 3 with view rate vr$=2$ as shown in fig.~\ref{fig:viewratedistexamplered} as red dot.
+We want to estimate what is the position of that video. 
+Is the video in at-peak phase, before-phase, or after phase.  
+We can estimate the that video position by averaging relative week to peak numbers (z-axis) of the nearest point from datasets. 
+If the average value less than $0$ we estimate the video position at before-peak phase, if the average value equal to $0$ we estimate the video position at at-peak phase,  and if the average value more than $0$ we estimate the video position at after-peak phase.
+In this case, the nearest points are the point at third week $(2,1,-1)$ and the point at fifth week $(4,1,1)$.  
+By averaging the z-axis of the nearest points $(-1 + 1)/2 = 0$,  we can get estimate that video is in at-peak phase.
 
 Since we can estimate before-peak week, at-peak week, and after-peak week of video, we modified the original utility function from PROP as follows: 
 \begin{itemize}
