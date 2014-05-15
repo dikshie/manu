@@ -529,25 +529,35 @@ Before analyzing the system description and video caching, we first examine the 
 We use YouTube as example of VoD service.
 The studies of content popularity evolution are mostly considered in short time periods.
 Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} measure the evolution of content popularity in long periods (36 weeks,from 3 August 2008 until 29 March 2009) in which view count statistics of Youtube. 
-Complement with Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} work, we also did same measurement as Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} for eight weeks from October to November 2013.
-We collected number of views, upload time YouTube videos on a weekly basis.
-We use YouTube's API to sampling popular videos. 
-The API provides a call that returns details on 20 popular videos.
-Finally, we combine our datasets with Borghol et al.,\cite{Borghol:2011:CMP:2039452.2039717} datasets. 
 
 In datasets, we have one-week spacing between consecutive snapshots.  
 We can get how many times the video was view during the one-week period since last week or since snapshot $(i-1)$. 
-Same as Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} work, we define time-to-peak for a video as its age (time since upload) at which its weekly viewing rate is the highest during measurement (from the first week until end of measurement).
+Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} define time-to-peak for a video as its age (time since upload) at which its weekly viewing rate is the highest during measurement (from the first week until end of measurement).
+
 The time-to-peak distributions is shown in fig.\ref{fig:timetopeak}.
 Figure \ref{fig:timetopeak} shows Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} work that around three-quarters of a large fraction videos peak within the first six weeks since their upload and beyond six weeks we have uniform distribution thus the time-to-peak is exponentially distributed mixture with uniform distribution. 
-Time-to-peak from our datasets is also showed in fig.~\ref{fig:timetopeak}.
-From our datasets, we get time-to-peak for video around $70$\% which is lower than Borghol et al., work. 
-This is because our measurement is shorter than Borghol et al.,\cite{Borghol:2011:CMP:2039452.2039717}.
-Our finding coherence with Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717}.
+Because we know the peak time (at-peak phase) of every video, we can also know before-peak phase and after-phase of every videos.
+
 To estimate the the rate parameter of exponential part of time-to-peak distribution, we use Maximum Likelihood Estimation (MLE) \cite{clauset2009power}.
-Using MLE method, we can get exponential parameter $\lambda = 0.59$ for Borghol et al., work while for our datasets $\lambda=0.9$. 
-For weekly views distribution, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} found that beta distribution is a good model to explain video views popularity evolution thus we follow Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} for  weekly views distribution model.
-%datanya youtube seperti ini.  view bisa dimodelkan dng beta.
+Using MLE method, we can get exponential parameter $\lambda = 0.59$ for Borghol et al., work. \\
+For weekly views distribution, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} found that beta distribution is a good model to explain video views popularity evolution thus we follow Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} for  weekly views distribution model.\\
+To reveal data distribution of view rate for every video, we plot view rate versus week where we shift week of view rate peak become zero. 
+Therefore we can get view rate distribution relative to peak week as shown in fig.~\ref{fig:viewratedistribution}
+
+\begin{figure}[!t]
+\begin{center}
+\includegraphics[scale=0.6]{graphs/datadistribution.eps}
+\end{center}
+\caption{View rate distribution versus week where x-axis$=0$ is the peak week for every video.
+Every points lie in negative x-axis mean view rate of every videos in before-peak phase.
+Every points lie in x-axis$=0$ mean view rate of every videos at-peak phase. 
+Every points lie in positive x-axis mean view rate of every videos in after-peak phase. }
+\label{fig:viewratedistribution}
+\end{figure} 
+
+
+
+
 
 
 
