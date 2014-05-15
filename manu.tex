@@ -588,7 +588,7 @@ In fig.~\ref{fig:viewratedistexample} part A, we have view rate (y-axis) and rel
 We transform these numbers by adding number of week and make number of week as x-axis, view rate 
 as y-axis, and relative week to peak as z-axis fig.~\ref{fig:viewratedistexample} part B.
 This transformation is shown in fig.~\ref{fig:viewratedistexamplered} as diamond points.
-Assume there is a peer that request a video where the position of video in third week with the last week view rate vr$=2$ (we can get as this data from CDN) shown in fig.~\ref{fig:viewratedistexamplered} as red cross.
+Assume there is a peer that request a video where the position of video in third week with the last week view rate $vr=2$ (we can get as this data from CDN) shown in fig.~\ref{fig:viewratedistexamplered} as red cross.
 We want to estimate what is the position of that video. 
 Is the video in at-peak phase, before-phase, or after phase.  
 We can estimate the that video position by averaging relative week to peak numbers (the points at z-axis) of the nearest point from datasets. 
@@ -642,7 +642,7 @@ Byte-hit-ratio is defined as the total bytes contents served by peers normalized
 It means more peer contributions, more byte-hit-ratio because peer can get content from another peers. 
 Access frequency of cache reflects the storage utilization. 
 More access means more peer storage utilization.  
-To evaluate these metrics, we developed peer-assisted CDN simulator. 
+To evaluate these metrics, we developed a peer-assisted CDN simulator. 
 
 \subsection{Simulation Design}\label{simulationdesign}
 An event driven simulator is developed using Python for this purpose.
@@ -755,7 +755,7 @@ In catalog generator, we assume peer request a video to CDN following poisson pr
 
 We calculate the number of videos at-peak time as follows: sample $N$ value from the time-to-peak distribution and determine the number of videos $n_j^{at}$ that peak at week $j$. 
 Total number of video $N = n_j^{before} + n_j^{at} + n_j^{after}$.\\
-Next, we determine view count terminus which the number of final view count of video.
+Next, we determine view count terminus which are the number of final view count of video.
 In view count terminus, we assume that a video will not get big additional view after at-peak phase.
 We assign view count terminus randomly from datasets.
 After determining view count terminus, we assign beta distribution parameter for every video. 
@@ -763,9 +763,9 @@ After determining view count terminus, we assign beta distribution parameter for
 Since we can estimate the time of at-peak phase for each video, we know the mode of beta distribution value and we can calculate $\alpha$ and $\beta$ value using the mode of distribution formula: $m=\frac{\alpha-1}{\alpha + \beta - 2}$.  
 We assign $\alpha$ value randomly between $1$ and $2$ thus we can calculate $\beta$ value.
 With the knowledge of beta distribution of every video and its view count terminus, we can know the view count and view rate of every video as function from time.
-%The knowledge of view count and view rate, will be used top generate a video choice.  
-%For video choice, we estimate that a peer will choose video proportionally considering view count and view rate of the video.   
-%We can get view count and view rate from probability distribution function (PDF) and cumulative distribution function (CDF) of beta distribution above multiply by video's view count terminus.
+The knowledge of view count and view rate, will be used top generate a video choice.  
+For video choice, we estimate that a peer will choose video proportionally considering view count and view rate of the video.   
+We can get view count and view rate from probability distribution function (PDF) and cumulative distribution function (CDF) of beta distribution above multiply by video's view count terminus.
 In last step, we assign file size of video randomly between $1$MB and $200$MB.
 Finally, we have a catalog that consists of: video-id to be chosen, time when uploaded, view count terminus, at-peak week, and video size.
 
