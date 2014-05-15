@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2014.4.17)  15 MAY 2014 16:09
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2014.4.17)  15 MAY 2014 16:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -492,10 +492,9 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [5]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 3557) has occurred while \output is active []
 
-
-(./manu.bbl
+ (./manu.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 33--35
 []\T1/ptm/m/n/8 Octoshape, ``Oc-toshape,'' $http : / / www . octoshape . com /
  []
@@ -512,4 +511,4 @@ Here is how much of TeX's memory you used:
  960 hyphenation exceptions out of 8191
  44i,10n,47p,480b,356s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on manu.dvi (7 pages, 45668 bytes).
+Output written on manu.dvi (7 pages, 45848 bytes).
