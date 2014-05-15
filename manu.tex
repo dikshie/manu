@@ -541,14 +541,14 @@ Because we know the peak time (at-peak phase) of every video, we can also know b
 To estimate the the rate parameter of exponential part of time-to-peak distribution, we use Maximum Likelihood Estimation (MLE) \cite{clauset2009power}.
 Using MLE method, we can get exponential parameter $\lambda = 0.59$ for Borghol et al., work. \\
 For weekly views distribution, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} found that beta distribution is a good model to explain video views popularity evolution thus we follow Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} for  weekly views distribution model.\\
-To reveal data distribution of view rate for every video, we plot view rate versus week where we shift week of view rate peak become zero. 
-Therefore we can get view rate distribution relative to peak week as shown in fig.~\ref{fig:viewratedistribution}
+To reveal data distribution of view rate for every video, we plot view rate versus week where we shift week of view rate at-peak phase to zero. 
+Therefore we can get view rate distribution relative to at-peak week as shown in fig.~\ref{fig:viewratedistribution}
 
 \begin{figure}[!t]
 \begin{center}
 \includegraphics[scale=0.6]{graphs/datadistribution.eps}
 \end{center}
-\caption{View rate distribution versus week where x-axis$=0$ is the peak week for every video.
+\caption{View rate distribution versus week relative to at-peak phase week for every videos.
 Every points lie in negative x-axis mean view rate of every videos in before-peak phase.
 Every points lie in x-axis$=0$ mean view rate of every videos at-peak phase. 
 Every points lie in positive x-axis mean view rate of every videos in after-peak phase. }
