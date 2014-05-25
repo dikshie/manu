@@ -665,86 +665,28 @@ From this description, we can see that deploying peer-assisted CDN can save some
 %%%contribution 500MB vs 1000MB CDN 10GB
 \begin{figure*}[!t]
 \centering
-\subfloat[CDF percentage of contribution of peers where peer capacity 500MB and CDN capacity 10GB. $x$ and $y$ axis in logscale.\label{fig:peer500MBcontributionCDN10G}]{
-\includegraphics[width=5.7cm]{graphs/hit-model-original-1000MB-cdf-log.eps}
+\subfloat[CDF percentage of contribution of peers where peer capacity 500MB and CDN capacity 10GB.\label{fig:peer500MBcontributionCDN10G}]{
+\includegraphics[width=5.7cm]{graphs/REPLICA/contributioncdfpropvsmodel.eps}
 }
 \hfill
 \vspace{2mm}
 \subfloat[CDF percentage of contribution of peers where peer capacity 1000MB and CDN capacity 10GB. $x$ and $y$ axis in logscale.\label{fig:peer1000MBcontributionCDN10G}]{
-\includegraphics[width=5.7cm]{graphs/hit-model-original-500MB-cdf-log.eps}
+\includegraphics[width=5.7cm]{graphs/REPLICA/contributioncdfpropvsmodel.eps}
 }
-\hfill
-\subfloat[CDF peer contribution percentage between peer with 500MB capacity and 1000MB capacity and CDN capacity 10GB.\label{fig:peer500MB-vs-1000MBcontributionCDN10G}]{
-\includegraphics[width=5.7cm]{graphs/hit-model-500MBvs-1000MB-cdf.eps}
-}
+%\hfill
+%\subfloat[CDF peer contribution percentage between peer with 500MB capacity and 1000MB capacity and CDN capacity 10GB.\label{fig:peer500MB-vs-1000MBcontributionCDN10G}]{
+%\includegraphics[width=5.7cm]{graphs/hit-model-500MBvs-1000MB-cdf.eps}
+%}
 \vspace{2mm}
 \caption{CDF peer contribution for peer capacity 500MB and 1000MB, CDN capacity 10000MB. Model refers to our work and original refer to PROP \cite{1613869}.}
 \label{fig:peercontribution}
 \end{figure*}
 
 
-%%%contribution 500MB vs 1000MB CDN 20GB
-\begin{figure*}[!t]
-\centering
-\subfloat[CDF percentage of contribution of peers where peer capacity 500MB and CDN capacity 20GB. $x$ and $y$ axis in logscale.\label{fig:peer500MBcontributionCDN20G}]{
-\includegraphics[width=5.7cm]{graphs/20G/hit-model-original-1000MB-20G-cdf-log.eps}
-}
-\hfill
-\vspace{2mm}
-\subfloat[CDF percentage of contribution of peers where peer capacity 1000MB and CDN capcity 20GB. $x$ and $y$ axis in logscale.\label{fig:peer1000MBcontributionCDN20G}]{
-\includegraphics[width=5.7cm]{graphs/20G/hit-model-original-500MB-20G-cdf-log.eps}
-}
-\hfill
-\subfloat[CDF peer contribution percentage between peer with 500MB capacity and 1000MB capacity and CDN capacity 20GB.\label{fig:peer500MB-vs-1000MBcontributionCDN20G}]{
-\includegraphics[width=5.7cm]{graphs/20G/hit-model-500MBvs-1000MB-20G-cdf.eps}
-}
-\caption{CDF peer contribution for peer capacity 500MB and 1000MB, CDN capacity 20000MB. Model refers to our work and original refer to PROP \cite{1613869}.}
-\label{fig:peercontribution20G}
-\end{figure*}
-
-%\begin{figure}[!t]
-%\begin{center}
-%\includegraphics[scale=0.6]{graphs/hit-model-500MBvs-1000MB-10G-20G-cdf.eps}
-%\end{center}
-%\caption{Comparisan the model of CDN capacity 10GB vs. 20GB.}
-%\label{fig:10Gvs20G}
-%\end{figure} 
+ 
 
 
 
-\begin{figure*}[!t]
-\centering
-\subfloat[Number of replicas by popularity at $t=10$day for peer capacity 500MB.\label{fig:peer500MBvs1000MBreplica10dayCDN10Gpopularity}]{
-\includegraphics[width=5.7cm]{graphs/replica-10hari-500vs1000-log.eps}
-}
-\hfill
-\subfloat[Number of replicas by popularity at $t=6$week for peer capacity 1000MB.\label{fig:peer500MBvs1000MBreplicaweek6CDN10Gpopularity}]{
-\includegraphics[width=5.7cm]{graphs/replica-minggu6-500vs1000-log.eps}
-}
-\subfloat[Number of replicas by popularity at $t=10$week for peer capacity 1000MB.\label{fig:peer500MBvs1000MBreplica10week10CDN10Gpopularity}]{
-\includegraphics[width=5.7cm]{graphs/replica-minggu10-500vs1000-log.eps}
-}
-\caption{Distribution number of video replicas at snapshot $t=10$day, $t=6$week, and $t=10$week for peer capacity 500MB and 1000MB, CDN capacity 10GB.}
-\label{fig:replicaatbypopularity}
-\vspace{-2mm}
-\end{figure*}
-
-\begin{figure*}[!ht]
-\centering
-\subfloat[Number of replicas by popularity at $t=10$day for peer capacity 500MB and 1000MB, CDN capacity 20GB.\label{fig:peer500MBvs1000MBreplica10dayCDN20Gpopularity}]{
-\includegraphics[width=5.7cm]{graphs/20G/replica-10hari-500vs1000-20G-log.eps}
-}
-\hfill
-\subfloat[Number of replicas by popularity at $t=6$week for peer capacity 500MB and 1000MB, CDN capacity 20GB.\label{fig:peer500MBvs1000MBreplicaweek6CDN20Gpopularity}]{
-\includegraphics[width=5.7cm]{graphs/20G/replica-minggu6-500vs1000-20G-log.eps}
-}
-\subfloat[Number of replicas by popularity at $t=10$week for peer capacity 500MB and 1000MB., CDN capacity 20GB.\label{fig:peer500MBvs1000MBreplica10week10CDN20Gpopularity}]{
-\includegraphics[width=5.7cm]{graphs/20G/replica-minggu10-500vs1000-20G-log.eps}
-}
-\caption{Distribution number of replicas at snapshot $t=10$day, $t=6$week, and $t=10$week for peer capacity 500MB and 1000MB, CDN capacity 20GB.}
-\label{fig:replicaatbypopularity20G}
-\vspace{-2mm}
-\end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -776,7 +718,7 @@ The simulation parameters are follows:
 \item Length: $360$ days.
 \item Video size: random between $1$MB and $200$MB.
 \item Peer capacity: [500MB,1000MB].
-\item CDN capacity: $10000$MB and $20000$MB.
+\item CDN capacity: $10000$MB.
 \item Number of peers: $100000$.
 \item Number of videos: $10000$.
 \end{itemize}

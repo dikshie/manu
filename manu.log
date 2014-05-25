@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2014.4.17)  15 MAY 2014 19:27
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2014.4.17)  26 MAY 2014 00:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -447,26 +447,12 @@ File: graphs/transformasi2.eps Graphic file (type eps)
 File: graphs/p2p-system-description.eps Graphic file (type eps)
 
 <graphs/p2p-system-description.eps>
-File: graphs/hit-model-original-1000MB-cdf-log.eps Graphic file (type eps)
+File: graphs/REPLICA/contributioncdfpropvsmodel.eps Graphic file (type eps)
 
-<graphs/hit-model-original-1000MB-cdf-log.eps>
-File: graphs/hit-model-original-500MB-cdf-log.eps Graphic file (type eps)
+<graphs/REPLICA/contributioncdfpropvsmodel.eps>
+File: graphs/REPLICA/contributioncdfpropvsmodel.eps Graphic file (type eps)
 
-<graphs/hit-model-original-500MB-cdf-log.eps>
-File: graphs/hit-model-500MBvs-1000MB-cdf.eps Graphic file (type eps)
-
-<graphs/hit-model-500MBvs-1000MB-cdf.eps>
-File: graphs/20G/hit-model-original-1000MB-20G-cdf-log.eps Graphic file (type e
-ps)
-
-<graphs/20G/hit-model-original-1000MB-20G-cdf-log.eps>
-File: graphs/20G/hit-model-original-500MB-20G-cdf-log.eps Graphic file (type ep
-s)
-
-<graphs/20G/hit-model-original-500MB-20G-cdf-log.eps>
-File: graphs/20G/hit-model-500MBvs-1000MB-20G-cdf.eps Graphic file (type eps)
-
-<graphs/20G/hit-model-500MBvs-1000MB-20G-cdf.eps>
+<graphs/REPLICA/contributioncdfpropvsmodel.eps>
 File: graphs/replica-10hari-500vs1000-log.eps Graphic file (type eps)
 
 <graphs/replica-10hari-500vs1000-log.eps>
@@ -485,13 +471,46 @@ File: graphs/20G/replica-minggu6-500vs1000-20G-log.eps Graphic file (type eps)
 File: graphs/20G/replica-minggu10-500vs1000-20G-log.eps Graphic file (type eps)
 
 
-<graphs/20G/replica-minggu10-500vs1000-20G-log.eps> [4]
+<graphs/20G/replica-minggu10-500vs1000-20G-log.eps>
+
+LaTeX Warning: Reference `fig:peer500MB-vs-1000MBcontributionCDN10G' on page 4 
+undefined on input line 768.
+
+
+LaTeX Warning: Reference `fig:peer500MB-vs-1000MBcontributionCDN10G' on page 4 
+undefined on input line 770.
+
+[4]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [5]
+
+LaTeX Warning: Reference `fig:peercontribution20G' on page 6 undefined on input
+ line 781.
+
+
+LaTeX Warning: Reference `fig:peer500MBcontributionCDN20G' on page 6 undefined 
+on input line 782.
+
+
+LaTeX Warning: Reference `fig:peer1000MBcontributionCDN20G' on page 6 undefined
+ on input line 783.
+
+
+LaTeX Warning: Reference `fig:peercontribution20G' on page 6 undefined on input
+ line 784.
+
+
+LaTeX Warning: Reference `fig:peer500MBcontributionCDN20G' on page 6 undefined 
+on input line 784.
+
+
+LaTeX Warning: Reference `fig:peer500MB-vs-1000MBcontributionCDN20G' on page 6 
+undefined on input line 788.
+
 (./manu.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 33--35
 []\T1/ptm/m/n/8 Octoshape, ``Oc-toshape,'' $http : / / www . octoshape . com /
@@ -499,14 +518,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 33--35
 
 [6]) [7
 
-] (./manu.aux) ) 
+] (./manu.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 4621 strings out of 493309
- 70465 string characters out of 6137842
- 238434 words of memory out of 5000000
- 8009 multiletter control sequences out of 15000+600000
+ 4608 strings out of 493309
+ 69888 string characters out of 6137842
+ 236434 words of memory out of 5000000
+ 8000 multiletter control sequences out of 15000+600000
  101383 words of font info for 108 fonts, out of 8000000 for 9000
  960 hyphenation exceptions out of 8191
- 44i,10n,47p,480b,356s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 44i,10n,47p,480b,359s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on manu.dvi (7 pages, 46420 bytes).
+Output written on manu.dvi (7 pages, 45120 bytes).
