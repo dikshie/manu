@@ -560,7 +560,7 @@ Every points lie in positive x-axis mean view rate of every videos in after-peak
 \begin{center}
 \includegraphics[scale=0.5]{graphs/transformasi.eps}
 \end{center}
-\caption{view rate distribution example. }
+\caption{Transformation of view rate distribution. We add number week and make it as $x$-axis, View rate as $y$-axis, and relative week to peak as $z$-axis.}
 \label{fig:viewratedistexample}
 \end{figure} 
 
@@ -568,7 +568,7 @@ Every points lie in positive x-axis mean view rate of every videos in after-peak
 \begin{center}
 \includegraphics[scale=0.5]{graphs/transformasi2.eps}
 \end{center}
-\caption{graph of view rate distributio and red}
+\caption{Final view rate distribution after transformation where $x$-axis is number of week, $y$-axis is view rate.}
 \label{fig:viewratedistexamplered}
 \end{figure} 
 
@@ -588,35 +588,25 @@ In fig.~\ref{fig:viewratedistexample} part A, we have view rate (y-axis) and rel
 We transform these numbers by adding number of week and make number of week as x-axis, view rate 
 as y-axis, and relative week to peak as z-axis fig.~\ref{fig:viewratedistexample} part B.
 This transformation is shown in fig.~\ref{fig:viewratedistexamplered} as diamond points.
-Assume there is a peer that request a video where the position of video in third week with the last week view rate $vr=2$ (we can get as this data from CDN) shown in fig.~\ref{fig:viewratedistexamplered} as red cross.
 We want to estimate what is the position of that video. 
 Is the video in at-peak phase, before-phase, or after phase.  
 We can estimate the that video position by averaging relative week to peak numbers (the points at z-axis) of the nearest point from datasets. 
 If the average value less than $0$ we estimate the video position at before-peak phase, if the average value equal to $0$ we estimate the video position at at-peak phase,  and if the average value more than $0$ we estimate the video position at after-peak phase.
+
+For example: there is a peer that request a video where the position of video in third week with the last week view rate $vr=2$ (we can get as this data from CDN) shown in fig.~\ref{fig:viewratedistexamplered} as red cross.
 In this case, the nearest points are the point at third week $(2,1,-1)$ and the point at fifth week $(4,1,1)$.  
 By averaging the points at z-axis of the nearest points $(-1 + 1)/2 = 0$,  we can get estimate that video is in at-peak phase.
 
-Since we can estimate before-peak week, at-peak week, and after-peak week of video, we modified the original utility function from PROP as follows: 
-\begin{itemize}
-
-\item In before-peak and after-peak phases, we assume that requests to video are low thus we only consider minimum popularity.
+Since we can estimate before-peak week, at-peak week, and after-peak week of video, we modified the original utility function from PROP by adding a weight as follows:
 \begin{equation}
-u = \frac{f(p)-f(p_{min})} {r^{\alpha+\beta}}.
-\label{eq:utilityfunctionbeforeafter}
+u = \frac{ (f(p) - f(p_{min})) (f(p_{max}) - f(p)) }{r^{\alpha + \beta}} + weight
 \end{equation}
-
-\item In at-peak phase, we assume that request to video are high thus we only consider maximum popularity.  
-
-\begin{equation}
-u = \frac{f(p_{max})-f(p)}{r^{\alpha+\beta}}.
-\label{eq:utilityfunctionat}
-\end{equation}
-\end{itemize}
-
+where $weight$ is proportion of view count that we get from Youtube datasets.  
+In before-peak week, we get $weight=0.149538787758 $,  in at-peak week, we get $weight=0.470040393021$, and in after-peak week, we get $weight=0.380420819221$.
 $p$ represents popularity of the video, $p_{min}$ represents estimation of minimum popularity in P2P system, $p_{max}$ represents estimation of maximum popularity in P2P system, $r$ represents the number of replicas of the video in the system, and $f(p)$ is monotonic non-decreasing function.
 $\alpha$ and $\beta$ are the adjustment factor.
 The CDN can calculate $p_{min}$ and $p_{max}$ then propagate to the P2P system.
-To able to track the simulation, we use default value from PROP for $\alpha=\beta=1$ and $f(p)=log p$.
+To able to track the simulation, we use default value from PROP for $\alpha=\beta=1$ and $f(p)=log (p)$.
 We choose the video with the smallest $u$ value as the candidate to be replaced when a peer's cache capacity is full.
 
 \begin{figure}[!t]
@@ -683,7 +673,26 @@ From this description, we can see that deploying peer-assisted CDN can save some
 \end{figure*}
 
 
- 
+\begin{figure*}[!t]
+\centering
+\subfloat[Cache duration 500MB and CDN capacity 10GB.\label{fig:peer500MBcontributionCDN10G}]{
+\includegraphics[scale=0.34]{graphs/REPLICA/cacheduration.png}
+}
+\subfloat[Cache entries frequency 500MB and CDN capacity 10GB.\label{fig:peer500MBcontributionCDN10G}]{
+\includegraphics[scale=0.34]{graphs/REPLICA/cachenetries.png}
+}
+\subfloat[Ratio between replica and demand for peer capacity 1000MB and CDN capacity 10GB. $x$ axis in logscale.\label{fig:peer1000MBcontributionCDN10G}]{
+\includegraphics[scale=0.34]{graphs/REPLICA/atd500cdf.png}
+}
+%\hfill
+%\subfloat[CDF peer contribution percentage between peer with 500MB capacity and 1000MB capacity and CDN capacity 10GB.\label{fig:peer500MB-vs-1000MBcontributionCDN10G}]{
+%\includegraphics[width=5.7cm]{graphs/hit-model-500MBvs-1000MB-cdf.eps}
+%}
+\vspace{2mm}
+\caption{CDF peer contribution for peer capacity 500MB and 1000MB, CDN capacity 10000MB. Model refers to our work and original refer to PROP \cite{1613869}.}
+\label{fig:peercontribution}
+\end{figure*}
+
 
 
 
@@ -692,8 +701,9 @@ From this description, we can see that deploying peer-assisted CDN can save some
 
 
 \subsubsection{Catalog Generator}
-In catalog generator, we assume peer request a video to CDN following poisson process with a mean rate $\lambda=1.1$ \cite{Zink:2009:CYN:1502814.1502987} and we made it 3600 videos per hour, finally we generate video request for 360 days of simulation thus we have 31104000 requests by peers. 
-%How a peer choice a video, we will explain in next paragraph.
+In catalog generator, we assume peer request a video to CDN following poisson process with a mean rate $\lambda=1$ \cite{Zink:2009:CYN:1502814.1502987} %and we made it 3600 videos per hour, 
+finally we generate video request for 360 days of simulation thus we have 31104000 requests by peers. 
+
 
 We calculate the number of videos at-peak time as follows: sample $N$ value from the time-to-peak distribution and determine the number of videos $n_j^{at}$ that peak at week $j$. 
 Total number of video $N = n_j^{before} + n_j^{at} + n_j^{after}$.\\
@@ -717,7 +727,7 @@ The simulation parameters are follows:
 \begin{itemize}
 \item Length: $360$ days.
 \item Video size: random between $1$MB and $200$MB.
-\item Peer capacity: [500MB,1000MB].
+\item Peer capacity: [500MB].
 \item CDN capacity: $10000$MB.
 \item Number of peers: $100000$.
 \item Number of videos: $10000$.
@@ -745,17 +755,6 @@ In peer capacity 1000MB case, we get $p$-value $0.46e-005$.
 Because both $p$-values are below $1\%$, we can reject null hypothesis that both data are the same thus our results are significant.
 
 
-Figure~\ref{fig:peercontribution20G} shows CDF peer contribution for our model compare to PROP for peer capacity 500MB and 1000MB, with CDN capacity 20GB.
-Figure~\ref{fig:peer500MBcontributionCDN20G} shows the comparison of CDF of peer contributions between our model and PROP for peer capacity 500MB.
-Figure~\ref{fig:peer1000MBcontributionCDN20G} shows the comparison of CDF of peer contributions between our model and PROP for peer capacity 1000MB.
-From fig.~\ref{fig:peercontribution20G} and fig.~\ref{fig:peer500MBcontributionCDN20G} show that our model can gain higher peer contributions than PROP.
-We also do significance statistical testing for both cases.  
-We get $p$-value $0.5e-005$ for peer capacity 500MB case and $p$-value $0.47e-005$ for peer capacity 1000MB case.
-Because the $p$-values less than $1\%$, therefore the results are signifincant.
-Finally, fig.~\ref{fig:peer500MB-vs-1000MBcontributionCDN20G} shows the comparison between peer capacity 500MB and peer capacity 1000MB in our model. 
-This figure shows that peer capacity 1000MB gives more contributions than peer capacity 500MB because additional space in peer makes a peer can cache more videos.  
-%Lastly, we compare our model peer capacity 500MB and 1000MB with CDN capacity 10GB and 20GB in fig.~\ref{fig:10Gvs20G}.
-%We found that there are no many different thus CDN capacity does not affect peer contributions. 
 
 
 Figure~\ref{fig:replicaatbypopularity} shows distribution of the number of replicas at snapshot $t=10$day, $t=6$week, and $t=10$week ranked by video popularity for peer capacity 500MB and 1000MB, CDN capacity 10GB between our model and PROP.
