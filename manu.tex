@@ -626,13 +626,16 @@ We choose the video with the smallest $u$ value as the candidate to be replaced 
 %bagaimana evaluasinya:  bikin simulator: a, b, c ,d 
 
 In order to evaluate the proposed peer-caching strategy using before-peak, at-peak, and after-peak information from Youtube VoD view model, we have to compare our model to PROP model.
-We evaluate two metrics which is peer contribution to delivery contents during simulation and access frequency of cache during simulation.
+We evaluate three metrics which is peer contribution to delivery contents during simulation,  access frequency of cache during simulation, and number of replicas. 
 Peer contribution metric related to byte-hit-ratio. 
 Byte-hit-ratio is defined as the total bytes contents served by peers normalized by the total bytes of video all peers and CDN consume.
 It means more peer contributions, more byte-hit-ratio because peer can get content from another peers. 
 Access frequency of cache reflects the storage utilization. 
 More access means more peer storage utilization.  
+Number of replicas is also related to peer storage utilization.  
+Too many replicas waste the storage resources.
 To evaluate these metrics, we developed a peer-assisted CDN simulator. 
+
 
 \subsection{Simulation Design}\label{simulationdesign}
 An event driven simulator is developed using Python for this purpose.
@@ -648,7 +651,7 @@ A CDN will check its record to see if there are some peers cache that requested 
 If there are some peers cache that requested video, a CDN will reply with redirect message that asking a peer to download requested video from other peer (step 4).
 If there are no peers have requested video, a CDN will serve the video.   
 A peer then can request the video to other peer and get the video (step 5 and step 6).
-From this description, we can see that deploying peer-assisted CDN can save some traffic since the clients which form P2P network can sharing the contents or videos.
+From above description, we can see that deploying peer-assisted CDN can save some traffic since the clients which form P2P network can sharing the contents or videos.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
