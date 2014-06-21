@@ -626,14 +626,14 @@ We choose the video with the smallest $u$ value as the candidate to be replaced 
 %bagaimana evaluasinya:  bikin simulator: a, b, c ,d 
 
 In order to evaluate the proposed peer-caching strategy using before-peak, at-peak, and after-peak information from Youtube VoD view model, we have to compare our model to PROP model.
-We evaluate three metrics which is peer contribution to delivery contents during simulation,  access frequency of cache during simulation, and number of replicas. 
+We evaluate three metrics which are peer contribution to delivery contents during simulation,  access frequency of cache during simulation, and number of replicas. 
 Peer contribution metric related to byte-hit-ratio. 
 Byte-hit-ratio is defined as the total bytes contents served by peers normalized by the total bytes of video all peers and CDN consume.
 It means more peer contributions, more byte-hit-ratio because peer can get content from another peers. 
 Access frequency of cache reflects the storage utilization. 
 More access means more peer storage utilization.  
 Number of replicas is also related to peer storage utilization.  
-Too many replicas waste the storage resources.
+How ever, too many replicas will waste the storage resources.
 To evaluate these metrics, we developed a peer-assisted CDN simulator. 
 
 
@@ -642,7 +642,7 @@ An event driven simulator is developed using Python for this purpose.
 In our simulator, time is divided into rounds. 
 During a round, a peer request a video.
 
-In fig.\ref{fig:p2pcdninteractioninsimulator}, we describe the process of a peer that requests a video in simulator.
+In fig.\ref{fig:p2pcdninteractioninsimulator}, we describe the process of a peer that requests a video in simulator which derived from PROP.
 A peer and a CDN are implemented in object oriented model. 
 When a peer requests a video, it always goes to a CDN server (step 1). 
 The CDN provides the videos to the peer (step 2). 
@@ -703,29 +703,40 @@ From above description, we can see that deploying peer-assisted CDN can save som
 
 
 
-\subsubsection{Catalog Generator}
+\subsubsection{Catalog Generator}\label{catalog}
+The goal for catalog generator is to create a catalog video that consist video-id, time when a video is uploaded, a video size, and view count terminus.
+We made catalog that consists of 10000 videos thus we have video-id from 0 until 9999.
+We assume that a video is uploaded to server following poisson process with mean rate $\lambda=1$ thus we can get the time when a video is uploaded. 
+The view count terminus for every video is assigned randomly from Youtube datasets and video size for every video is assigned randomly between $1$MB and $200$MB. 
+
+In last step, we assign file size of video randomly between $1$MB and $200$MB.
+Finally, we have a catalog that consists of: video-id, time when a video is uploaded, view count terminus, and video size.
+
+
+
+\subsubsection{Peer Request Generator}\label{peerrequest}
 In catalog generator, we assume peer request a video to CDN following poisson process with a mean rate $\lambda=1$ \cite{Zink:2009:CYN:1502814.1502987} %and we made it 3600 videos per hour, 
 finally we generate video request for 360 days of simulation thus we have 31104000 requests by peers. 
 
-
-We calculate the number of videos at-peak time as follows: sample $N$ value from the time-to-peak distribution and determine the number of videos $n_j^{at}$ that peak at week $j$. 
+We assume that a peer choose a video based on a preference from view count and view rate.
+First, we calculate the number of videos at-peak time as follows: sample $N$ value from the time-to-peak distribution and determine the number of videos $n_j^{at}$ that peak at week $j$. 
 Total number of video $N = n_j^{before} + n_j^{at} + n_j^{after}$.\\
 Next, we determine view count terminus which are the number of final view count of video.
 In view count terminus, we assume that a video will not get big additional view after at-peak phase.
 We assign view count terminus randomly from datasets.
 After determining view count terminus, we assign beta distribution parameter for every video. 
-
 Since we can estimate the time of at-peak phase for each video, we know the mode of beta distribution value and we can calculate $\alpha$ and $\beta$ value using the mode of distribution formula: $m=\frac{\alpha-1}{\alpha + \beta - 2}$.  
 We assign $\alpha$ value randomly between $1$ and $2$ thus we can calculate $\beta$ value.
 With the knowledge of beta distribution of every video and its view count terminus, we can know the view count and view rate of every video as function from time.
-The knowledge of view count and view rate, will be used top generate a video choice.  
+The knowledge of view count and view rate, will be used top generate a video choice that used by a peer.  
 For video choice, we estimate that a peer will choose video proportionally considering view count and view rate of the video.   
 We can get view count and view rate from probability distribution function (PDF) and cumulative distribution function (CDF) of beta distribution above multiply by video's view count terminus.
-In last step, we assign file size of video randomly between $1$MB and $200$MB.
-Finally, we have a catalog that consists of: video-id to be chosen, time when uploaded, view count terminus, at-peak week, and video size.
+Finaly, we have requests catalog that consists of: peer-id, request time, and video-id to be choosen.
 
 
-\subsubsection{Simulation Parameters}
+
+
+\subsubsection{Simulation Parameters and Scenarios}
 The simulation parameters are follows:
 \begin{itemize}
 \item Length: $360$ days.
@@ -735,8 +746,11 @@ The simulation parameters are follows:
 \item Number of peers: $100000$.
 \item Number of videos: $10000$.
 \end{itemize}
-We compare our proposed improvement of PROP to original PROP \cite{1613869} implementation.
-
+We compare our results to original PROP \cite{1613869} implementation.
+There are three scenarios in our simulations.
+First, peers choose a video that has a popularity following from Youtube data sets that we already explained in \ref{catalog}.
+Second, peers choose a video that has a popularity following from Youtube data sets and we shift the requests time four weeks.
+Third, peers choose a video that has a popularity following zipf distribution.
 
 
 \subsection{Result and Discussion}\label{resultanddiscussion}
