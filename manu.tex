@@ -658,45 +658,19 @@ From above description, we can see that deploying peer-assisted CDN can save som
 %%%contribution 500MB vs 1000MB CDN 10GB
 \begin{figure*}[!t]
 \centering
-\subfloat[CDF percentage of contribution of peers where peer capacity 500MB and CDN capacity 10GB.\label{fig:peer500MBcontributionCDN10G}]{
-\includegraphics[width=5.7cm]{graphs/REPLICA/contributioncdfpropvsmodel.eps}
+\subfloat[Absolute of contribution of peer.\label{fig:contribu-normal}]{
+\includegraphics[width=5.7cm]{graphs/new/repl/contributioncdnpeermodelsortedabs.png}
 }
 \hfill
 \vspace{2mm}
-\subfloat[CDF percentage of contribution of peers where peer capacity 1000MB and CDN capacity 10GB. $x$ and $y$ axis in logscale.\label{fig:peer1000MBcontributionCDN10G}]{
-\includegraphics[width=5.7cm]{graphs/REPLICA/contributioncdfpropvsmodel.eps}
+\subfloat[Absolute contribution of peers with zipf popularity.\label{fig:contrib-zipf}]{
+\includegraphics[width=5.7cm]{graphs/new/zipf/contributioncdnpeermodelsortedabs.png}
 }
-%\hfill
-%\subfloat[CDF peer contribution percentage between peer with 500MB capacity and 1000MB capacity and CDN capacity 10GB.\label{fig:peer500MB-vs-1000MBcontributionCDN10G}]{
-%\includegraphics[width=5.7cm]{graphs/hit-model-500MBvs-1000MB-cdf.eps}
-%}
+
 \vspace{2mm}
-\caption{CDF peer contribution for peer capacity 500MB and 1000MB, CDN capacity 10000MB. Model refers to our work and original refer to PROP \cite{1613869}.}
+\caption{Peer contributions compared between model and prop.}
 \label{fig:peercontribution}
 \end{figure*}
-
-
-\begin{figure*}[!t]
-\centering
-\subfloat[Cache duration 500MB and CDN capacity 10GB.\label{fig:peer500MBcontributionCDN10G}]{
-\includegraphics[scale=0.34]{graphs/REPLICA/cacheduration.png}
-}
-\subfloat[Cache entries frequency 500MB and CDN capacity 10GB.\label{fig:peer500MBcontributionCDN10G}]{
-\includegraphics[scale=0.34]{graphs/REPLICA/cachenetries.png}
-}
-\subfloat[Ratio between replica and demand for peer capacity 1000MB and CDN capacity 10GB. $x$ axis in logscale.\label{fig:peer1000MBcontributionCDN10G}]{
-\includegraphics[scale=0.34]{graphs/REPLICA/atd500cdf.png}
-}
-%\hfill
-%\subfloat[CDF peer contribution percentage between peer with 500MB capacity and 1000MB capacity and CDN capacity 10GB.\label{fig:peer500MB-vs-1000MBcontributionCDN10G}]{
-%\includegraphics[width=5.7cm]{graphs/hit-model-500MBvs-1000MB-cdf.eps}
-%}
-\vspace{2mm}
-\caption{CDF peer contribution for peer capacity 500MB and 1000MB, CDN capacity 10000MB. Model refers to our work and original refer to PROP \cite{1613869}.}
-\label{fig:peercontribution}
-\end{figure*}
-
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -755,34 +729,10 @@ Third, peers choose a video that has a popularity following zipf distribution.
 
 \subsection{Result and Discussion}\label{resultanddiscussion}
 
-Figure~\ref{fig:peercontribution} shows CDF peer contribution for our model compare to PROP for peer capacity 500MB and 1000MB, with CDN capacity 20GB. 
-One dot in a figure means how many percentage a video delivered by peers during simulation.z
-Moreover fig.~\ref{fig:peer500MBcontributionCDN10G} shows the comparison of CDF of peer contributions between our model and PROP for peer capacity 500MB. 
-Figure~\ref{fig:peer1000MBcontributionCDN10G} shows the comparison of CDF of peer contribution between our model and PROP for peer capacity 1000MB.
-Figure~\ref{fig:peer500MB-vs-1000MBcontributionCDN10G} we compare our model between peer capacity 500MB and peer capacity 1000MB.
-Peer capacity 1000MB gives higher peer contribution because additional space makes a peer can cache more videos.
-From fig.~\ref{fig:peer1000MBcontributionCDN10G} and fig.~\ref{fig:peer500MB-vs-1000MBcontributionCDN10G}, We can see that our model can gain higher peer contributions than PROP.
-We do significance statistical testing if our model has significantly different from PROP.
-We use Kolmogorov-Smirnov (KS) test for this purpose.  
-KS-test tries to determine if two datasets differ significantly.
-It has the advantage of making no assumption about the distribution of data. 
-KS-test reject the null hypothesis of no difference between datasets if $p$-value is small.
-For peer capacity 500MB when we compare our model and PROP, we get $p$-value $0.5e-005$.
-In peer capacity 1000MB case, we get $p$-value $0.46e-005$.
-Because both $p$-values are below $1\%$, we can reject null hypothesis that both data are the same thus our results are significant.
 
 
 
 
-Figure~\ref{fig:replicaatbypopularity} shows distribution of the number of replicas at snapshot $t=10$day, $t=6$week, and $t=10$week ranked by video popularity for peer capacity 500MB and 1000MB, CDN capacity 10GB between our model and PROP.
-Figure~\ref{fig:peer500MBvs1000MBreplica10dayCDN10Gpopularity} shows distribution of the number of replicas comparison for peer capacity 500MB and 1000MB and CDN capacity 10GB sorted by popularity rank at snapshot $t=10$day.
-This figure shows that on snapshot $t=10$day there are no many different for peer capacity 500MB between our model and PROP except for peer capacity 1000MB PROP has lower number of replicas than our model for popular video rank between $1$ until $1000$ beyond that the number of replicas is same.
-Figure~\ref{fig:peer500MBvs1000MBreplicaweek6CDN10Gpopularity} shows distribution of the number of replicas comparison for peer capacity 500MB and 1000MB and CDN capacity sorted by popularity rank at snapshot $t=6$week.
-Both peer capacity 500MB and 1000MB show that our model has lower number of replicas compare to PROP for popular video rank between $1$ and $1000$ for peer capacity 500MB while for peer capacity 1000MB our model gives lower replicas for popular video rank between $1$ and $400$.  
-Peer capacity 1000MB gives higher replicas than 500MB because additional capacity make more room for peer to cache videos.
-Figure~\ref{fig:peer500MBvs1000MBreplica10week10CDN10Gpopularity} shows distribution of the number of replicas comparison for peer capacity 500MB and 1000MB and CDN capacity 10GB sorted by popularity rank at snapshot $t=10$week.
-Again, our model gives lower number of replicas compare to PROP. 
-Snapshot $t=10$ weeks gives lower number of replicas than snapshot at $t=6$week because in our model the utility function knows that $t=10$week is at after-peak phase thus the model only considering minimum popularity for all videos. 
 
 
 
