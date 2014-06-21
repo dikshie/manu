@@ -751,7 +751,7 @@ Finally, we have a catalog that consists of: video-id, time when a video is uplo
 
 \subsubsection{Peer Request Generator}\label{peerrequest}
 In catalog generator, we assume peer request a video to CDN following poisson process with a mean rate $\lambda=1$ \cite{Zink:2009:CYN:1502814.1502987} %and we made it 3600 videos per hour, 
-finally we generate video request for 360 days of simulation thus we have 31104000 requests by peers. 
+finally we generate video request for 360 days of simulation.
 
 We assume that a peer choose a video based on a preference from view count and view rate.
 First, we calculate the number of videos at-peak time as follows: sample $N$ value from the time-to-peak distribution and determine the number of videos $n_j^{at}$ that peak at week $j$. 
