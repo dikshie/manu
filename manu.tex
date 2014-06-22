@@ -786,8 +786,11 @@ When the difference between $weight_{ms}$ and $weight_{dl}$ is negative, the dif
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Figure \ref{fig:freq-normal}, \ref{fig:freq-shift}, and \ref{fig:freq-zipf} show the frequency a video in peers compared between model and prop.
-
+Figure \ref{fig:freq-normal}, \ref{fig:freq-shift}, and \ref{fig:freq-zipf} show the frequency a video stay in peers compared between model and prop.
+As all figure show the model has higher frequency than prop to stay in peers except for the beginning rank of data where the model has same frequency with prop in first and second scenario. 
+In the third scenario, in the beginning rank of data the model has lower frequency than prop, then around rank 1000 the model has higher frequency than prop until the end of data. 
+The frequency a video stay in a video can also be viewed in fig \ref{fig:duration-normal},  \ref{fig:duration-shift}, and \ref{fig:duration-zipf}, where in the model some videos have longer cache duration than prop, while others have shorter cache duration than prop.  
+Thus, we can see the relationship between cache duration and frequency a video stay in peers. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%duration
@@ -810,6 +813,11 @@ Figure \ref{fig:freq-normal}, \ref{fig:freq-shift}, and \ref{fig:freq-zipf} show
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+
+Figure \ref{fig:atd-normal}, \ref{fig:atd-shift}, and \ref{fig:atd-zipf} show the number of replicas and a peer request a video. 
+For the first scenario and the second scenario, the replicas in the beginning of rank data are almost same, while in the body of distribution we can see the model has lower replicas than prop.   
+For the third scenario, we only see the model has lower replica in the tail of the data.
 
 %%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%replica
@@ -843,9 +851,14 @@ Figure \ref{fig:freq-normal}, \ref{fig:freq-shift}, and \ref{fig:freq-zipf} show
 
 
 \section{Conclusion and Future Work}\label{conclusion}
-This paper presents a scheme for a ISP managed peer-assisted CDN model that 
+This paper presents a scheme for peer-to-peer network can help CDN to deliver the content over the Internet. 
+We show that by introducing the weight to utility function we can increase the peer contribution to deliver the content while decreasing required replicas. 
+We found that there are no much different between the first scenario and the second scenario in peer contribution to deliver a video, while for the third scenario we see the model has higher peer contribution than prop in the body of the distribution.
+We found that in the first scenario and the second scenario, the model gives lower replica in the body of distribution than prop, while the third scenario gives lower replica in the tail of distribution than prop.
+
 Some areas of improvement that we have identified for future are:
-We are also very interested to include energy trade off this peer-assisted CDN architecture in order to know how much energy saving by ISP and how much increase of energy at users home gateway side in this architecture.
+The energy trade off this peer-assisted CDN architecture in order to know how much energy saving by ISP and how much increase of energy at users home gateway side in this architecture since we have higher peer contribution.   
+More numerical experiments for other zipf shape parameters. 
 
 
 % use section* for acknowledgement
