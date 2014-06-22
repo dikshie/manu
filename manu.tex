@@ -744,27 +744,26 @@ u_{dl} > u_{ms}
 \frac{ (f(p_{dl}) - f(p_{min})) (f(p_{max}) - f(p_{dl})) }{r^{\alpha + \beta}_{dl}} + weight_{dl} > \\
 \frac{ (f(p_{ms}) - f(p_{min})) (f(p_{max}) - f(p_{ms})) }{r^{\alpha + \beta}_{ms}} + weight_{ms}
 \end{align*}
+
 We assume that number of replicas are same, thus:
 \begin{align*}
 (f(p_{dl}) - f(p_{min})) (f(p_{max}) - f(p_{dl})) - \\ 
 (f(p_{ms}) - f(p_{min})) (f(p_{max}) - f(p_{ms})) > \\
 weight_{ms} - weight_{dl}
 \end{align*}
+
 Since $p_{min}$ and $p_{max}$ are same, we can find that the difference between $p_{dl}$ and $p_{ms}$ must always bigger than the difference between $weight_{ms}$ and $weight_{dl}$.
-If both videos are in the same position (e.g before-peak, at-peak, or after-peak) then the video popularity is the only factor. 
+If both videos are in the same position (e.g before-peak, at-peak, or after-peak) then the difference between $p_{dl}$ and $p_{ms}$ is the only factor for utility function.
 However, if the videos are not in the same position then the difference between $p_{dl}$ and $p_{ms}$ must always bigger than the difference between $weight_{ms}$ and $weight_{dl}$.
 There are two cases for the difference between $weight_{ms}$ and $weight_{dl}$.
-The first case is negative and the second case is positive.  
-Since we only interested in positive case, we will explain the positive case.  
-
-
-
-
-
-
-
-
-
+The first case is negative and the second case is positive.    
+The difference between $weight_{ms}$ and $weight_{dl}$ is positive when: 
+\begin{itemize}
+\item $weight_{ms}$ is in at-peak period and $weight_{dl}$ is in before-peak period.
+\item $weight_{ms}$ is in at-peak period and $weight_{dl}$ is in after-peak period.
+\item $weight_{ms}$ is in after-peak period and $weight_{dl}$ is in before-peak period.
+\end{itemize}
+When the difference between $weight_{ms}$ and $weight_{dl}$ is negative, the difference between $p_{dl}$ and $p_{ms}$ is the only factor for utility function.
 
 %%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%freq
@@ -787,6 +786,7 @@ Since we only interested in positive case, we will explain the positive case.
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+Figure \ref{fig:freq-normal}, \ref{fig:freq-shift}, and \ref{fig:freq-zipf} show the frequency a video in peers compared between model and prop.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
