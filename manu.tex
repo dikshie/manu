@@ -734,21 +734,28 @@ The peers give more contribution in the tail while in the third scenario the pee
 A peers can give more contribution because a video has longer duration than other videos in a peer's cache thus other peer's requests are served by the peer. 
 A video has longer duration than other videos in peer's cache because that a video has bigger utility function than other videos for example a video that will enter the cache. 
 
-Denote $u_{dl}$ is utility function for a video inside the cache and $u_{ms}$ is utility function for a video that will enter the cache. 
+Denote $u_{dl}$ is utility function for a video inside the cache and $u_{ms}$ is utility function for a video that will enter the cache,  $p_{dl}$ is the popularity for a video inside the cache and $p_{ms}$ is the popularity for a video that will enter the cache.
 In order a video in cache has longer duration, the utility function for $u_{dl}$ must be bigger than the utility function for $u_{ms}$.
 \begin{equation*}
 u_{dl} > u_{ms}
 \end{equation*}
 
 \begin{align*}
-\frac{ (f(p_{dl}) - f(p_{min})) (f(p_{max}) - f(p_{dl})) }{r^{\alpha + \beta}}_{dl} + weight_{dl} > \\
-\frac{ (f(p_{ms}) - f(p_{min})) (f(p_{max}) - f(p_{ms})) }{r^{\alpha + \beta}}_{ms} + weight_{ms}
+\frac{ (f(p_{dl}) - f(p_{min})) (f(p_{max}) - f(p_{dl})) }{r^{\alpha + \beta}_{dl}} + weight_{dl} > \\
+\frac{ (f(p_{ms}) - f(p_{min})) (f(p_{max}) - f(p_{ms})) }{r^{\alpha + \beta}_{ms}} + weight_{ms}
 \end{align*}
 We assume that number of replicas are same, thus:
 \begin{align*}
-(f(p_{dl}) - f(p_{min})) (f(p_{max}) - f(p_{dl})) - (f(p_{ms}) - f(p_{min})) (f(p_{max}) - f(p_{ms})) > \\
+(f(p_{dl}) - f(p_{min})) (f(p_{max}) - f(p_{dl})) - \\ 
+(f(p_{ms}) - f(p_{min})) (f(p_{max}) - f(p_{ms})) > \\
 weight_{ms} - weight_{dl}
 \end{align*}
+Since $p_{min}$ and $p_{max}$ are same, we can find that the difference between $p_{dl}$ and $p_{ms}$ must always bigger than the difference between $weight_{ms}$ and $weight_{dl}$.
+If both videos are in the same position (e.g before-peak, at-peak, or after-peak) then the video popularity is the only factor. 
+However, if the videos are not in the same position then the difference between $p_{dl}$ and $p_{ms}$ must always bigger than the difference between $weight_{ms}$ and $weight_{dl}$.
+There are two cases for the difference between $weight_{ms}$ and $weight_{dl}$.
+The first case is negative and the second case is positive.  
+Since we only interested in positive case, we will explain the positive case.  
 
 
 
