@@ -654,19 +654,22 @@ A peer then can request the video to other peer and get the video (step 5 and st
 From above description, we can see that deploying peer-assisted CDN can save some traffic since the clients which form P2P network can sharing the contents or videos.
 
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%contribution 
 \begin{figure*}[!t]
 \centering
-\subfloat[Absolute of contribution of peer.\label{fig:contribu-normal}]{
+\subfloat[Absolute of contribution of peer for the first scenario.\label{fig:contribu-normal}]{
 \includegraphics[width=5.7cm]{graphs/new/repl/contributioncdnpeermodelsortedabs.png}
 }
 \hfill
-\vspace{2mm}
-\subfloat[Absolute contribution of peers with zipf popularity.\label{fig:contrib-zipf}]{
+\subfloat[Absolute of contribution of peer for the second scenario.\label{fig:contribu-shift}]{
+\includegraphics[width=5.7cm]{graphs/new/shift/contributioncdnpeermodelsortedabs.png}
+}
+\hfill
+\subfloat[Absolute contribution of peers for the third scenario.\label{fig:contrib-zipf}]{
 \includegraphics[width=5.7cm]{graphs/new/zipf/contributioncdnpeermodelsortedabs.png}
 }
-
 \vspace{2mm}
 \caption{Peer contributions compared between model and prop.}
 \label{fig:peercontribution}
@@ -679,15 +682,17 @@ From above description, we can see that deploying peer-assisted CDN can save som
 %%%freq
 \begin{figure*}[!t]
 \centering
-\subfloat[Frequency a video in peers.\label{fig:freq-normal}]{
+\subfloat[Frequency a video in peers for the first scenario.\label{fig:freq-normal}]{
 \includegraphics[width=5.7cm]{graphs/new/repl/freq.png}
 }
 \hfill
-\vspace{2mm}
-\subfloat[Frequency a video in peers with zipf popularity.\label{fig:freq-zipf}]{
+\subfloat[Frequency a video in peers for the second scenario.\label{fig:freq-shift}]{
+\includegraphics[width=5.7cm]{graphs/new/shift/freq.png}
+}
+\hfill
+\subfloat[Frequency a video in peers for the third scenario.\label{fig:freq-zipf}]{
 \includegraphics[width=5.7cm]{graphs/new/zipf/freq.png}
 }
-
 \vspace{2mm}
 \caption{Frequency a video in peers compared between model and prop.}
 \label{fig:freq}
@@ -700,15 +705,17 @@ From above description, we can see that deploying peer-assisted CDN can save som
 %%%duration
 \begin{figure*}[!t]
 \centering
-\subfloat[Cache duration in peers.\label{fig:duration-normal}]{
+\subfloat[Cache duration in peers for the first scenario.\label{fig:duration-normal}]{
 \includegraphics[width=5.7cm]{graphs/new/repl/duration.png}
 }
 \hfill
-\vspace{2mm}
-\subfloat[Cache duration in peers with zipf popularity.\label{fig:duration-zipf}]{
+\subfloat[Cache duration in peers for the second scenario.\label{fig:duration-shift}]{
+\includegraphics[width=5.7cm]{graphs/new/shift/duration.png}
+}
+\hfill
+\subfloat[Cache duration in peers for the third scenario.\label{fig:duration-zipf}]{
 \includegraphics[width=5.7cm]{graphs/new/zipf/duration.png}
 }
-
 \vspace{2mm}
 \caption{Duration compared between model and prop.}
 \label{fig:duration}
@@ -720,22 +727,22 @@ From above description, we can see that deploying peer-assisted CDN can save som
 %%%replica
 \begin{figure*}[!t]
 \centering
-\subfloat[Number of a video replicas when a peer request a video.\label{fig:atd-normal}]{
+\subfloat[Number of a video replicas when a peer request a video for the first scenario.\label{fig:atd-normal}]{
 \includegraphics[width=5.7cm]{graphs/new/repl/atd.png}
 }
 \hfill
-\vspace{2mm}
-\subfloat[Number of a video replicas when a peer request a video with zipf popularity.\label{fig:atd-zipf}]{
+\subfloat[Number of a video replicas when a peer request a video for the second scenario.\label{fig:atd-shift}]{
+\includegraphics[width=5.7cm]{graphs/new/repl/atd.png}
+}
+\hfill
+\subfloat[Number of a video replicas when a peer request a video for the third scenario where $y$ axis in log-scale.\label{fig:atd-zipf}]{
 \includegraphics[width=5.7cm]{graphs/new/zipf/atd.png}
 }
-
 \vspace{2mm}
 \caption{Replicas compared between model and prop.}
 \label{fig:replica}
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 
 
 \subsubsection{Catalog Generator}\label{catalog}
@@ -788,6 +795,9 @@ Second, peers choose a video that has a popularity following from Youtube data s
 Third, peers choose a video that has a popularity following zipf distribution with rate$=0.9$ \cite{6654887}.
 
 
+
+
+
 \subsection{Result and Discussion}\label{resultanddiscussion}
 
 
@@ -807,7 +817,7 @@ We are also very interested to include energy trade off this peer-assisted CDN a
 
 % use section* for acknowledgement
 \section*{Acknowledgment}
-The authors would like to thank Internet research laboratory member at Keio University and anonymous reviewer.
+The authors would like to thank Internet research laboratory member at Keio University and anonymous reviewers.
 
 
 
