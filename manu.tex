@@ -906,7 +906,11 @@ f(p_{ms}) - f(p_{dl}) > z_{dl} - z_{ms}
 %\end{align}
 
 
-As we know from table.\ref{tab:stacked2} that the majority of a requested video is in after-peak phase and a requested video phase that is in at-peak phase is very small portion, then we can see that $z_{dl} - z_{ms}$ majority will be in negative term. The left term $(p_{ms}) - f(p_{dl})$ 
+As we know from table.\ref{tab:stacked2} that the majority of a requested video is in after-peak phase and a requested video phase that is in at-peak phase is very small portion, then we can see that $z_{dl} - z_{ms}$ term will be in negative term if $z_{dl}$ is in before-peak phase or $0$ if $z_{dl}$ is in after-peak phase. 
+Since the not-cached events happen in when a requested video phase in after-peak phase, we can get that $f(p_{ms}) - f(p_{dl} < 0$. 
+It also means that $p_{ms}$ in after-peak phase less popular than $p_{dl}$.
+
+
 %While comparing to PROP, the left term $f(p_{ms}) - f(p_{dl})$ will be equal to $0$ thus as result in our model a peer rejects the a requested video to be cached.
 
 %If both videos are in the same phase (e.g before-peak, at-peak, or after-peak) then the difference between $p_{dl}$ and $p_{ms}$ is the only factor for utility function.
