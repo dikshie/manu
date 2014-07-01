@@ -603,10 +603,10 @@ u = \frac{ (f(p) - f(p_{min})) (f(p_{max}) - f(p)) }{r^{\alpha + \beta}} + z
 
 Following \cite{1613869} we can calculate $p$ as follows:
 \begin{equation}
-p = min (\frac{n_i^r}{t_i^r - t_a^i}  , \frac{1}{t_cur - t_i^r})
+p = min (\frac{n_i^r}{t_i^r - t_a^i}  , \frac{1}{t_{cur} - t_i^r})
 \end{equation}
 
-where $n_i^r$ is number of requested video, $t_i^r$ is last time the video is requested, $t_a^i$ is the uploaded time of the video.
+where $n_i^r$ is number of requested video, $t_i^r$ is last time the video is requested, $t_a^i$ is the uploaded time of the video, and $t_{cur}$ is the current time.
 $z$ is proportion of view count that we get from Youtube datasets.  
 In before-peak week, we get $z=0.149538787758 $,  in at-peak week, we get $z=0.470040393021$, and in after-peak week, we get $z=0.380420819221$.
 In PROP's utility function, the difference between very popular videos and unpopular video is very difficult to differentiate. 
@@ -906,7 +906,7 @@ f(p_{ms}) - f(p_{dl}) > z_{dl} - z_{ms}
 %\end{align}
 
 
-As we know from table.\ref{tab:stacked2} that the majority of a requested video phase is in after-peak and a requested video phase that is in at-peak phase is very small portion, then we can see that $z_{dl} - z_{ms}$ majority will be in negative term.
+As we know from table.\ref{tab:stacked2} that the majority of a requested video is in after-peak phase and a requested video phase that is in at-peak phase is very small portion, then we can see that $z_{dl} - z_{ms}$ majority will be in negative term. The left term $(p_{ms}) - f(p_{dl})$ 
 %While comparing to PROP, the left term $f(p_{ms}) - f(p_{dl})$ will be equal to $0$ thus as result in our model a peer rejects the a requested video to be cached.
 
 %If both videos are in the same phase (e.g before-peak, at-peak, or after-peak) then the difference between $p_{dl}$ and $p_{ms}$ is the only factor for utility function.
