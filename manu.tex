@@ -391,7 +391,9 @@ On the other side, the rise of peer-to-peer (P2P) networks are scalable but do n
 In this paper, we present peer-assisted CDN model, the peer-to-peer networks that can be used to help CDN to deliver streaming media.
 Our peer-assisted CDN model is aided by Youtube VoD views popularity model.
 We have comparatively evaluated our system through trace-driven simulations with synthetic workloads.
-Our results show that in our model peers can have more contribution to deliver streaming media than previous with less replicas.
+Our results show that our model gives lower number of replicas while maintaining same number of peers contribution compare to previous work. 
+We also do the significance to the number of replicas using the Kolmogorov-Smirnov statistic on two samples and we find our results are significant. 
+
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
 % This preserves the distinction between vectors and scalars. However,
@@ -451,6 +453,8 @@ Due to the complexity of the behavior of peers, the process should be done in th
 
 In this work, we will revisit Guo et al., \cite{1613869} work's PROP as basis to evaluate of the peer-assisted CDN and propose an improvement the model for the PROP.
 We also examine the characteristics of Internet VoD by investigating real-world datasets obtained from Youtube.
+We estimate the video popularity phase.
+Information of video popularity phase will be used for caching strategy
 In P2P assisted CDN for video on demand (VoD), most of researcher assume that catalog of video popularity rank is already established following zipf distribution.  
 This become basis for P2P assisted CDN model in PROP \cite{1613869}.
 Our work is quite different whereas we will use VoD view popularity to aid the PROP model.
@@ -509,7 +513,7 @@ Guo et al., \cite{1613869} work's PROP is closest with our work.
 PROP uses local system (local counter) to calculate the segment popularity in peer-assisted proxy system. 
 PROP uses popularity for proxy cache replacement strategy. 
 In peer side, the author use utility function for cache replacement strategy.
-A utility function assigns numerical value to outcomes, in such a way that outcomes with higher utility are always preferred ot outcomes with lower utilities.
+A utility function assigns numerical value to outcomes, in such a way that outcomes with higher utility are always preferred of outcomes with lower utilities.
 The utility function is also function from popularity.
 While the authors successfully show that the results are very good, the peer-assisted system behavior over time is not explain because the author focus on properties such as proxy cache size variations and peer cache size variations.
 The explanation of the optimal number of replicas is not also clear because unavailable information when the snapshot is taken.  
@@ -524,12 +528,11 @@ In our work, we complement Guo et al., \cite{1613869} work with VoD viewing popu
 \end{figure} 
 
 \section{Characterizing Internet VoD Popularity}\label{popularity}
-Before analyzing the system description and video caching, we first examine the popularity characteristics of Internet VoD services.
-We use YouTube as example of VoD service.
-The studies of content popularity evolution are mostly considered in short time periods.
-Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} measure the evolution of content popularity in long periods (36 weeks,from 3 August 2008 until 29 March 2009) in which view count statistics of Youtube. 
+The objective of estimating Internet VoD popularity phase is to get popularity state of a video whether a video is at before-peal popularity phase or at peak popularity phase, or at after-peak popularity phase.
+We use YouTube as an example of VoD service where we get YouTube content popularity from Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717}.
+The datasets itself measure the evolution of content popularity in 36 weeks by recording video count statistics of YouTube.
 
-In datasets, we have one-week spacing between consecutive snapshots.  
+In YouTube datasets, we have one-week spacing between consecutive snapshots.  
 We can get how many times the video was view during the one-week period since last week or since snapshot $(i-1)$. 
 Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} define time-to-peak for a video as its age (time since upload) at which its weekly viewing rate is the highest during measurement (from the first week until end of measurement).
 
@@ -571,42 +574,50 @@ Every points lie in positive x-axis mean view rate of every videos in after-peak
 \label{fig:viewratedistexamplered}
 \end{figure} 
 
+We use estimation of video popularity phase in peer caching strategy side.
+How we estimate the video popularity phase is shown in fig.\ref{fig:viewratedistexample} and fig.\ref{fig:viewratedistexamplered}.
+In fig.~\ref{fig:viewratedistexample} part A, we have view rate (y-axis) and relative week to peak (x-axis) which is view rate distribution versus week relative to at-peak phase as also shown completely in fig.~\ref{fig:viewratedistribution}.
+We transform these numbers by adding number of week and make number of week as x-axis, view rate 
+as y-axis, and relative week to peak as z-axis fig.~\ref{fig:viewratedistexample} part B.
+This transformation is shown in fig.~\ref{fig:viewratedistexamplered} denote as diamond points.
+We want to estimate what is the phase of that video. 
+Is the video in at-peak phase, before-phase, or after phase.  
+We can estimate the that video phase by averaging relative week to peak numbers (the points at z-axis) of the nearest point from datasets. 
+If the average value less than $0$ we estimate the video is at before-peak phase, if the average value equal to $0$ we estimate the video is at at-peak phase,  and if the average value more than $0$ we estimate the video is at after-peak phase.
+
+For example: there is a peer that requests a video where the position of video is in fourth week with the last week view rate $vr=2$ (we can get as this data from CDN) shown in fig.~\ref{fig:viewratedistexamplered} denote as cross.
+In this case, the nearest points are the point at third week $(2,1,-1)$ and the point at fifth week $(4,1,1)$.  
+By averaging the points at z-axis of the nearest points $(-1 + 1)/2 = 0$,  we can get estimate that video is in at-peak phase.
+
 
 
 \section{System Description}\label{systemdescription}
 In our work, we use Youtube VoD view model to aid our work that based from PROP. 
 The Youtube VoD view model will be used in peer-caching strategy side to exploits the video popularity. 
 
-
 \subsection{Peer caching strategy}\label{peercachingstrategy}
-As we mentioned before, we use Youtube VoD view model in peer caching strategy side. 
-Our utility function is different from PROP.
-Our utility function need the estimation of video position whether the requested video is in before-peak phase, at-peak phase, or after-peak phase.
-How we estimate the video position is shown in fig.~\ref{fig:viewratedistexample} and fig.~\ref{fig:viewratedistexamplered}.
-In fig.~\ref{fig:viewratedistexample} part A, we have view rate (y-axis) and relative week to peak (x-axis) which is view rate distribution versus week relative to at-peak phase as also shown completely in fig.~\ref{fig:viewratedistribution}.
-We transform these numbers by adding number of week and make number of week as x-axis, view rate 
-as y-axis, and relative week to peak as z-axis fig.~\ref{fig:viewratedistexample} part B.
-This transformation is shown in fig.~\ref{fig:viewratedistexamplered} as diamond points.
-We want to estimate what is the position of that video. 
-Is the video in at-peak phase, before-phase, or after phase.  
-We can estimate the that video position by averaging relative week to peak numbers (the points at z-axis) of the nearest point from datasets. 
-If the average value less than $0$ we estimate the video position at before-peak phase, if the average value equal to $0$ we estimate the video position at at-peak phase,  and if the average value more than $0$ we estimate the video position at after-peak phase.
-
-For example: there is a peer that request a video where the position of video in third week with the last week view rate $vr=2$ (we can get as this data from CDN) shown in fig.~\ref{fig:viewratedistexamplered} as red cross.
-In this case, the nearest points are the point at third week $(2,1,-1)$ and the point at fifth week $(4,1,1)$.  
-By averaging the points at z-axis of the nearest points $(-1 + 1)/2 = 0$,  we can get estimate that video is in at-peak phase.
-
 Since we can estimate before-peak week, at-peak week, and after-peak week of video, we modified the original utility function from PROP by adding a weight as follows:
 \begin{equation}
-u = \frac{ (f(p) - f(p_{min})) (f(p_{max}) - f(p)) }{r^{\alpha + \beta}} + weight
+u = \frac{ (f(p) - f(p_{min})) (f(p_{max}) - f(p)) }{r^{\alpha + \beta}} + z
 \end{equation}
-where $weight$ is proportion of view count that we get from Youtube datasets.  
-In before-peak week, we get $weight=0.149538787758 $,  in at-peak week, we get $weight=0.470040393021$, and in after-peak week, we get $weight=0.380420819221$.
+
+Following \cite{1613869} we can calculate $p$ as follows:
+\begin{equation}
+p = min (\frac{n_i^r}{t_i^r - t_a^i}  , \frac{1}{t_cur - t_i^r})
+\end{equation}
+
+where $n_i^r$ is number of requested video, $t_i^r$ is last time the video is requested, $t_a^i$ is the uploaded time of the video.
+$z$ is proportion of view count that we get from Youtube datasets.  
+In before-peak week, we get $z=0.149538787758 $,  in at-peak week, we get $z=0.470040393021$, and in after-peak week, we get $z=0.380420819221$.
+In PROP's utility function, the difference between very popular videos and unpopular video is very difficult to differentiate. 
 $p$ represents popularity of the video, $p_{min}$ represents estimation of minimum popularity in P2P system, $p_{max}$ represents estimation of maximum popularity in P2P system, $r$ represents the number of replicas of the video in the system, and $f(p)$ is monotonic non-decreasing function.
 $\alpha$ and $\beta$ are the adjustment factor.
 The CDN can calculate $p_{min}$ and $p_{max}$ then propagate to the P2P system.
 To able to track the simulation, we use default value from PROP for $\alpha=\beta=1$ and $f(p)=log (p)$.
 We choose the video with the smallest $u$ value as the candidate to be replaced when a peer's cache capacity is full.
+For unpopular video $f(p)$ will be very close to $f(p_{min})$ thus $f(p) - f(p_{min})$ will be very close to $0$ then utility function become very small.
+For very populary video $f(p)$ will be very close to $f(p_{max})$ thus $f(p_{max}) - f(p)$ will be very close to $0$ then utility function become very small.  
+Linear addition of $z$ factor here can help the differentiate the value of utility function.
 
 \begin{figure}[!t]
 \begin{center}
@@ -654,52 +665,32 @@ From above description, we can see that deploying peer-assisted CDN can save som
 
 
 \subsubsection{Catalog Generator}\label{catalog}
-The goal for catalog generator is to create a catalog video that consist video-id, time when a video is uploaded, a video size, and view count terminus.
-We made catalog that consists of 10000 videos thus we have video-id from 0 until 9999.
-We assume that a video is uploaded to server following poisson process with mean rate $\lambda=1$ thus we can get the time when a video is uploaded. 
-The view count terminus for every video is assigned randomly from Youtube datasets and video size for every video is assigned randomly between $1$MB and $200$MB. 
-
-In last step, we assign file size of video randomly between $1$MB and $200$MB.
-Finally, we have a catalog that consists of: video-id, time when a video is uploaded, view count terminus, and video size.
-
-
+TThe goal for catalog generator is to create a catalog video that consist video-id, time when a video is uploaded, a video size, view count terminus, and progress of videos popularity. We assume that a video is uploaded to server following Poisson process with mean rate $\lambda=1$ thus we can get the time when a video is uploaded. 
+The view count terminus for every video is assigned randomly uniform from Youtube datasets and video size for every video is assigned randomly uniform between 1 and 200MB. Finally, we have a catalog that consists of: video-id, time when a video is uploaded, view count terminus, and video size.
 
 \subsubsection{Peer Request Generator}\label{peerrequest}
-In catalog generator, we assume peer request a video to CDN following poisson process with a mean rate $\lambda=1$ \cite{Zink:2009:CYN:1502814.1502987} %and we made it 3600 videos per hour, 
-finally we generate video request for 360 days of simulation.
+In catalog generator, we assume peer request a video to CDN following poisson process with a mean rate $\lambda=1$ \cite{Zink:2009:CYN:1502814.1502987}.
+We assume that a peer choose a video based on a preference from view count and view rate that we can get from catalog generator.  
+Because peer requests are generate from catalog, the video request will follow global popularity video from YouTube
 
-We assume that a peer choose a video based on a preference from view count and view rate.
-First, we calculate the number of videos at-peak time as follows: sample $N$ value from the time-to-peak distribution and determine the number of videos $n_j^{at}$ that peak at week $j$. 
-Total number of video $N = n_j^{before} + n_j^{at} + n_j^{after}$.\\
-Next, we determine view count terminus which are the number of final view count of video.
-In view count terminus, we assume that a video will not get big additional view after at-peak phase.
-We assign view count terminus randomly from datasets.
-After determining view count terminus, we assign beta distribution parameter for every video. 
-Since we can estimate the time of at-peak phase for each video, we know the mode of beta distribution value and we can calculate $\alpha$ and $\beta$ value using the mode of distribution formula: $m=\frac{\alpha-1}{\alpha + \beta - 2}$.  
-We assign $\alpha$ value randomly between $1$ and $2$ thus we can calculate $\beta$ value.
-With the knowledge of beta distribution of every video and its view count terminus, we can know the view count and view rate of every video as function from time.
-The knowledge of view count and view rate, will be used top generate a video choice that used by a peer.  
-For video choice, we estimate that a peer will choose video proportionally considering view count and view rate of the video.   
-We can get view count and view rate from probability distribution function (PDF) and cumulative distribution function (CDF) of beta distribution above multiply by video's view count terminus.
-Finaly, we have requests catalog that consists of: peer-id, request time, and video-id to be choosen.
 
 \subsubsection{Simulation Parameters and Scenarios}
 The simulation parameters are follows:
+
 \begin{itemize}
 \item Length: $360$ days.
-\item Video size: random between $1$MB and $200$MB.
-\item Peer capacity: [500MB].
+\item Video size: uniform random between $1$MB and $200$MB.
+\item Peer capacity: $500$MB.
 \item CDN capacity: $10000$MB.
 \item Number of peers: $100000$.
 \item Number of videos: $10000$.
 \end{itemize}
-We compare our results to original PROP \cite{1613869} implementation.
+
 There are three scenarios in our simulations.
 First, peers choose a video that has a popularity following from Youtube data sets that we already explained in \ref{catalog}.
 Second, peers choose a video that has a popularity following from Youtube data sets and we shift the requests time four weeks.
 Third, peers choose a video that has a popularity following zipf distribution with rate$=0.9$ \cite{6654887}.
-
-
+We compare our results to original PROP \cite{1613869} implementation.
 
 
 
@@ -708,77 +699,102 @@ Third, peers choose a video that has a popularity following zipf distribution wi
 \begin{figure*}[!t]
 \centering
 \subfloat[Absolute of contribution of peer for the first scenario where $y$-axis in log-scale.\label{fig:contribu-normal}]{
-\includegraphics[width=5.7cm]{graphs/new/repl/contributioncdnpeermodelsortedabs.png}
+\includegraphics[width=5.7cm]{graphs/new/repl/contributioncdnpeermodelsortedabs.eps}
 }
 \hfill
 \subfloat[Absolute of contribution of peer for the second scenario where $y$-axis in log-scale.\label{fig:contribu-shift}]{
-\includegraphics[width=5.7cm]{graphs/new/shift/contributioncdnpeermodelsortedabs.png}
+\includegraphics[width=5.7cm]{graphs/new/shift/contributioncdnpeermodelsortedabs.eps}
 }
 \hfill
-\subfloat[Absolute contribution of peers for the third scenario.\label{fig:contrib-zipf}]{
-\includegraphics[width=5.7cm]{graphs/new/zipf/contributioncdnpeermodelsortedabs.png}
+\subfloat[Absolute contribution of peers for the third scenario where $y$-axis in log-scale.\label{fig:contrib-zipf}]{
+\includegraphics[width=5.7cm]{graphs/new/zipf/contributioncdnpeermodelsortedabs.eps}
 }
 \vspace{2mm}
-\caption{Peer contributions compared between model and prop.}
+\caption{Peer contributions compared between model and PROP.}
 \label{fig:peercontribution}
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%replica
+\begin{figure*}[!t]
+\centering
+\subfloat[Number of a video replicas when a peer request a video for the first scenario where $y$ axis in log-scale.\label{fig:atd-normal}]{
+\includegraphics[width=5.7cm]{graphs/new/repl/atd.eps}
+}
+\hfill
+\subfloat[Number of a video replicas when a peer request a video for the second scenario where $y$ axis in log-scale.\label{fig:atd-shift}]{
+\includegraphics[width=5.7cm]{graphs/new/shift/atd.eps}
+}
+\hfill
+\subfloat[Number of a video replicas when a peer request a video for the third scenario where $y$ axis in log-scale.\label{fig:atd-zipf}]{
+\includegraphics[width=5.7cm]{graphs/new/zipf/atd.eps}
+}
+\vspace{2mm}
+\caption{Comparison of available replicas between model and prop when a peer requests a video.}
+\label{fig:replica}
+\end{figure*}
+%%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\subsection{Result and Discussion}\label{resultanddiscussion}
-Figure \ref{fig:contribu-normal}, \ref{fig:contribu-shift}, and \ref{fig:contrib-zipf} show the absolute peer contribution to deliver videos compared between model and prop. 
-Figure \ref{fig:contribu-normal} and fig.\ref{fig:contribu-shift} show same pattern.
-The peers give more contribution in the tail while in the third scenario the peer give more contribution in body. 
-This is because the zipf distribution of videos popularity in the third scenario is more skew than the first and the second scenario. Thus we can see a few videos have big popularity while the majority have same less popularity. 
-A peers can give more contribution because a video has longer duration than other videos in a peer's cache thus other peer's requests are served by the peer. 
-A video has longer duration than other videos in peer's cache because that a video has bigger utility function than other videos for example a video that will enter the cache. 
+%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%replica
+% \begin{figure*}[!t]
+% \centering
+% \subfloat[Percentage of cached and not-cached events for the first scenario.\label{fig:stacked1-normal}]{
+% \includegraphics[width=5.7cm]{graphs/new/repl/stackedrepl1.eps}
+% }
+% \hfill
+% \subfloat[Percentage of cached and not-cached events for the second scenario.\label{fig:stacked1-shift}]{
+% \includegraphics[width=5.7cm]{graphs/new/shift/stackedshift1.eps}
+% }
+% \hfill
+% \subfloat[Percentage of cached and not-cached events for the third scenario.\label{fig:stacked1-zipf}]{
+% \includegraphics[width=5.7cm]{graphs/new/zipf/stackedzipf1.eps}
+% }
+% \vspace{2mm}
+% \caption{Comparison of cached and not-cached events when a peer requests a video. For the model around $65\%$ events are not-cached event, while for PROP around $52\%$ events are cached event.}
+% \label{fig:stacked1}
+% \end{figure*}
+%%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Denote $u_{dl}$ is utility function for a video inside the cache and $u_{ms}$ is utility function for a video that will enter the cache,  $p_{dl}$ is the popularity for a video inside the cache and $p_{ms}$ is the popularity for a video that will enter the cache.
-In order a video in cache has longer duration, the utility function for $u_{dl}$ must be bigger than the utility function for $u_{ms}$.
-\begin{equation*}
-u_{dl} > u_{ms}
-\end{equation*}
 
-\begin{align*}
-\frac{ (f(p_{dl}) - f(p_{min})) (f(p_{max}) - f(p_{dl})) }{r^{\alpha + \beta}_{dl}} + weight_{dl} > \\
-\frac{ (f(p_{ms}) - f(p_{min})) (f(p_{max}) - f(p_{ms})) }{r^{\alpha + \beta}_{ms}} + weight_{ms}
-\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%replica
+% \begin{figure*}[!t]
+% \centering
+% \subfloat[Video phase percentage in model for the first scenario and percentage of chaced and not-cached in PROP for the first scenario.\label{fig:stacked2-normal}]{
+% \includegraphics[width=5.7cm]{graphs/new/repl/stacked-excel.eps}
+% }
+% \hfill
+% \subfloat[Video phase percentage in model for the second scenario and percentage of chaced and not-cached in PROP for the second scenario.\label{fig:stacked2-shift}]{
+% \includegraphics[width=5.7cm]{graphs/new/shift/stacked-excel.eps}
+% }
+% \hfill
+% \subfloat[Video phase percentage in model for the third scenario and percentage of chaced and not-cached in PROP for the third scenario.\label{fig:stacked2-zipf}]{
+% \includegraphics[width=5.7cm]{graphs/new/zipf/stacked-excel.eps}
+% }
+% \vspace{2mm}
+% \caption{Video phase percentage in model for every scenario and percentage of cached and not-cached in PROP for every scenario.}
+% \label{fig:stacked2}
+% \end{figure*}
+%%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-We assume that number of replicas are same, thus:
-\begin{align*}
-(f(p_{dl}) - f(p_{min})) (f(p_{max}) - f(p_{dl})) - \\ 
-(f(p_{ms}) - f(p_{min})) (f(p_{max}) - f(p_{ms})) > \\
-weight_{ms} - weight_{dl}
-\end{align*}
-
-Since $p_{min}$ and $p_{max}$ are same, we can find that the difference between $p_{dl}$ and $p_{ms}$ must always bigger than the difference between $weight_{ms}$ and $weight_{dl}$.
-If both videos are in the same position (e.g before-peak, at-peak, or after-peak) then the difference between $p_{dl}$ and $p_{ms}$ is the only factor for utility function.
-However, if the videos are not in the same position then the difference between $p_{dl}$ and $p_{ms}$ must always bigger than the difference between $weight_{ms}$ and $weight_{dl}$.
-There are two cases for the difference between $weight_{ms}$ and $weight_{dl}$.
-The first case is negative and the second case is positive.    
-The difference between $weight_{ms}$ and $weight_{dl}$ is positive when: 
-\begin{itemize}
-\item $weight_{ms}$ is in at-peak period and $weight_{dl}$ is in before-peak period.
-\item $weight_{ms}$ is in at-peak period and $weight_{dl}$ is in after-peak period.
-\item $weight_{ms}$ is in after-peak period and $weight_{dl}$ is in before-peak period.
-\end{itemize}
-When the difference between $weight_{ms}$ and $weight_{dl}$ is negative, the difference between $p_{dl}$ and $p_{ms}$ is the only factor for utility function.
 
 %%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%freq
 \begin{figure*}[!t]
 \centering
 \subfloat[Frequency a video in peers for the first scenario.\label{fig:freq-normal}]{
-\includegraphics[width=5.7cm]{graphs/new/repl/freq.png}
+\includegraphics[width=5.7cm]{graphs/new/repl/freq.eps}
 }
 \hfill
 \subfloat[Frequency a video in peers for the second scenario.\label{fig:freq-shift}]{
-\includegraphics[width=5.7cm]{graphs/new/shift/freq.png}
+\includegraphics[width=5.7cm]{graphs/new/shift/freq.eps}
 }
 \hfill
 \subfloat[Frequency a video in peers for the third scenario.\label{fig:freq-zipf}]{
-\includegraphics[width=5.7cm]{graphs/new/zipf/freq.png}
+\includegraphics[width=5.7cm]{graphs/new/zipf/freq.eps}
 }
 \vspace{2mm}
 \caption{Frequency a video in peers compared between model and prop.}
@@ -786,26 +802,20 @@ When the difference between $weight_{ms}$ and $weight_{dl}$ is negative, the dif
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Figure \ref{fig:freq-normal}, \ref{fig:freq-shift}, and \ref{fig:freq-zipf} show the frequency a video stay in peers compared between model and prop.
-As all figure show the model has higher frequency than prop to stay in peers except for the beginning rank of data where the model has same frequency with prop in first and second scenario. 
-In the third scenario, in the beginning rank of data the model has lower frequency than prop, then around rank 1000 the model has higher frequency than prop until the end of data. 
-The frequency a video stay in a video can also be viewed in fig \ref{fig:duration-normal},  \ref{fig:duration-shift}, and \ref{fig:duration-zipf}, where in the model some videos have longer cache duration than prop, while others have shorter cache duration than prop.  
-Thus, we can see the relationship between cache duration and frequency a video stays in peers. 
-
 %%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%duration
 \begin{figure*}[!t]
 \centering
 \subfloat[Cache duration in peers for the first scenario.\label{fig:duration-normal}]{
-\includegraphics[width=5.7cm]{graphs/new/repl/duration.png}
+\includegraphics[width=5.7cm]{graphs/new/repl/duration.eps}
 }
 \hfill
 \subfloat[Cache duration in peers for the second scenario.\label{fig:duration-shift}]{
-\includegraphics[width=5.7cm]{graphs/new/shift/duration.png}
+\includegraphics[width=5.7cm]{graphs/new/shift/duration.eps}
 }
 \hfill
 \subfloat[Cache duration in peers for the third scenario.\label{fig:duration-zipf}]{
-\includegraphics[width=5.7cm]{graphs/new/zipf/duration.png}
+\includegraphics[width=5.7cm]{graphs/new/zipf/duration.eps}
 }
 \vspace{2mm}
 \caption{Duration compared between model and prop.}
@@ -814,38 +824,159 @@ Thus, we can see the relationship between cache duration and frequency a video s
 %%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-Figure \ref{fig:atd-normal}, \ref{fig:atd-shift}, and \ref{fig:atd-zipf} show the number of replicas and a peer request a video. 
-For the first scenario and the second scenario, the replicas in the beginning of rank data are almost same, while in the body of distribution we can see the model has lower replicas than prop. 
-We calculate the significance test using the Kolmogorov-Smirnov statistic on 2 samples and we find that for the first and second scenario the $p$-values are less than $1$\% thus the results are significant. 
-For the third scenario, we only see the model has lower replicas in the tail of the data.
-For the third scenario, the $p$-value is more than $1$\% thus the result is not significance.    
 
-%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%replica
-\begin{figure*}[!t]
+\subsection{Result and Discussion}\label{resultanddiscussion}
+Figure \ref{fig:contribu-normal}, \ref{fig:contribu-shift}, and \ref{fig:contrib-zipf} show the absolute peer contribution to deliver videos compared between model and prop. 
+Figure \ref{fig:contribu-normal} and fig.\ref{fig:contribu-shift} show same pattern.
+The peers give more contribution in the tail while in the third scenario the peer contribution is mostly same between model and PROP. 
+A peers can give more contribution because a video has longer duration than other videos in a peer's cache thus other peer's requests are served by the peer. 
+A video has longer duration than other videos in peer's cache because that a video has bigger utility function than other videos for example a video that will enter the cache. 
+
+\begin{table}[!t]
+%% increase table row spacing, adjust to taste
+%\renewcommand{\arraystretch}{1.3}
+% if using array.sty, it might be a good idea to tweak the value of
+% \extrarowheight as needed to properly center the text within the cells
+\caption{Percentage of Cached events and Not-Cached events in Model and PROP}
+\label{tab:stacked1}
 \centering
-\subfloat[Number of a video replicas when a peer request a video for the first scenario.\label{fig:atd-normal}]{
-\includegraphics[width=5.7cm]{graphs/new/repl/atd.png}
-}
-\hfill
-\subfloat[Number of a video replicas when a peer request a video for the second scenario.\label{fig:atd-shift}]{
-\includegraphics[width=5.7cm]{graphs/new/repl/atd.png}
-}
-\hfill
-\subfloat[Number of a video replicas when a peer request a video for the third scenario where $y$ axis in log-scale.\label{fig:atd-zipf}]{
-\includegraphics[width=5.7cm]{graphs/new/zipf/atd.png}
-}
-\vspace{2mm}
-\caption{Replicas compared between model and prop.}
-\label{fig:replica}
-\end{figure*}
-%%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Some packages, such as MDW tools, offer better commands for making tables
+%% than the plain LaTeX2e tabular which is used here.
+\begin{tabular}{|l|l|c|c|}
+\hline
+Scenario & Type & Cached & Not-Cached\\
+\hline
+Scenario 1 & Model & $33.5\%$ & $66.5\%$ \\
+\hline
+ & PROP & $52\%$ & $48\%$  \\
+\hline
+
+Scenario 2 & Model & $34.8\%$ & $65.2\%$ \\
+\hline
+ & PROP & $52.6\%$ & $47.4\%$  \\
+\hline
+
+Scenario 3 & Model & $32.4\%$ & $67.6\%$  \\
+\hline
+ & PROP & $67.7\%$ & $32.3\%$ \\
+\hline
+\end{tabular}
+\end{table}
+
+Figure \ref{fig:atd-normal}, \ref{fig:atd-shift}, and \ref{fig:atd-normal} show the number of a video replicas available in system when a peer requests a video.
+As we can see from all figures, the model gives us lower number of replicas than PROP.
+The model gives lower number of replicas than PROP because when a peer requests a video, that peer does not cached the video.
+We can see the proportion of cached and not-cached event in table.\ref{tab:stacked1} and detail of the video phase breakdown is shown in table.\ref{tab:stacked2}.
+In model, not-cached events take around $65\%$ from all events and majority of video phase is in after-peak for both cached events and not-cached events. 
+Because the majority of video phase is in after-peak for both cached events and not-cached events, 
+In PROP, cached events take around $52\%$ from all events for the first scenario and the second scenario, while for the third scenario is $67.7\%$.
+In model not-cached events are bigger than PROP, means peers do not cached the videos thus we get lower replicas number than PROP.
+%If we see eq.\ref{eq:dlms_3} and table.\ref{tab:stacked2}, we found that the majority of video phase is in after-peak for both cached events and not-cached events, then big probability that $z_{ms}$ and $z_{dl}$ are in the same phase which is after-peak phase.
+
+
+Denote $u_{dl}$ is the minimum utility function for a video inside the cache and $u_{ms}$ is utility function for a video that will enter the cache,  $p_{dl}$ is the popularity for a video inside the cache and $p_{ms}$ is the popularity for a video that will enter the cache.
+In order a requested video is cached by a peer, the utility function for $u_{dl}$ must be lower than the utility function for $u_{ms}$.
+
+\begin{align}\label{eq:dlms_1}
+u_{dl} < u_{ms}
+\end{align}
+
+\begin{multline}\label{eq:dlms_2}
+\frac{ (f(p_{dl}) - f(p_{min})) (f(p_{max}) - f(p_{dl})) }{r^{\alpha + \beta}_{dl}} + z_{dl} < \\
+\frac{ (f(p_{ms}) - f(p_{min})) (f(p_{max}) - f(p_{ms})) }{r^{\alpha + \beta}_{ms}} + z_{ms}
+%\end{equation}
+\end{multline}
+
+We assume that number of replicas are same, thus:
+\begin{multline}\label{eq:dlms_3}
+(f(p_{dl}) - f(p_{min})) (f(p_{max}) - f(p_{dl})) - \\ 
+(f(p_{ms}) - f(p_{min})) (f(p_{max}) - f(p_{ms})) < \\
+z_{ms} - z_{dl}
+\end{multline}
+
+Since $p_{min}$ and $p_{max}$ are same, we can arrange the equation become:
+\begin{align}\label{eq:dlms_4}
+f(p_{ms}) - f(p_{dl}) > z_{dl} - z_{ms}
+\end{align}
+
+%and comparing with PROP: 
+%\begin{align}\label{eq:dlms_5}
+%f(p_{ms}) - f(p_{dl}) > 0 \\
+%f(p_{ms}) - f(p_{dl}) > z_{dl} - z_{ms}
+%\end{align}
+
+
+As we know from table.\ref{tab:stacked2} that the majority of a requested video phase is in after-peak and a requested video phase that is in at-peak phase is very small portion, then we can see that $z_{dl} - z_{ms}$ majority will be in negative term.
+%While comparing to PROP, the left term $f(p_{ms}) - f(p_{dl})$ will be equal to $0$ thus as result in our model a peer rejects the a requested video to be cached.
+
+%If both videos are in the same phase (e.g before-peak, at-peak, or after-peak) then the difference between $p_{dl}$ and $p_{ms}$ is the only factor for utility function.
+%However, if the videos are not in the same phase then the difference between $p_{dl}$ and $p_{ms}$ must always bigger than the difference between $z_{ms}$ and $z_{dl}$.
+%There are two cases for the difference between $z_{ms}$ and $z_{dl}$.
+%The first case is negative and the second case is positive.    
+%The difference between $z_{ms}$ and $z_{dl}$ is positive when: 
+%\begin{itemize}
+%\item $z_{ms}$ is in at-peak period and $z_{dl}$ is in before-peak period.
+%\item $z_{ms}$ is in at-peak period and $z_{dl}$ is in after-peak period.
+%\item $z_{ms}$ is in after-peak period and $z_{dl}$ is in before-peak period.
+%\end{itemize}
+%When the difference between $z_{ms}$ and $z_{dl}$ is negative, the difference between $p_{dl}$ and $p_{ms}$ is the only factor for utility function.
+
+
+
+
+
+\begin{table}[!t]
+%% increase table row spacing, adjust to taste
+%\renewcommand{\arraystretch}{1.3}
+% if using array.sty, it might be a good idea to tweak the value of
+% \extrarowheight as needed to properly center the text within the cells
+\caption{Percentage of Video Phase for Model in cached and not-cached events}
+\label{tab:stacked2}
+\centering
+%% Some packages, such as MDW tools, offer better commands for making tables
+%% than the plain LaTeX2e tabular which is used here.
+\begin{tabular}{|l|l|c|c|c|}
+\hline
+Scenario & Type/Events & Before-Peak & At-Peak & After-Peak\\
+\hline
+Scenario 1 & Model-Cached & $8.2\%$ & $1.2\%$ & $24.1\%$ \\
+\hline
+ & Model-Not-Cached & $11.2\%$ & $0.8\%$ & $54.5\%$ \\
+ \hline
+
+Scenario 2 & Model-Cached & $6.2\%$ & $1.2\%$ & $29.8\%$ \\
+\hline
+ & Model-Not-Cached & $5.2\%$ & $0.8\%$ & $56.8\%$ \\
+\hline
+
+Scenario 3 & Model-Cached & $8.0\%$ & $1.8\%$ & $22.7\%$ \\
+\hline
+ & Model-Not-Cached & $15.1\%$ & $0.8\%$ & $51.6\%$ \\
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+
+Figure \ref{fig:freq-normal}, \ref{fig:freq-shift}, and \ref{fig:freq-zipf} show the frequency a video stay in peers compared between model and prop.
+As all figure show the model has higher frequency than prop to stay in peers except for the beginning rank of data where the model has same frequency with prop in first and second scenario. 
+In the third scenario, in the beginning rank of data the model has lower frequency than prop, then around rank 1000 the model has higher frequency than prop until the end of data. 
+The frequency a video stay in a video can also be viewed in fig \ref{fig:duration-normal},  \ref{fig:duration-shift}, and \ref{fig:duration-zipf}, where in the model some videos have longer cache duration than prop, while others have shorter cache duration than prop.  
+Thus, we can see the relationship between cache duration and frequency a video stays in peers. 
+
+
+
 
 \section{Conclusion and Future Work}\label{conclusion}
 This paper presents a scheme for peer-to-peer network can help CDN to deliver the content over the Internet. 
 We show that by introducing the weight to utility function we can increase the peer contribution to deliver the content while decreasing required replicas. 
-We found that there are no much different between the first scenario and the second scenario in peer contribution to deliver a video, while for the third scenario we see the model has higher peer contribution than prop in the body of the distribution.
-We found that in the first scenario and the second scenario, the model gives lower replica in the body of distribution than prop, while the third scenario gives lower replica in the tail of distribution than prop.
+We found that there are no much different between the first scenario, the second scenario and the third scenario in peer contribution to deliver a video. 
+We found that in the all scenarios, the model gives lower replica than PROP. 
+This is because in the model, we found that not-cached events are higher than cached events. 
+Therefore, in the model the number of available replicas are lower than PROP. 
+We also did the significance test to the number of replicas using the Kolmogorov-Smirnov statistic on two samples and we find that for all scenarios the $p$-values are less than $1$\% thus the results are significant. 
 
 Some areas of improvement that we have identified for future are:
 The energy trade off this peer-assisted CDN architecture in order to know how much energy saving by ISP and how much increase of energy at users home gateway side in this architecture since we have higher peer contribution.   
