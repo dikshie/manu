@@ -385,9 +385,9 @@ dikshie@sfc.wide.ad.jp \quad\quad husni@ai3.net \quad\quad jun@wide.ad.jp}
 
 \begin{abstract}
 %\boldmath
-Content distribution network (CDN) is widely used to efficiently deliver streaming media. 
-The CDN with dedicated network bandwidths and hardware supports can provide high-quality streaming services but at a high cost. 
-On the other side, the rise of peer-to-peer (P2P) networks are scalable but do not guarantee high quality streaming service due to the transient nature of peers.
+%Content distribution network (CDN) is widely used to efficiently deliver streaming media. 
+%The CDN with dedicated network bandwidths and hardware supports can provide high-quality streaming services but at a high cost. 
+%On the other side, the rise of peer-to-peer (P2P) networks are scalable but do not guarantee high quality streaming service due to the transient nature of peers.
 In this paper, we present peer-assisted CDN model, the peer-to-peer networks that can be used to help CDN to deliver streaming media.
 Our peer-assisted CDN model is aided by Youtube VoD views popularity model.
 We have comparatively evaluated our system through trace-driven simulations with synthetic workloads.
@@ -452,13 +452,20 @@ A user may cache the content after download to serve requests from other users.
 Due to the complexity of the behavior of peers, the process should be done in the home gateway user where the ISP can control it.
 
 In this work, we will revisit Guo et al., \cite{1613869} work's PROP as basis to evaluate of the peer-assisted CDN and propose an improvement the model for the PROP.
-We also examine the characteristics of Internet VoD by investigating real-world datasets obtained from Youtube.
-We estimate the video popularity phase.
-Information of video popularity phase will be used for caching strategy
-In P2P assisted CDN for video on demand (VoD), most of researcher assume that catalog of video popularity rank is already established following zipf distribution.  
-This become basis for P2P assisted CDN model in PROP \cite{1613869}.
-Our work is quite different whereas we will use VoD view popularity to aid the PROP model.
-We use Youtube VoD view model for this purpose.
+Internet video on demand (VoD) is on rising todays e.g. Youtube.
+We will take Youtube as an example of Internet VoD service model.
+In Youtube service model, we can get data such as (1) the time when a video is uploaded and (2) number of access or number of view.
+The information of (1) the time when a video is uploaded and (2) number of access or number of view will be used for helping PROP.
+In a seminal work, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} use above information to estimate when a video become very popular.
+Moreover, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} classify a video popularity become three categories: before-peak phase, at-peak phase, and after-peak phase.
+We will explain about video popularity in sect.\ref{popularity}.
+%We also examine the characteristics of Internet VoD by investigating real-world datasets obtained from Youtube.
+%We estimate the video popularity phase.
+%Information of video popularity phase will be used for caching strategy
+%In P2P assisted CDN for video on demand (VoD), most of researcher assume that catalog of video popularity rank is already established following zipf distribution.  
+%This become basis for P2P assisted CDN model in PROP \cite{1613869}.
+%Our work is quite different whereas we will use VoD view popularity to aid the PROP model.
+%We use Youtube VoD view model for this purpose.
 %In Youtube, video view popularity has three phase which is before-peak, at-peak, and after-peak \cite{Borghol:2011:CMP:2039452.2039717} which we will explain later in sect.\ref{popularity}.
 A twofold of our contributions as follows:
 (1) We use the idea of VoD view popularity model to aid the PROP model. 
@@ -528,8 +535,8 @@ In our work, we complement Guo et al., \cite{1613869} work with VoD viewing popu
 \end{figure} 
 
 \section{Characterizing Internet VoD Popularity}\label{popularity}
-The objective of estimating Internet VoD popularity phase is to get popularity state of a video whether a video is at before-peal popularity phase or at peak popularity phase, or at after-peak popularity phase.
-We use YouTube as an example of VoD service where we get YouTube content popularity from Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717}.
+The objective of estimating Internet VoD popularity phase is to get popularity state of a video whether a video is at before-peak popularity phase or at peak popularity phase, or at after-peak popularity phase.
+We use YouTube as an example of VoD service where we get YouTube content popularity datasets from Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717}.
 The datasets itself measure the evolution of content popularity in 36 weeks by recording video count statistics of YouTube.
 
 In YouTube datasets, we have one-week spacing between consecutive snapshots.  
@@ -596,12 +603,12 @@ In our work, we use Youtube VoD view model to aid our work that based from PROP.
 The Youtube VoD view model will be used in peer-caching strategy side to exploits the video popularity. 
 
 \subsection{Peer caching strategy}\label{peercachingstrategy}
-Since we can estimate before-peak week, at-peak week, and after-peak week of video, we modified the original utility function from PROP by adding a weight as follows:
+Since we can estimate before-peak phase, at-peak phase, and after-peak phase of video, we modified the original utility function from PROP by adding a weight as follows:
 \begin{equation}
 u = \frac{ (f(p) - f(p_{min})) (f(p_{max}) - f(p)) }{r^{\alpha + \beta}} + z
 \end{equation}
 
-Following \cite{1613869} we can calculate $p$ as follows:
+Following \cite{1613869}, we can calculate $p$ as follows:
 \begin{equation}
 p = min (\frac{n_i^r}{t_i^r - t_a^i}  , \frac{1}{t_{cur} - t_i^r})
 \end{equation}
@@ -609,15 +616,15 @@ p = min (\frac{n_i^r}{t_i^r - t_a^i}  , \frac{1}{t_{cur} - t_i^r})
 where $n_i^r$ is number of requested video, $t_i^r$ is last time the video is requested, $t_a^i$ is the uploaded time of the video, and $t_{cur}$ is the current time.
 $z$ is proportion of view count that we get from Youtube datasets.  
 In before-peak week, we get $z=0.149538787758 $,  in at-peak week, we get $z=0.470040393021$, and in after-peak week, we get $z=0.380420819221$.
-In PROP's utility function, the difference between very popular videos and unpopular video is very difficult to differentiate. 
 $p$ represents popularity of the video, $p_{min}$ represents estimation of minimum popularity in P2P system, $p_{max}$ represents estimation of maximum popularity in P2P system, $r$ represents the number of replicas of the video in the system, and $f(p)$ is monotonic non-decreasing function.
 $\alpha$ and $\beta$ are the adjustment factor.
 The CDN can calculate $p_{min}$ and $p_{max}$ then propagate to the P2P system.
 To able to track the simulation, we use default value from PROP for $\alpha=\beta=1$ and $f(p)=log (p)$.
 We choose the video with the smallest $u$ value as the candidate to be replaced when a peer's cache capacity is full.
+In PROP's utility function, the difference between very popular videos and unpopular video is very difficult to differentiate. 
 For unpopular video $f(p)$ will be very close to $f(p_{min})$ thus $f(p) - f(p_{min})$ will be very close to $0$ then utility function become very small.
 For very populary video $f(p)$ will be very close to $f(p_{max})$ thus $f(p_{max}) - f(p)$ will be very close to $0$ then utility function become very small.  
-Linear addition of $z$ factor here can help to differentiate the value of utility function.
+Linear addition of $z$ factor can help to differentiate the value of utility function.
 
 \begin{figure}[!t]
 \begin{center}
@@ -635,7 +642,7 @@ Linear addition of $z$ factor here can help to differentiate the value of utilit
 %kenapa 2 metric ini dipilih.
 %bagaimana evaluasinya:  bikin simulator: a, b, c ,d 
 
-In order to evaluate the proposed peer-caching strategy using before-peak, at-peak, and after-peak information from Youtube VoD view model, we have to compare our model to PROP model.
+In order to evaluate the proposed peer-caching strategy using estimation of before-peak, at-peak, and after-peak information from Youtube VoD view model, we have to compare our model to PROP model.
 We evaluate three metrics which are peer contribution to delivery contents during simulation,  access frequency of cache during simulation, and number of replicas. 
 Peer contribution metric related to byte-hit-ratio. 
 Byte-hit-ratio is defined as the total bytes contents served by peers normalized by the total bytes of video all peers and CDN consume.
@@ -649,7 +656,7 @@ To evaluate these metrics, we developed a peer-assisted CDN simulator.
 
 \subsection{Simulation Design}\label{simulationdesign}
 An event driven simulator is developed using Python for this purpose.
-In our simulator, time is divided into rounds. 
+In our simulator, time is divided into rounds.
 During a round, a peer request a video.
 
 In fig.\ref{fig:p2pcdninteractioninsimulator}, we describe the process of a peer that requests a video in simulator which derived from PROP.
@@ -665,7 +672,7 @@ From above description, we can see that deploying peer-assisted CDN can save som
 
 
 \subsubsection{Catalog Generator}\label{catalog}
-TThe goal for catalog generator is to create a catalog video that consist video-id, time when a video is uploaded, a video size, view count terminus, and progress of videos popularity. We assume that a video is uploaded to server following Poisson process with mean rate $\lambda=1$ thus we can get the time when a video is uploaded. 
+The goal for catalog generator is to create a catalog video that consist video-id, time when a video is uploaded, a video size, view count terminus, and progress of videos popularity. We assume that a video is uploaded to server following Poisson process with mean rate $\lambda=1$ thus we can get the time when a video is uploaded. 
 The view count terminus for every video is assigned randomly uniform from Youtube datasets and video size for every video is assigned randomly uniform between 1 and 200MB. Finally, we have a catalog that consists of: video-id, time when a video is uploaded, view count terminus, and video size.
 
 \subsubsection{Peer Request Generator}\label{peerrequest}
@@ -894,7 +901,7 @@ We assume that number of replicas are same, thus:
 z_{ms} - z_{dl}
 \end{multline}
 
-Since $p_{min}$ and $p_{max}$ are same, we can arrange the equation become:
+Since $p_{min}$ and $p_{max}$ are same for $u_{dl}$ and $u_{ms}$, we can arrange the equation become:
 \begin{align}\label{eq:dlms_4}
 f(p_{ms}) - f(p_{dl}) > z_{dl} - z_{ms}
 \end{align}
