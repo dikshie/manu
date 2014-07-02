@@ -455,9 +455,10 @@ In this work, we will revisit Guo et al., \cite{1613869} work's PROP as basis to
 Internet video on demand (VoD) is on rising todays e.g. Youtube.
 We will take Youtube as an example of Internet VoD service model.
 In Youtube service model, we can get data such as (1) the time when a video is uploaded and (2) number of access or number of view.
-The information of (1) the time when a video is uploaded and (2) number of access or number of view will be used for helping PROP.
+%The information of (1) the time when a video is uploaded and (2) number of access or number of view will be used for helping PROP.
 In a seminal work, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} use above information to estimate when a video become very popular.
-Moreover, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} classify a video popularity become three categories: before-peak phase, at-peak phase, and after-peak phase.
+Moreover, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} classify a video popularity become three phases: before-peak phase, at-peak phase, and after-peak phase.
+We will use estimation of a video popularity phases for helping PROP.
 We will explain about video popularity in sect.\ref{popularity}.
 %We also examine the characteristics of Internet VoD by investigating real-world datasets obtained from Youtube.
 %We estimate the video popularity phase.
@@ -530,26 +531,27 @@ In our work, we complement Guo et al., \cite{1613869} work with VoD viewing popu
 \begin{center}
 \includegraphics[scale=0.6]{graphs/timetopeak.eps}
 \end{center}
-\caption{Time to peak empirical distribution.}
+\caption{Time to peak empirical distribution \cite{Borghol:2011:CMP:2039452.2039717}.}
 \label{fig:timetopeak}
 \end{figure} 
 
 \section{Characterizing Internet VoD Popularity}\label{popularity}
-The objective of estimating Internet VoD popularity phase is to get popularity state of a video whether a video is at before-peak popularity phase or at peak popularity phase, or at after-peak popularity phase.
-We use YouTube as an example of VoD service where we get YouTube content popularity datasets from Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717}.
-The datasets itself measure the evolution of content popularity in 36 weeks by recording video count statistics of YouTube.
-
-In YouTube datasets, we have one-week spacing between consecutive snapshots.  
-We can get how many times the video was view during the one-week period since last week or since snapshot $(i-1)$. 
-Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} define time-to-peak for a video as its age (time since upload) at which its weekly viewing rate is the highest during measurement (from the first week until end of measurement).
-
+As we mentioned earlier, we will use Youtube service model as an example of Internet VoD.
+The objective of estimating Internet VoD popularity phase is to get popularity state of a requested video whether a video is before-peak popularity phase or at peak popularity phase, or  after-peak popularity phase.
+We use Youtube as an example of VoD service where we get Youtube content popularity datasets from Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717}.
+The datasets consists the measurement of 29000 videos view count and the time when videos are uploaded during 36 weeks.
+Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} classify three phases of a video popularity: before-peak, at-peak, and after-peak.
+The authors define time-to-peak for a video as its age (time since upload) at which its weekly viewing rate is the highest during measurement (from the first week until end of measurement).
 The time-to-peak distributions is shown in fig.\ref{fig:timetopeak}.
 Figure \ref{fig:timetopeak} shows Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} work that around three-quarters of a large fraction videos peak within the first six weeks since their upload and beyond six weeks we have uniform distribution thus the time-to-peak is exponentially distributed mixture with uniform distribution. 
-Because we know the peak time (at-peak phase) of every video, we can also know before-peak phase and after-phase of every videos.
-
 To estimate the the rate parameter of exponential part of time-to-peak distribution, we use Maximum Likelihood Estimation (MLE) \cite{clauset2009power}.
 Using MLE method, we can get exponential parameter $\lambda = 0.59$.
-For weekly views distribution, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} found that beta distribution is a good model to explain video views popularity evolution thus we follow Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} for  weekly views distribution model.\\
+Because we know the peak time (at-peak phase) of every video, we can also know before-peak phase and after-phase of every videos. 
+For detail we refer the readers to \cite{Borghol:2011:CMP:2039452.2039717}.
+
+%To estimate the the rate parameter of exponential part of time-to-peak distribution, we use Maximum Likelihood Estimation (MLE) \cite{clauset2009power}.
+%Using MLE method, we can get exponential parameter $\lambda = 0.59$.
+%For weekly views distribution, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} found that beta distribution is a good model to explain video views popularity evolution thus we follow Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} for  weekly views distribution model.\\
 To reveal data distribution of view rate for every video, we plot view rate versus week where we shift week of view rate at-peak phase to zero. 
 Therefore we can get view rate distribution relative to at-peak week as shown in fig.~\ref{fig:viewratedistribution}
 
