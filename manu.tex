@@ -539,9 +539,9 @@ In our work, we complement Guo et al., \cite{1613869} work with VoD viewing popu
 \includegraphics[scale=0.6]{graphs/datadistribution.eps}
 \end{center}
 \caption{View rate distribution versus week relative to at-peak phase week for every video, where y-axis in log scale.
-Every point lies in negative x-axis mean view rate of every videos in before-peak phase.
-Every point lies in x-axis$=0$ mean view rate of every videos at-peak phase. 
-Every point lies in positive x-axis mean view rate of every videos in after-peak phase. }
+Every point lies in negative x-axis mean view rate of every video in before-peak phase.
+Every point lies in x-axis$=0$ mean view rate of every video at-peak phase. 
+Every point lies in positive x-axis mean view rate of every video in after-peak phase. }
 \label{fig:viewratedistribution}
 \end{figure} 
 
@@ -686,7 +686,7 @@ Linear addition of $z(t)$ factor can help to differentiate the value of utility 
 When a peer requests a video, it always goes to a CDN server (step 1). 
 The CDN provides the videos to the peer (step 2). 
 If there is another peer request same video, that request will go to CDN (step 3).  
-A CDN will check its record to see if there are some peers cache that requested video.  
+A CDN will check its record to see if there is some peers cache that requested video.  
 If there is some peers cache that requested video, a CDN will reply with redirect message that asking a peer to download requested video from other peer (step 4).
 If there s no peers have requested video, a CDN will serve the video.   
 A peer then can request the video to other peer and get the video (step 5 and step 6).
@@ -942,7 +942,7 @@ Scenario 3 & Model & $32.4\%$ & $67.6\%$  \\
 
 Figure \ref{fig:atd-normal}, \ref{fig:atd-shift}, and \ref{fig:atd-normal} show the number of  videos replicas available in system when a peer requests a video.
 As we can see from all figures, the model gives us lower number of replicas than PROP.
-The model gives lower number of replicas than PROP because when a peer requests a video, that peer does not cached the video.
+The model gives lower number of replicas than PROP because when a peer requests a video, that peer is not cached the video.
 We can see the proportion of cached and not-cached event in table.\ref{tab:stacked1}. 
 We also present detail of the video phase breakdown in table.\ref{tab:stacked2}.
 In model, not-cached events take around $65\%$ from all events and majority of video phase is  after-peak for both cached events and not-cached events. 
@@ -965,7 +965,7 @@ u_{dl} < u_{ms}
 %\end{equation}
 \end{multline}
 
-We assume that number of replicas are same, thus:
+We assume that numbers of replicas are same, thus:
 \begin{multline}\label{eq:dlms_3}
 (f(p_{dl}) - f(p_{min})) (f(p_{max}) - f(p_{dl})) - \\ 
 (f(p_{ms}) - f(p_{min})) (f(p_{max}) - f(p_{ms})) < \\
