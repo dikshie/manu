@@ -391,8 +391,9 @@ dikshie@sfc.wide.ad.jp \quad\quad husni@ai3.net \quad\quad jun@wide.ad.jp}
 In this paper, we present peer-assisted CDN model, the peer-to-peer networks that can be used to help CDN to deliver streaming media.
 Our peer-assisted CDN model is aided by Youtube VoD views popularity model.
 We have comparatively evaluated our system through trace-driven simulations with synthetic workloads.
-Our results show that our model gives lower number of replicas while maintaining same number of peers contribution compare to previous work. 
-We also do the significance to the number of replicas using the Kolmogorov-Smirnov statistic on two samples and we find our results are significant. 
+We use three scenarios in our simulation which are (1) a peer requests a video that follow Youtube popularity, (2) a peer requests a video that follow Youtube popularity but we shift the request time four weeks, (3) a peer requests a video that based on zipf distribution popularity instead of Youtube.
+Our results show that our model gives lower number of replicas while maintaining same number of peers contribution compare to counterpart work. 
+We also do the significance to the number of replicas using the Kolmogorov-Smirnov statistic on two samples and we find our results are significant ($p-values < 0.1$). 
 
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
