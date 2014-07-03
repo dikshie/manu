@@ -534,6 +534,8 @@ In our work, we complement Guo et al., \cite{1613869} work with VoD viewing popu
 \caption{Time to peak empirical distribution \cite{Borghol:2011:CMP:2039452.2039717}.}
 \label{fig:timetopeak}
 \end{figure} 
+
+
 \begin{figure}[!t]
 \begin{center}
 \includegraphics[scale=0.6]{graphs/datadistribution.eps}
@@ -621,12 +623,12 @@ Therefore we can get view rate distribution relative to at-peak week as shown in
 % \end{figure} 
 
 %We use estimation of video popularity phase in peer caching strategy side.
-How we estimate the video popularity phase is shown in fig.\ref{fig:viewratedistexample} and fig.\ref{fig:viewratedistexamplered}.
-In fig.~\ref{fig:viewratedistexample} part A, we have view rate (y-axis) and relative week to peak (x-axis) which is view rate distribution versus week relative to at-peak phase as also shown completely in fig.~\ref{fig:viewratedistribution}.
-We transform these numbers by adding number of week and make number of week as x-axis, view rate 
-as y-axis, and relative week to peak as z-axis fig.~\ref{fig:viewratedistexample} part B.
+How we estimate the video popularity phase is shown in fig.\ref{fig:transformand2d}.
+In fig.~\ref{fig:viewratedistexample} we have view rate (y-axis) and relative week to peak (x-axis) which is view rate distribution versus week relative to at-peak phase.
+We transform these numbers by adding week number and make it as x-axis, view rate 
+as y-axis, and relative week to peak as z-axis fig.~\ref{fig:viewratedistexample}.
 This transformation is shown in fig.~\ref{fig:viewratedistexamplered} denote as box points.
-We want to estimate what is the phase of that video. 
+Assume there is a peer requests a video, we want to estimate what is the phase of that video. 
 Is the video in at-peak phase, before-phase, or after phase.  
 We can estimate that video phase by averaging relative week to peak numbers (the points at z-axis) of the nearest point from datasets. 
 If the average value less than $0$ we estimate the video is at before-peak phase, if the average value equal to $0$ we estimate the video is at at-peak phase,  and if the average value more than $0$ we estimate the video is at after-peak phase.
