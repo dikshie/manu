@@ -391,7 +391,7 @@ dikshie@sfc.wide.ad.jp \quad\quad husni@ai3.net \quad\quad jun@wide.ad.jp}
 In this paper, we present peer-assisted CDN model, the peer-to-peer networks that can be used to help CDN to deliver streaming media.
 Our peer-assisted CDN model is aided by Youtube VoD views popularity model.
 We have comparatively evaluated our system through trace-driven simulations with synthetic workloads.
-We use three scenarios in our simulation which are (1) a peer requests a video that follow Youtube popularity, (2) a peer requests a video that follow Youtube popularity but we shift the request time four weeks, (3) a peer requests a video that based on zipf distribution popularity instead of Youtube.
+We use three scenarios in our simulation which are (b) a peer requests a video that follow Youtube popularity, (b) a peer requests a video that follow Youtube popularity but we shift the request time four weeks, (c) a peer requests a video that based on zipf distribution popularity instead of Youtube.
 Our results show that our model gives lower number of replicas while maintaining same number of peers contribution compare to counterpart work. 
 We also do the significance to the number of replicas using the Kolmogorov-Smirnov statistic on two samples and we find our results are significant ($p-values < 0.1$). 
 
@@ -736,12 +736,12 @@ The view count terminus for every video is assigned randomly uniform from Youtub
 
 \subsubsection{Peer Request Generator}\label{peerrequest}
 In catalog generator, we assume peer request a video to CDN following Poisson process with a mean rate $\lambda=1$ \cite{Zink:2009:CYN:1502814.1502987}.
-There are three scenarios for peer request:
-First, a peer chooses a video that has popularity following Youtube.
+There are three scenarios for peer request (named as scenario A, B, and C):
+In scenario A, a peer chooses a video that has popularity following Youtube.
 The objective of the first scenario, we want to see the peer requests effect to peer-assisted CDN when the request following Youtube popularity. 
-Second, a peer chooses a video that has popularity following Youtube but we shift the request four weeks later.  
+In scenario B, a peer chooses a video that has popularity following Youtube but we shift the request four weeks later.  
 The objective of the second scenario, we want to see the peer requests effect to peer-assisted CDN when the request from peers are lag four weeks after popular in Youtube.
-Third, a peer chooses a video that has popularity following zipf distribution with rate$=0.9$ \cite{6654887} thus a peer choose a video that its popularity does not follow Youtube popularity.
+In scenario C, a peer chooses a video that has popularity following zipf distribution with rate$=0.9$ \cite{6654887} thus a peer choose a video that its popularity does not follow Youtube popularity.
 The objective of the third scenario, we want to see the peer request effect to peer-assisted CDN when the requests from peers are totally different from Youtube's videos popularity.
 
 %We assume that a peer choose a video based on a preference from view count and view rate that we can get from catalog generator.  
@@ -759,7 +759,7 @@ The simulation parameters are follows:
 \item Number of peers: $100000$.
 \item Number of videos: $10000$.
 \end{itemize}
-Finally, we compare our results to original PROP \cite{1613869} implementation.
+Finally, we compare our results to PROP \cite{1613869} implementation.
 
 %There are three scenarios in our simulations.
 %First, peers choose a video that has a popularity following from Youtube data sets that we already explained in \ref{catalog}.
@@ -773,15 +773,15 @@ Finally, we compare our results to original PROP \cite{1613869} implementation.
 %%%contribution 
 \begin{figure*}[!t]
 \centering
-\subfloat[Absolute of contribution of peer for the first scenario where $y$-axis in log-scale.\label{fig:contribu-normal}]{
+\subfloat[Absolute of contribution of peer for scenario A ($y$-axis in log-scale).\label{fig:contribu-normal}]{
 \includegraphics[width=5.7cm]{graphs/new/repl/contributioncdnpeermodelsortedabs.eps}
 }
 \hfill
-\subfloat[Absolute of contribution of peer for the second scenario where $y$-axis in log-scale.\label{fig:contribu-shift}]{
+\subfloat[Absolute of contribution of peer for scenario B ($y$-axis in log-scale).\label{fig:contribu-shift}]{
 \includegraphics[width=5.7cm]{graphs/new/shift/contributioncdnpeermodelsortedabs.eps}
 }
 \hfill
-\subfloat[Absolute contribution of peers for the third scenario where $y$-axis in log-scale.\label{fig:contribu-zipf}]{
+\subfloat[Absolute contribution of peers for scenario C ($y$-axis in log-scale).\label{fig:contribu-zipf}]{
 \includegraphics[width=5.7cm]{graphs/new/zipf/contributioncdnpeermodelsortedabs.eps}
 }
 \vspace{2mm}
@@ -794,15 +794,15 @@ Finally, we compare our results to original PROP \cite{1613869} implementation.
 %%%replica
 \begin{figure*}[!t]
 \centering
-\subfloat[Number of a video replicas when a peer request a video for the first scenario where $y$ axis in log-scale.\label{fig:atd-normal}]{
+\subfloat[Number of a video replicas when a peer request a video for scenario A ($y$ axis in log-scale).\label{fig:atd-normal}]{
 \includegraphics[width=5.7cm]{graphs/new/repl/atd.eps}
 }
 \hfill
-\subfloat[Number of a video replicas when a peer request a video for the second scenario where $y$ axis in log-scale.\label{fig:atd-shift}]{
+\subfloat[Number of a video replicas when a peer request a video for scenario B ($y$ axis in log-scale).\label{fig:atd-shift}]{
 \includegraphics[width=5.7cm]{graphs/new/shift/atd.eps}
 }
 \hfill
-\subfloat[Number of a video replicas when a peer request a video for the third scenario where $y$ axis in log-scale. In model we found many zero replica when a peer requests a video. Because we use log-scale in this figure, the zero numbers can not be viewed.\label{fig:atd-zipf}]{
+\subfloat[Number of a video replicas when a peer request a video for scenario C ($y$ axis in log-scale). In model we found many zero replica when a peer requests a video. Because we use log-scale in this figure, the zero numbers can not be viewed.\label{fig:atd-zipf}]{
 \includegraphics[width=5.7cm]{graphs/new/zipf/atd.eps}
 }
 \vspace{2mm}
@@ -860,19 +860,19 @@ Finally, we compare our results to original PROP \cite{1613869} implementation.
 %%%freq
 \begin{figure*}[!t]
 \centering
-\subfloat[Frequency a video in peers for the first scenario.\label{fig:freq-normal}]{
+\subfloat[Frequency a video stays in peers for scenario A.\label{fig:freq-normal}]{
 \includegraphics[width=5.7cm]{graphs/new/repl/freq.eps}
 }
 \hfill
-\subfloat[Frequency a video in peers for the second scenario.\label{fig:freq-shift}]{
+\subfloat[Frequency a video stays in peers for scenario B.\label{fig:freq-shift}]{
 \includegraphics[width=5.7cm]{graphs/new/shift/freq.eps}
 }
 \hfill
-\subfloat[Frequency a video in peers for the third scenario.\label{fig:freq-zipf}]{
+\subfloat[Frequency a video stays in peers for scenario C.\label{fig:freq-zipf}]{
 \includegraphics[width=5.7cm]{graphs/new/zipf/freq.eps}
 }
 \vspace{2mm}
-\caption{Frequency a video in peers compared between model and prop.}
+\caption{Frequency a video stays in peers compared between model and prop.}
 \label{fig:freq}
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -881,15 +881,15 @@ Finally, we compare our results to original PROP \cite{1613869} implementation.
 %%%duration
 \begin{figure*}[!t]
 \centering
-\subfloat[Cache duration in peers for the first scenario.\label{fig:duration-normal}]{
+\subfloat[Cache duration of a video in peers for scenario A.\label{fig:duration-normal}]{
 \includegraphics[width=5.7cm]{graphs/new/repl/duration.eps}
 }
 \hfill
-\subfloat[Cache duration in peers for the second scenario.\label{fig:duration-shift}]{
+\subfloat[Cache duration of a video in peers for scenario B.\label{fig:duration-shift}]{
 \includegraphics[width=5.7cm]{graphs/new/shift/duration.eps}
 }
 \hfill
-\subfloat[Cache duration in peers for the third scenario.\label{fig:duration-zipf}]{
+\subfloat[Cache duration of a video in peers for scenario C.\label{fig:duration-zipf}]{
 \includegraphics[width=5.7cm]{graphs/new/zipf/duration.eps}
 }
 \vspace{2mm}
