@@ -578,9 +578,8 @@ For detail we refer the readers to \cite{Borghol:2011:CMP:2039452.2039717}.
 %To estimate the the rate parameter of exponential part of time-to-peak distribution, we use Maximum Likelihood Estimation (MLE) \cite{clauset2009power}.
 %Using MLE method, we can get exponential parameter $\lambda = 0.59$.
 %For weekly views distribution, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} found that beta distribution is a good model to explain video views popularity evolution thus we follow Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} for  weekly views distribution model.\\
-To reveal data distribution of view rate for every video, we plot view rate versus week where we shift week of view rate at-peak phase to zero. 
+To reveal data distribution of view rate for every video, we plot view rate versus week where we shift week of view rate of at-peak phase to zero. 
 Therefore we can get view rate distribution relative to at-peak week as shown in fig.~\ref{fig:viewratedistribution}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%replica
@@ -602,9 +601,6 @@ Therefore we can get view rate distribution relative to at-peak week as shown in
 % \label{fig:stacked1}
 % \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
 
 % \begin{figure}[!t]
 % \begin{center}
@@ -635,7 +631,7 @@ If the average value less than $0$ we estimate the video is at before-peak phase
 
 For example: there is a peer that requests a video where the position of video is in fourth week with the last week view rate $vr=2$ (we can get as this data from CDN) shown in fig.~\ref{fig:viewratedistexamplered} denote as circle.
 In this case, the nearest points are the point at third week $(2,1,-1)$ and the point at fifth week $(4,1,1)$.  
-By averaging the points at z-axis of the nearest points $(-1 + 1)/2 = 0$,  we can get estimate that video is in at-peak phase.
+By averaging the points at z-axis of the nearest points $(-1 + 1)/2 = 0$,  we can estimate that video is in at-peak phase.
 
 
 \section{System Description}\label{systemdescription}
