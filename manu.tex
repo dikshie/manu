@@ -566,11 +566,11 @@ We use Youtube as an example of VoD service where we get Youtube content popular
 The datasets consists the measurement of 29000 videos view count and the time when videos are uploaded during 36 weeks.
 Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} classify three phases of a video popularity: before-peak, at-peak, and after-peak.
 The authors define time-to-peak for a video as its age (time since upload) at which its weekly viewing rate is the highest during measurement (from the first week until end of measurement).
-The time-to-peak distributions is shown in fig.\ref{fig:timetopeak}.
+The time-to-peak distribution is shown in fig.\ref{fig:timetopeak}.
 Figure \ref{fig:timetopeak} shows Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} work that around three-quarters of a large fraction videos peak within the first six weeks since their upload and beyond six weeks we have uniform distribution thus the time-to-peak is exponentially distributed mixture with uniform distribution. 
-To estimate the the rate parameter of exponential part of time-to-peak distribution, we use Maximum Likelihood Estimation (MLE) \cite{clauset2009power}.
+To estimate the rate parameter of exponential part of time-to-peak distribution, we use Maximum Likelihood Estimation (MLE) \cite{clauset2009power}.
 Using MLE method, we can get exponential parameter $\lambda = 0.59$.
-Because we know the peak time (at-peak phase) of every video, we can also know before-peak phase and after-phase of every videos. 
+Because we know the peak time (at-peak phase) of every video, we can also know before-peak phase and after-phase of every video. 
 For detail we refer the readers to \cite{Borghol:2011:CMP:2039452.2039717}.
 
 %To estimate the the rate parameter of exponential part of time-to-peak distribution, we use Maximum Likelihood Estimation (MLE) \cite{clauset2009power}.
@@ -625,10 +625,10 @@ How we estimate the video popularity phase is shown in fig.\ref{fig:viewratedist
 In fig.~\ref{fig:viewratedistexample} part A, we have view rate (y-axis) and relative week to peak (x-axis) which is view rate distribution versus week relative to at-peak phase as also shown completely in fig.~\ref{fig:viewratedistribution}.
 We transform these numbers by adding number of week and make number of week as x-axis, view rate 
 as y-axis, and relative week to peak as z-axis fig.~\ref{fig:viewratedistexample} part B.
-This transformation is shown in fig.~\ref{fig:viewratedistexamplered} denote as diamond points.
+This transformation is shown in fig.~\ref{fig:viewratedistexamplered} denote as box points.
 We want to estimate what is the phase of that video. 
 Is the video in at-peak phase, before-phase, or after phase.  
-We can estimate the that video phase by averaging relative week to peak numbers (the points at z-axis) of the nearest point from datasets. 
+We can estimate that video phase by averaging relative week to peak numbers (the points at z-axis) of the nearest point from datasets. 
 If the average value less than $0$ we estimate the video is at before-peak phase, if the average value equal to $0$ we estimate the video is at at-peak phase,  and if the average value more than $0$ we estimate the video is at after-peak phase.
 
 For example: there is a peer that requests a video where the position of video is in fourth week with the last week view rate $vr=2$ (we can get as this data from CDN) shown in fig.~\ref{fig:viewratedistexamplered} denote as circle.
