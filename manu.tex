@@ -638,7 +638,6 @@ In this case, the nearest points are the point at third week $(2,1,-1)$ and the 
 By averaging the points at z-axis of the nearest points $(-1 + 1)/2 = 0$,  we can get estimate that video is in at-peak phase.
 
 
-
 \section{System Description}\label{systemdescription}
 In our work, we use Youtube VoD view model to aid our work that based from PROP. 
 The Youtube VoD view model will be used in peer-caching strategy side to exploits the video popularity while caching strategy in CDN side is out of scope. 
@@ -785,7 +784,7 @@ Finally, we compare our results to original PROP \cite{1613869} implementation.
 \includegraphics[width=5.7cm]{graphs/new/shift/contributioncdnpeermodelsortedabs.eps}
 }
 \hfill
-\subfloat[Absolute contribution of peers for the third scenario where $y$-axis in log-scale.\label{fig:contrib-zipf}]{
+\subfloat[Absolute contribution of peers for the third scenario where $y$-axis in log-scale.\label{fig:contribu-zipf}]{
 \includegraphics[width=5.7cm]{graphs/new/zipf/contributioncdnpeermodelsortedabs.eps}
 }
 \vspace{2mm}
@@ -806,7 +805,7 @@ Finally, we compare our results to original PROP \cite{1613869} implementation.
 \includegraphics[width=5.7cm]{graphs/new/shift/atd.eps}
 }
 \hfill
-\subfloat[Number of a video replicas when a peer request a video for the third scenario where $y$ axis in log-scale.\label{fig:atd-zipf}]{
+\subfloat[Number of a video replicas when a peer request a video for the third scenario where $y$ axis in log-scale. In model we found many zero replica when a peer requests a video. Because we use log-scale in this figure, the zero numbers can not be viewed.\label{fig:atd-zipf}]{
 \includegraphics[width=5.7cm]{graphs/new/zipf/atd.eps}
 }
 \vspace{2mm}
@@ -905,7 +904,7 @@ Finally, we compare our results to original PROP \cite{1613869} implementation.
 
 
 \subsection{Result and Discussion}\label{resultanddiscussion}
-Figure \ref{fig:contribu-normal}, \ref{fig:contribu-shift}, and \ref{fig:contrib-zipf} show the absolute peer contribution to deliver videos compared between model and prop. 
+Figure \ref{fig:contribu-normal}, \ref{fig:contribu-shift}, and \ref{fig:contribu-zipf} show the absolute peer contribution to deliver videos compared between model and prop. 
 Figure \ref{fig:contribu-normal} and fig.\ref{fig:contribu-shift} show same pattern.
 The peers give more contribution in the tail while in the third scenario the peer contribution is mostly same between model and PROP. 
 A peers can give more contribution because a video has longer duration than other videos in a peer's cache thus other peer's requests are served by the peer. 
@@ -987,14 +986,11 @@ f(p_{ms}) - f(p_{dl}) > z_{dl} - z_{ms}
 
 As we know from table.\ref{tab:stacked2} that the majority of a requested video is after-peak phase and a requested video phase that is  at-peak phase is very small portion, then we can see that $z_{dl} - z_{ms}$ term will be in negative term if $z_{dl}$ is  before-peak phase or $0$ if $z_{dl}$ is  after-peak phase. 
 If $z_{dl} - z_{ms}=0$ then it is same with PROP. 
-Since the not-cached events happen in when a requested video phase after-peak phase, we can get that $f(p_{ms}) - f(p_{dl} < 0$.
-For the same situation and we compare to the PROP, the probability of $u_{ms}$ less than $u_{dl}$ in the model is less than PROP. 
+Since the not-cached events happen when a requested video phase is after-peak phase, we can get that $f(p_{ms}) - f(p_{dl} < 0$.
+For the same situation and we compare to the PROP, the probability of $u_{ms}$ less than $u_{dl}$ in the model is higher than PROP. 
 Therefore, we can see in the model that the events when a peer does not cache a video are more often than PROP.
 
 %It also means that $p_{ms}$ in after-peak phase less popular than $p_{dl}$.
-
-
-
 %While comparing to PROP, the left term $f(p_{ms}) - f(p_{dl})$ will be equal to $0$ thus as result in our model a peer rejects the a requested video to be cached.
 
 %If both videos are in the same phase (e.g before-peak, at-peak, or after-peak) then the difference between $p_{dl}$ and $p_{ms}$ is the only factor for utility function.
@@ -1008,8 +1004,6 @@ Therefore, we can see in the model that the events when a peer does not cache a 
 %\item $z_{ms}$ is in after-peak period and $z_{dl}$ is in before-peak period.
 %\end{itemize}
 %When the difference between $z_{ms}$ and $z_{dl}$ is negative, the difference between $p_{dl}$ and $p_{ms}$ is the only factor for utility function.
-
-
 
 
 
