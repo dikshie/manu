@@ -551,18 +551,26 @@ Popularity phase of a requested video denote by circle can be determine by avera
 \section{Determining Internet VoD Popularity}\label{popularity}
 
 The objective of estimating the Internet VoD popularity phase is to determing whether a video is before-peak, at-peak, or  after-peak.
+Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} define time-to-peak for a video as its age (time since upload) at which its weekly viewing rate is the highest during measurement (from the first week until end of measurement).
+We need those phases because we will use those in peer caching strategy that we will explain in Sec.\ref{peercachingstrategy}. 
+The value of those phase will effect the decision if a peer will cache or not cache the requested video.
+
 We use Youtube as an example of VoD service where we get Youtube content popularity datasets from Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717}.
 The datasets consist of the measurement of 29000 videos, including view count and the time when videos are uploaded, during a period of 36 weeks.
-The authors define time-to-peak for a video as its age (time since upload) at which its weekly viewing rate is the highest during measurement (from the first week until end of measurement).
 The time-to-peak distribution is shown in fig.\ref{fig:timetopeak}.
 Figure \ref{fig:timetopeak} shows that around three-quarters of the videos peak within the first six weeks since their upload. 
 Beyond six weeks, we have uniform distribution thus the time-to-peak is exponentially distributed mix with uniform distribution. 
-To estimate the rate parameter of the exponential part of time-to-peak distribution, we use Maximum Likelihood Estimation (MLE) \cite{clauset2009power}.
-Using MLE, we get the exponential parameter $\lambda = 0.59$.
+%To estimate the rate parameter of the exponential part of time-to-peak distribution, we use Maximum Likelihood Estimation (MLE) \cite{clauset2009power}.
+%Using MLE, we get the exponential parameter $\lambda = 0.59$.
 Because we know the peak time (at-peak phase) of every video, we can also find the before-peak phase and after-phase of every video. 
 For detail we refer the readers to \cite{Borghol:2011:CMP:2039452.2039717}.
 
-To reveal the distribution of view rate for every video from datasets, we plot view rate versus week where we shift the week of the at-peak phase to zero, as shown in fig.~\ref{fig:viewratedistribution}.
+From Youtube dataset, we want to know the distribution of view rate that refer to at-peak week, not the time when a video is uploaded,  for every video.
+For that purpose, we shift the week of the at-peak phase to zero for every video as shown in fig.~\ref{fig:viewratedistribution}.
+The steps to shift the week of the at-peak phase to zero for every video in dataset is shown as pseudo code in \ref{}.
+
+
+%To reveal the distribution of view rate for every video from datasets, we plot view rate versus week where we shift the week of the at-peak phase to zero, as shown in fig.~\ref{fig:viewratedistribution}.
 A simple example of determining the video popularity phase is shown in fig.\ref{fig:transformand2d}.
 In fig.~\ref{fig:viewratedistexample} we have view rate (y-axis) and relative week to at-peak (x-axis).
 Then we add week number as shown in fig.~\ref{fig:viewratedistexample}.
