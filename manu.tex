@@ -664,11 +664,11 @@ A peer then can request the video to other peer and get the video (step 5 and st
 %kenapa 2 metric ini dipilih.
 %bagaimana evaluasinya:  bikin simulator: a, b, c ,d 
 
-In order to evaluate the proposed peer-caching strategy using estimation of before-peak, at-peak, and after-peak information from Youtube VoD view model, we have to compare our model to PROP model.
+In order to evaluate the proposed peer-caching strategy using our algoritmic designation of the poplarity phase of before-peak, at-peak, and after-peak information from Youtube VoD view model, we have to compare our model to the PROP model.
 We evaluate three metrics, which are peer contribution to delivery contents during simulation,  access frequency of cache during simulation, and number of replicas. 
-Peer contribution metric related to byte-hit-ratio. 
-Byte-hit-ratio is defined as the total bytes contents served by peers normalized by the total bytes of video all peers and CDN consume.
-It means more peer contributions, more byte-hit-ratio because peer can get content from another peers. 
+The peer contribution metric is related to the byte-hit-ratio. 
+The byte-hit-ratio is defined as the total bytes of content served by peers normalized by the total bytes of video all peers and the CDN consume.
+With more peer contributions, we will have higher byte-hit-ratio because peer can get content from other peers. 
 Access frequency of cache reflects the storage utilization. 
 More access means more peer storage utilization.  
 Number of replicas is also related to peer storage utilization.  
@@ -694,9 +694,12 @@ If a requested video is not available CDN will serve the request.
 
 
 \subsubsection{Catalog Generator}\label{catalog}
-The goal for catalog generator is to create a catalog video that consist video-id, time when a video is uploaded, a video size, view count terminus, and progress of videos popularity like Youtube service model. 
-We assume that a video is uploaded to server following Poisson process with mean rate $\lambda=1$ thus we can get the time when a video is uploaded. 
-The view count terminus for every video is assigned randomly uniform from Youtube datasets and video size for every video is assigned randomly uniform between 1 and 200MB. Finally, we have a catalog that consists of: video-id, time when a video is uploaded, view count terminus, and video size.
+The goal for the catalog generator is to create a catalog video that consist of the video-id, time when a video is uploaded, a video size, and final view count.
+% progress of videos popularity like Youtube service model. 
+We assume that a video is uploaded to the server following Poisson process with mean rate $\lambda=1$. 
+The final view count for every video is assigned randomly uniform from Youtube datasets and video size for every video is assigned randomly uniform between $1$ and $200$MB from Youtube datasets. 
+Because of the very weak relationship betwen filesize and popularity \cite{abhari2010workload} and because our work focuses on the impact of the popularity aspect on the utility function rather than storage optimization we believe that the choice to assign a random uniform file size from the Youtube datasets does not have an effect to our results.
+Finally, we have a catalog that consists of: video-id, time when a video is uploaded, view count terminus, and video size.
 
 \subsubsection{Peer Request Generator}\label{peerrequest}
 In catalog generator, we assume peer request a video to CDN following Poisson process with a mean rate $\lambda=1$ \cite{Zink:2009:CYN:1502814.1502987}.
