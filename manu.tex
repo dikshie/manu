@@ -452,41 +452,21 @@ In Peer assisted CDN, users can download content from CDN nodes from or other us
 A user may cache the content after download to serve requests from other users. 
 Due to the complexity of the behavior of peers, the process should be done in the home gateway user where the ISP can control it.
 
-In this work, we will revisit Guo et al., \cite{1613869} work's PROP as basis to evaluate of the peer-assisted CDN and propose an improvement the model for the PROP.
-Internet video on demand (VoD) is on rising todays e.g. Youtube.
-We will take Youtube as an example of Internet VoD service model.
-In Youtube service model, we can get data such as (1) the time when a video is uploaded and (2) number of access or number of view.
-%The information of (1) the time when a video is uploaded and (2) number of access or number of view will be used for helping PROP.
-In a seminal work, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} use above information to estimate when a video become very popular.
-Moreover, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} classify a video popularity become three phases: before-peak phase, at-peak phase, and after-peak phase.
-We will use estimation of a video popularity phases for helping PROP.
-We will explain about video popularity in sect.\ref{popularity}.
-%We also examine the characteristics of Internet VoD by investigating real-world datasets obtained from Youtube.
-%We estimate the video popularity phase.
-%Information of video popularity phase will be used for caching strategy
-%In P2P assisted CDN for video on demand (VoD), most of researcher assume that catalog of video popularity rank is already established following zipf distribution.  
-%This become basis for P2P assisted CDN model in PROP \cite{1613869}.
-%Our work is quite different whereas we will use VoD view popularity to aid the PROP model.
-%We use Youtube VoD view model for this purpose.
-%In Youtube, video view popularity has three phase which is before-peak, at-peak, and after-peak \cite{Borghol:2011:CMP:2039452.2039717} which we will explain later in sect.\ref{popularity}.
-A twofold of our contributions as follows:
+In this work, we will revisit Guo et al.'s, \cite{1613869} PROP as a basis to evaluate peer-assisted CDN and propose an improvement to the model for the PROP.
+We will take Youtube as an example of an Internet VoD service model.
+In the Youtube service model, we can get data such as (1) the time when a video is uploaded and (2) number of access or number of view.
+We can get such data using Youtube's API.
+In seminal work, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} used the above information to estimate when a video will become very popular.
+They divide a video's popularity into three phases: before-peak phase, at-peak phase, and after-peak phase.
+We will use an estimate of a video's popularity phases for helping PROP.
+We will explain video popularity in Sec.\ref{popularity}.
+Our contribution is as follows:
 (1) We use the idea of VoD view popularity model to aid the PROP model. 
-To our knowledge, the combination of PROP model and VoD view popularity model is the first.
-(2) From simulation-based experiments, we find that peer contributions in our model are almost same with PROP while the numbers of replicas are lower than PROP.
+To the best of our knowledge, the combination of the PROP model and the VoD view popularity model is new.
+(2) From simulation-based experiments, we find that peer contributions in our model are almost as good as  PROP while the numbers of replicas are lower than PROP resulting in a reduction of resources required.
 
 Our paper presentation as follows: (1) we describe related work in sect.\ref{relatedwork}; (2) we explain detail of Youtube popularity evolution model in sect.\ref{popularity}; (3) we explain the caching strategy for CDN and peer in sect.\ref{systemdescription}; (4) we explain our simulation design, simulator, and its evaluation in sect.\ref{evaluation}.
 Finally, we present our conclusions in section \ref{conclusion}.
-
-%\begin{figure}[!t]
-%\begin{center}
-%\includegraphics[scale=0.3]{graphs/netsession.eps}
-%\end{center}
-%\caption{Peer Assisted CDN Overview.}
-%\label{fig:p2pcdnoverview}
-%\end{figure} 
-
-
-
 
 \section{Related Work}\label{relatedwork}
 Content Distribution Networks with peer assist have been successfully deployed on the Internet, such as Akamai \cite{Zhao:2013:PCD:2504730.2504752}, \cite{Huang:2008:UHC:1496046.1496064} and LiveSky \cite{Yin:2010:LEC:1823746.1823750}.  
@@ -523,6 +503,7 @@ PROP uses local system (local counter) to calculate the segment popularity in pe
 PROP uses popularity for proxy cache replacement strategy. 
 In peer side, the author use utility function for cache replacement strategy.
 A utility function assigns numerical value to outcomes, in such a way that outcomes with higher utility are always preferred of outcomes with lower utilities.
+In PROP's utility function, the difference between very popular videos and unpopular video is very difficult to differentiate. 
 The utility function is also function from popularity.
 While the authors successfully show that the results are very good, the peer-assisted system behavior over time is not explain because the author focus on properties such as proxy cache size variations and peer cache size variations.
 The explanation of the optimal number of replicas is not also clear because unavailable information when the snapshot is taken.  
@@ -532,7 +513,7 @@ In our work, we complement Guo et al., \cite{1613869} work with VoD viewing popu
 \begin{center}
 \includegraphics[scale=0.6]{graphs/timetopeak.eps}
 \end{center}
-\caption{Time to peak empirical distribution \cite{Borghol:2011:CMP:2039452.2039717}.}
+\caption{Time to peak empirical distribution data from \cite{Borghol:2011:CMP:2039452.2039717}.}
 \label{fig:timetopeak}
 \end{figure} 
 
@@ -544,7 +525,9 @@ In our work, we complement Guo et al., \cite{1613869} work with VoD viewing popu
 \caption{View rate distribution versus week relative to at-peak phase week for every video, where y-axis in log scale.
 Every point lies in negative x-axis mean view rate of every video in before-peak phase.
 Every point lies in x-axis$=0$ mean view rate of every video at-peak phase. 
-Every point lies in positive x-axis mean view rate of every video in after-peak phase. }
+Every point lies in positive x-axis mean view rate of every video in after-peak phase.
+As we see in this graph, while fig.\ref{fig:timetopeak} mentioned that $75\%$ of videos reach at-peak within six weeks, we also see that some vides reach at-peak after six weeks.
+Data from \cite{Borghol:2011:CMP:2039452.2039717}. }
 \label{fig:viewratedistribution}
 \end{figure} 
 
@@ -554,99 +537,68 @@ Every point lies in positive x-axis mean view rate of every video in after-peak 
 \includegraphics[width=7cm]{graphs/transformasi.eps} 
 }
 \hfill
-\subfloat[2D visualization of view rate distribution after transformation where $x$-axis is week number, $y$-axis is view rate. \label{fig:viewratedistexamplered}] {
+\subfloat[2D visualization of view rate distribution after transformation where $x$-axis is week number, $y$-axis is view rate. 
+Popularity phase of a requested video denote by circle can be determine by averaging relative week to peak values from the nearest points which are A and B.
+\label{fig:viewratedistexamplered}] {
 \includegraphics[width=7cm]{graphs/transformasi3.eps} 
 }
-\caption{Transformation of view rate distribution dataset and 2D visualization of view rate distribution.}
+\caption{Transformation of view rate distribution dataset and 2D visualization of view rate distribution from fig.~\ref{fig:viewratedistexamplered}. X-axis is week number and Y-axis is view rate.
+}
 \label{fig:transformand2d}
 \end{figure*}
 
 
-\section{Characterizing Internet VoD Popularity}\label{popularity}
-As we mentioned earlier, we will use Youtube service model as an example of Internet VoD.
-The objective of estimating Internet VoD popularity phase is to get popularity state of a requested video whether a video is before-peak popularity phase or at peak popularity phase, or  after-peak popularity phase.
+\section{Determining Internet VoD Popularity}\label{popularity}
+
+The objective of estimating the Internet VoD popularity phase is to determing whether a video is before-peak, at-peak, or  after-peak.
 We use Youtube as an example of VoD service where we get Youtube content popularity datasets from Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717}.
-The datasets consists the measurement of 29000 videos view count and the time when videos are uploaded during 36 weeks.
-Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} classify three phases of a video popularity: before-peak, at-peak, and after-peak.
+The datasets consist of the measurement of 29000 videos, including view count and the time when videos are uploaded, during a period of 36 weeks.
 The authors define time-to-peak for a video as its age (time since upload) at which its weekly viewing rate is the highest during measurement (from the first week until end of measurement).
 The time-to-peak distribution is shown in fig.\ref{fig:timetopeak}.
-Figure \ref{fig:timetopeak} shows Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} work that around three-quarters of a large fraction videos peak within the first six weeks since their upload and beyond six weeks we have uniform distribution thus the time-to-peak is exponentially distributed mixture with uniform distribution. 
-To estimate the rate parameter of exponential part of time-to-peak distribution, we use Maximum Likelihood Estimation (MLE) \cite{clauset2009power}.
-Using MLE method, we can get exponential parameter $\lambda = 0.59$.
-Because we know the peak time (at-peak phase) of every video, we can also know before-peak phase and after-phase of every video. 
+Figure \ref{fig:timetopeak} shows that around three-quarters of the videos peak within the first six weeks since their upload. 
+Beyond six weeks, we have uniform distribution thus the time-to-peak is exponentially distributed mix with uniform distribution. 
+To estimate the rate parameter of the exponential part of time-to-peak distribution, we use Maximum Likelihood Estimation (MLE) \cite{clauset2009power}.
+Using MLE, we get the exponential parameter $\lambda = 0.59$.
+Because we know the peak time (at-peak phase) of every video, we can also find the before-peak phase and after-phase of every video. 
 For detail we refer the readers to \cite{Borghol:2011:CMP:2039452.2039717}.
 
-%To estimate the the rate parameter of exponential part of time-to-peak distribution, we use Maximum Likelihood Estimation (MLE) \cite{clauset2009power}.
-%Using MLE method, we can get exponential parameter $\lambda = 0.59$.
-%For weekly views distribution, Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} found that beta distribution is a good model to explain video views popularity evolution thus we follow Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} for  weekly views distribution model.\\
-To reveal data distribution of view rate for every video, we plot view rate versus week where we shift week of view rate of at-peak phase to zero. 
-Therefore we can get view rate distribution relative to at-peak week as shown in fig.~\ref{fig:viewratedistribution}
-
-%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%replica
-% \begin{figure*}[!t]
-% \centering
-% \subfloat[Percentage of cached and not-cached events for the first scenario.\label{fig:stacked1-normal}]{
-% \includegraphics[width=5.7cm]{graphs/new/repl/stackedrepl1.eps}
-% }
-% \hfill
-% \subfloat[Percentage of cached and not-cached events for the second scenario.\label{fig:stacked1-shift}]{
-% \includegraphics[width=5.7cm]{graphs/new/shift/stackedshift1.eps}
-% }
-% \hfill
-% \subfloat[Percentage of cached and not-cached events for the third scenario.\label{fig:stacked1-zipf}]{
-% \includegraphics[width=5.7cm]{graphs/new/zipf/stackedzipf1.eps}
-% }
-% \vspace{2mm}
-% \caption{Comparison of cached and not-cached events when a peer requests a video. For the model around $65\%$ events are not-cached event, while for PROP around $52\%$ events are cached event.}
-% \label{fig:stacked1}
-% \end{figure*}
-%%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% \begin{figure}[!t]
-% \begin{center}
-% \includegraphics[scale=0.5]{graphs/transformasi.eps}
-% \end{center}
-% \caption{Transformation of view rate distribution. We add week number and make it as $x$-axis, View rate as $y$-axis, and relative week to peak as $z$-axis.}
-% \label{fig:viewratedistexample}
-% \end{figure} 
-
-% \begin{figure}[!t]
-% \begin{center}
-% \includegraphics[scale=0.5]{graphs/transformasi3.eps}
-% \end{center}
-% \caption{2D view rate distribution after transformation where $x$-axis is week number, $y$-axis is view rate.}
-% \label{fig:viewratedistexamplered}
-% \end{figure} 
-
-%We use estimation of video popularity phase in peer caching strategy side.
-How we estimate the video popularity phase is shown in fig.\ref{fig:transformand2d}.
-In fig.~\ref{fig:viewratedistexample} we have view rate (y-axis) and relative week to peak (x-axis) which is view rate distribution versus week relative to at-peak phase.
-We transform these numbers by adding week number and make it as x-axis, view rate 
-as y-axis, and relative week to peak as z-axis fig.~\ref{fig:viewratedistexample}.
-This transformation is shown in fig.~\ref{fig:viewratedistexamplered} denote as box points.
+To reveal the distribution of view rate for every video from datasets, we plot view rate versus week where we shift the week of the at-peak phase to zero, as shown in fig.~\ref{fig:viewratedistribution}.
+A simple example of determining the video popularity phase is shown in fig.\ref{fig:transformand2d}.
+In fig.~\ref{fig:viewratedistexample} we have view rate (y-axis) and relative week to at-peak (x-axis).
+Then we add week number as shown in fig.~\ref{fig:viewratedistexample}.
+We make view rate as y-axis, relative week to at-peak as x-axis as shown in fig.~\ref{fig:viewratedistexamplered} denote as box points.
 Assume there is a peer requests a video, we want to estimate what is the phase of that video. 
 Is the video in at-peak phase, before-phase, or after phase.  
-We can estimate that video phase by averaging relative week to peak numbers (the points at z-axis) of the nearest point from datasets. 
+We can estimate that video phase by averaging relative week to peak numbers of the nearest point from datasets. 
 If the average value less than $0$ we estimate the video is at before-peak phase, if the average value equal to $0$ we estimate the video is at at-peak phase,  and if the average value more than $0$ we estimate the video is at after-peak phase.
+For concrete example:   there is a peer that requests a video. 
+The requested video age is four week since upload with the last week view rate $vr=2$ (shown in fig.~\ref{fig:viewratedistexamplered} as circle).
+We want to determine, what's phase the video is. 
+By averaging relative week to peak number of the nearest point of a requested video, we can determine that a requested video is at-peak phase.
 
-For example: there is a peer that requests a video where the position of video is in fourth week with the last week view rate $vr=2$ (we can get as this data from CDN) shown in fig.~\ref{fig:viewratedistexamplered} denote as circle.
-In this case, the nearest points are the point at third week $(2,1,-1)$ and the point at fifth week $(4,1,1)$.  
-By averaging the points at z-axis of the nearest points $(-1 + 1)/2 = 0$,  we can estimate that video is in at-peak phase.
+%In this case, the nearest points are the point at third week $(2,1,-1)$ and the point at fifth week $(4,1,1)$.  
+%By averaging the points at z-axis of the nearest points $(-1 + 1)/2 = 0$,  we can estimate that video is in at-peak phase.
 
 
 \section{System Description}\label{systemdescription}
-In our work, we use Youtube VoD view model to aid our work that based from PROP. 
-The Youtube VoD view model will be used in peer-caching strategy side to exploits the video popularity while caching strategy in CDN side is out of scope. 
+In our work, we use the Youtube VoD view model to aid our work that based from PROP. 
+The Youtube VoD view model will be used in our peer-caching strategy to exploit the video popularity while the caching strategy used in the CDN is out of scope for this project. 
 
 %\subsection{Peer caching strategy}\label{peercachingstrategy}
-Since we can estimate before-peak phase, at-peak phase, and after-peak phase of video, we modified the original utility function from PROP by adding a $z(t)$ factor as follows:
+We introduce the PROP's \textit{utility function} of a video as:
+\begin{equation}
+u = \frac{ (f(p) - f(p_{min})) (f(p_{max}) - f(p)) }{r^{\alpha + \beta}} 
+\end{equation}
+where $p$ represents the popularity of the video, $p_{min}$ represents minimum popularity in the system, and $p_{max}$ represents maximum popularity in the system.
+We choose video with the smallest utility value as the candidate to be replaced when a peer's cache is full.
+Since we can determine before-peak phase, at-peak phase, and after-peak phase of video, we modified the original utility function from PROP above by adding a $z(t)$ factor as follows:
 \begin{equation}
 u = \frac{ (f(p) - f(p_{min})) (f(p_{max}) - f(p)) }{r^{\alpha + \beta}} + z(t)
 \end{equation}
 
 $\frac{ (f(p) - f(p_{min})) (f(p_{max}) - f(p)) }{r^{\alpha + \beta}}$ is the utility function from PROP and $z(t)$ is the z factor from our model.
-$z(t)$ is a function from current time in simulation.
+$z(t)$ is a function from current time in simulation. 
+$z(t)$ is used for every a requested video. 
 
 
 \[
@@ -670,7 +622,7 @@ To able to track the simulation, we use default value from PROP thus we refer th
 %$\alpha$ and $\beta$ are the adjustment factor.
 %The CDN can calculate $p_{min}$ and $p_{max}$ then propagate to the P2P system.
 %To able to track the simulation, we use default value from PROP for $\alpha=\beta=1$ and $f(p)=log (p)$.
-We choose the video with the smallest $u$ value as the candidate to be replaced when a peer's cache capacity is full.
+%We choose the video with the smallest $u$ value as the candidate to be replaced when a peer's cache capacity is full.
 In PROP's utility function, the difference between very popular videos and unpopular video is very difficult to differentiate. 
 For unpopular video $f(p)$ will be very close to $f(p_{min})$ thus $f(p) - f(p_{min})$ will be very close to $0$ then utility function become very small.
 For very popular video $f(p)$ will be very close to $f(p_{max})$ thus $f(p_{max}) - f(p)$ will be very close to $0$ then utility function become very small.  
