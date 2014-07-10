@@ -702,14 +702,16 @@ Because of the very weak relationship betwen filesize and popularity \cite{abhar
 Finally, we have a catalog that consists of: video-id, time when a video is uploaded, view count terminus, and video size.
 
 \subsubsection{Peer Request Generator}\label{peerrequest}
-In catalog generator, we assume peer request a video to CDN following Poisson process with a mean rate $\lambda=1$ \cite{Zink:2009:CYN:1502814.1502987}.
 There are three scenarios for peer request (named as scenario A, B, and C):
 In scenario A, a peer chooses a video that has popularity following Youtube.
 The objective of the first scenario, we want to see the peer requests effect to peer-assisted CDN when the request following Youtube popularity. 
 In scenario B, a peer chooses a video that has popularity following Youtube but we shift the request four weeks later.  
-The objective of the second scenario, we want to see the peer requests effect to peer-assisted CDN when the request from peers are lag four weeks after popular in Youtube.
+The objective of the second scenario, we want to see the peer requests effect to peer-assisted CDN when the request from peers are shifted four weeks after popular in Youtube.
+%%why 4 weeks?
 In scenario C, a peer chooses a video that has popularity following zipf distribution with rate$=0.9$ \cite{6654887} thus a peer choose a video that its popularity does not follow Youtube popularity.
 The objective of the third scenario, we want to see the peer request effect to peer-assisted CDN when the requests from peers are totally different from Youtube's videos popularity.
+In all scenarios we assume peer interarrival time request a video following Poisson process with a mean rate $\lambda=1$ \cite{Zink:2009:CYN:1502814.1502987}.
+
 
 %We assume that a peer choose a video based on a preference from view count and view rate that we can get from catalog generator.  
 %Because peer requests are generate from catalog, the video request will follow global popularity video from YouTube
@@ -721,10 +723,11 @@ The simulation parameters are follows:
 \begin{itemize}
 \item Length: $360$ days.
 \item Video size: uniform random between $1$MB and $200$MB.
-\item Peer capacity: $500$MB.
-\item CDN capacity: $10000$MB.
+\item Peer storage capacity: $500$MB.
+\item CDN storage capacity: $10000$MB.
 \item Number of peers: $100000$.
 \item Number of videos: $10000$.
+\item Peer's caching strategy: our model, PROP.
 \end{itemize}
 Finally, we compare our results to PROP \cite{1613869} implementation.
 
