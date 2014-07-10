@@ -584,7 +584,17 @@ By averaging relative week to peak number of the nearest point of a requested vi
 In our work, we use the Youtube VoD view model to aid our work that based from PROP. 
 The Youtube VoD view model will be used in our peer-caching strategy to exploit the video popularity while the caching strategy used in the CDN is out of scope for this project. 
 
-%\subsection{Peer caching strategy}\label{peercachingstrategy}
+\subsection{System Overview}\label{systemoverview}
+The main components of the system are (1) CDN and (2) peers which are selforganized into a P2P overlay network.
+When a video is requested for the first time, the CDN is resposible to fetch the requested video.
+Each peer in the system has two functionalities.
+First, a peer is a client that requests a video. 
+Second, a peer is a contributor or share the cached video with other peers in the system. 
+In our system, the videos and their corresponding indices are decoupled because in current modern peer-assisted CDN, CDN is responsible for recording each peer activities.  
+This recording is also usefull in CDN for accounting purpose.
+
+
+\subsection{Peer caching strategy}\label{peercachingstrategy}
 We introduce the PROP's \textit{utility function} of a video as:
 \begin{equation}
 u = \frac{ (f(p) - f(p_{min})) (f(p_{max}) - f(p)) }{r^{\alpha + \beta}} 
@@ -617,6 +627,8 @@ p = min \left(\frac{n_i^r}{t_i^r - t_a^i}  , \frac{1}{t_{cur} - t_i^r}\right)
 
 Where $n_i^r$ is number of requested video, $t_i^r$ is last time the video is requested, $t_a^i$ is the uploaded time of the video, and $t_{cur}$ is the current time.
 $z(t)$ is proportion of view count that we get from Youtube datasets.  
+The value of $z(t)$ decided after we finish to determine a video popopularity phase.  
+For example: if we determine a video popularity phase is at-peak, then $z(t)=0.47$.
 To able to track the simulation, we use default value from PROP thus we refer the readers to \cite{1613869}.
 %$p$ represents popularity of the video, $p_{min}$ represents estimation of minimum popularity in P2P system, $p_{max}$ represents estimation of maximum popularity in P2P system, $r$ represents the number of replicas of the video in the system, and $f(p)$ is monotonic non-decreasing function.
 %$\alpha$ and $\beta$ are the adjustment factor.
@@ -624,8 +636,8 @@ To able to track the simulation, we use default value from PROP thus we refer th
 %To able to track the simulation, we use default value from PROP for $\alpha=\beta=1$ and $f(p)=log (p)$.
 %We choose the video with the smallest $u$ value as the candidate to be replaced when a peer's cache capacity is full.
 In PROP's utility function, the difference between very popular videos and unpopular video is very difficult to differentiate. 
-For unpopular video $f(p)$ will be very close to $f(p_{min})$ thus $f(p) - f(p_{min})$ will be very close to $0$ then utility function become very small.
-For very popular video $f(p)$ will be very close to $f(p_{max})$ thus $f(p_{max}) - f(p)$ will be very close to $0$ then utility function become very small.  
+For an unpopular video, $f(p)$ will be very close to $f(p_{min})$ thus $f(p) - f(p_{min})$ will be very close to $0$ then the utility function becomes very small.
+For a very popular video, $f(p)$ will be very close to $f(p_{max})$, thus $f(p_{max}) - f(p)$ will be very close to $0$ and the  utility function becomes very small.  
 Linear addition of $z(t)$ factor can help to differentiate the value of utility function.
 
 \begin{figure}[!t]
