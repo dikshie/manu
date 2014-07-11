@@ -193,6 +193,8 @@
 % *** SPECIALIZED LIST PACKAGES ***
 %
 \usepackage{algorithmic}
+\usepackage{algorithm}
+
 % algorithmic.sty was written by Peter Williams and Rogerio Brito.
 % This package provides an algorithmic environment fo describing algorithms.
 % You can use the algorithmic environment in-text or within a figure
@@ -568,14 +570,28 @@ For detail we refer the readers to \cite{Borghol:2011:CMP:2039452.2039717}.
 
 From Youtube dataset, we want to know the distribution of view rate that refer to at-peak week, not the time when a video is uploaded,  for every video.
 For that purpose, we shift the week of the at-peak phase to zero for every video as shown in fig.~\ref{fig:viewratedistribution}.
-The steps to shift the week of the at-peak phase to zero for every video in dataset is shown as pseudo code in \ref{}.
+The steps to shift the week of the at-peak phase to zero for every video in dataset is shown as pseudo code in \ref{alg1}.
 
 %%%%
+\begin{algorithm}
+\caption{Shifting relative week to at-peak for every video in dataset}
+\label{alg1}
 \begin{algorithmic}
-\FOR{$i=0$ to $10$}
-\STATE carry out some processing
+\REQUIRE $data=view rate$
+\STATE length $\leftarrow$ 36 \COMMENT{number of weeks}
+\FOR{every video}
+\STATE viewratemax $\leftarrow$ max(data) \COMMENT{find max view rate from a list}
+\STATE index $\leftarrow$ findindex(viewratemax)\COMMENT{find element index of maximum view rate}
+\FOR{$i=0$ to $length$ }
+\STATE $j[i]$ $\leftarrow$ $0$ \COMMENT{initialization with 0}
+\ENDFOR
+\FOR{$i=0$ to $length$}
+\STATE $j[i]$ $\leftarrow$ $i-index$ \COMMENT{we got relative week to at-peak}
+\ENDFOR
+ 
 \ENDFOR
 \end{algorithmic}
+\end{algorithm}
 
 %%%%
 
