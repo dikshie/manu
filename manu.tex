@@ -192,7 +192,7 @@
 
 % *** SPECIALIZED LIST PACKAGES ***
 %
-\usepackage{algorithmic}
+%\usepackage{algorithmic}
 \usepackage{algorithm}
 
 % algorithmic.sty was written by Peter Williams and Rogerio Brito.
@@ -343,6 +343,9 @@
 \usepackage{mwe}
 \usepackage{subfig}
 \usepackage{float}
+\usepackage{algcompatible}
+
+%\usepackage{algpseudocode}
 %\usepackage{algpseudocode}
 %\usepackage{subfloat}
 %\usepackage[section]{placeins}
@@ -534,21 +537,21 @@ Data from \cite{Borghol:2011:CMP:2039452.2039717}. }
 \label{fig:viewratedistribution}
 \end{figure} 
 
-\begin{figure*}[!t]
-\centering
-\subfloat[Transformation of view rate distribution. We add week number and make it as $x$-axis, View rate as $y$-axis, and relative week to peak as $z$-axis. \label{fig:viewratedistexample}] {
-\includegraphics[width=7cm]{graphs/transformasi.eps} 
-}
-\hfill
-\subfloat[2D visualization of view rate distribution after transformation where $x$-axis is week number, $y$-axis is view rate. 
-Popularity phase of a requested video denote by circle can be determine by averaging relative week to peak values from the nearest points which are A and B.
-\label{fig:viewratedistexamplered}] {
-\includegraphics[width=7cm]{graphs/transformasi3.eps} 
-}
-\caption{Transformation of view rate distribution dataset and 2D visualization of view rate distribution from fig.~\ref{fig:viewratedistexamplered}. X-axis is week number and Y-axis is view rate.
-}
-\label{fig:transformand2d}
-\end{figure*}
+% \begin{figure*}[!t]
+% \centering
+% \subfloat[Transformation of view rate distribution. We add week number and make it as $x$-axis, View rate as $y$-axis, and relative week to peak as $z$-axis. \label{fig:viewratedistexample}] {
+% \includegraphics[width=7cm]{graphs/transformasi.eps} 
+% }
+% \hfill
+% \subfloat[2D visualization of view rate distribution after transformation where $x$-axis is week number, $y$-axis is view rate. 
+% Popularity phase of a requested video denote by circle can be determine by averaging relative week to peak values from the nearest points which are A and B.
+% \label{fig:viewratedistexamplered}] {
+% \includegraphics[width=7cm]{graphs/transformasi3.eps} 
+% }
+% \caption{Transformation of view rate distribution dataset and 2D visualization of view rate distribution from fig.~\ref{fig:viewratedistexamplered}. X-axis is week number and Y-axis is view rate.
+% }
+% \label{fig:transformand2d}
+% \end{figure*}
 
 
 \section{Determining Internet VoD Popularity}\label{popularity}
@@ -568,8 +571,8 @@ Beyond six weeks, we have uniform distribution thus the time-to-peak is exponent
 Because we know the peak time (at-peak phase) of every video, we can also find the before-peak phase and after-phase of every video. 
 For detail we refer the readers to \cite{Borghol:2011:CMP:2039452.2039717}.
 
-From Youtube dataset, we want to know the distribution of view rate that refer to at-peak week, not the time when a video is uploaded,  for every video.
-For that purpose, we shift the week of the at-peak phase to zero for every video as shown in fig.~\ref{fig:viewratedistribution}.
+%From Youtube dataset, we want to know the distribution of view rate that refer to at-peak week, not the time when a video is uploaded,  for every video.
+%For that purpose, we shift the week of the at-peak phase to zero for every video as shown in fig.~\ref{fig:viewratedistribution}.
 The steps to shift the week of the at-peak phase to zero for every video in dataset is shown as pseudo code in \ref{alg1}.
 
 %%%%
@@ -577,7 +580,8 @@ The steps to shift the week of the at-peak phase to zero for every video in data
 \caption{Shifting relative week to at-peak for every video in dataset}
 \label{alg1}
 \begin{algorithmic}
-\REQUIRE $data=view rate$
+\REQUIRE $data \leftarrow view rate$
+
 \STATE length $\leftarrow$ 36 \COMMENT{number of weeks}
 \FOR{every video}
 \STATE viewratemax $\leftarrow$ max(data) \COMMENT{find max view rate from a list}
@@ -588,27 +592,196 @@ The steps to shift the week of the at-peak phase to zero for every video in data
 \FOR{$i=0$ to $length$}
 \STATE $j[i]$ $\leftarrow$ $i-index$ \COMMENT{we got relative week to at-peak}
 \ENDFOR
- 
 \ENDFOR
 \end{algorithmic}
 \end{algorithm}
-
 %%%%
+
+\begin{algorithm}
+\caption{Averaging relative weeks from the nearest neighbor points}
+\label{alg2}
+\begin{algorithmic}[1]
+\REQUIRE {dataset that consist of weeknumber, viewrate, and relative week to at peak.}
+
+\STATE x $\leftarrow$ read(weeknumber) \COMMENT{read week number from dataset}
+\STATE y $\leftarrow$ read(viewrate) \COMMENT{read view rate from dataset}
+\STATE z $\leftarrow$ read(relativeweeksatpeak) \COMMENT{read relative week at peak from dataset}
+
+%\COMMENT{a requested video has week number and view rate}
+\STATE xsearch $\leftarrow$ weeknumber \COMMENT{week number of a requested video}
+\STATE ysearch $\leftarrow$ viewrate \COMMENT{view of a requested video}
+
+
+\STATE $x1$ $\leftarrow$ $(xsearch - 1)$ \COMMENT{search the nearest point at one week before}
+
+%\COMMENT{slice the dataset}
+\STATE $len_1$ $\leftarrow$ $length(x1)$
+\FOR{$i=0$ to $len_1$}
+\IF{$x[i]$ $==$ $x1$} 
+%\COMMENT{get data that only for x1}
+\STATE $tempx[i]$ $\leftarrow$ $x[i]$
+\STATE $tempy[i]$ $\leftarrow$ $y[i]$
+\STATE $tempz[i]$ $\leftarrow$ $z[i]$
+\ENDIF
+\ENDFOR
+
+\STATE $len_2 \leftarrow length(tempy[i])$
+\FOR{$i=0$ to $len_2$}
+    \IF{$tempy[i]$ $==$ $ysearch$}
+    \STATE $result1[i]$ $\leftarrow$ $tempz[i]$ \COMMENT {get relative week only for ysearch}
+    \ENDIF
+\ENDFOR
+
+
+\STATE $x1$ $\leftarrow$ $(xsearch)$ \COMMENT{search the nearest point at same week}
+
+%\COMMENT{slice the dataset}
+\STATE $len_1$ $\leftarrow$ $length(x1)$
+\FOR{$i=0$ to $len_1$}
+\IF{$x[i]$ $==$ $x1$} 
+%\COMMENT{get data that only for x1}
+\STATE $tempx[i]$ $\leftarrow$ $x[i]$
+\STATE $tempy[i]$ $\leftarrow$ $y[i]$
+\STATE $tempz[i]$ $\leftarrow$ $z[i]$
+\ENDIF
+\ENDFOR
+
+\STATE $len_2 \leftarrow length(tempy)$
+\FOR{$i=0$ to $len_2$}
+    \IF{$tempy[i]$ $==$ $ysearch$}
+    \STATE $result2[i]$ $\leftarrow$ $tempz[i]$ \COMMENT {get relative week only for ysearch}
+    \ENDIF
+\ENDFOR
+
+\algstore{myalg}
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\begin{algorithmic}[1]
+\algrestore{myalg}
+
+\STATE $x1$ $\leftarrow$ $(xsearch + 1)$ \COMMENT{search the nearest point at one week after}
+
+%\COMMENT{slice the dataset}
+\STATE $len_1$ $\leftarrow$ $length(x1)$
+\FOR{$i=0$ to $len_1$}
+\IF{$x[i]$ $==$ $x1$} 
+%\COMMENT{get data that only for x1}
+\STATE $tempx[i]$ $\leftarrow$ $x[i]$
+\STATE $tempy[i]$ $\leftarrow$ $y[i]$
+\STATE $tempz[i]$ $\leftarrow$ $z[i]$
+\ENDIF
+\ENDFOR
+
+\STATE $len_2 \leftarrow length(tempy[i])$
+\FOR{$i=0$ to $len_2$}
+    \IF{$tempy[i]$ $==$ $ysearch$}
+    \STATE $result3[i]$ $\leftarrow$ $tempz[i]$ \COMMENT {get relative week only for ysearch}
+    \ENDIF
+\ENDFOR
+
+
+\STATE $final$ $\leftarrow$ $average(result1,result2,result3)$
+\IF{$final$ $<$ $0$}
+\STATE $phase$ $\leftarrow$ $before$
+\ELSIF{$final$ $==$ $0$}
+\STATE $phase$ $\leftarrow$ $at$
+\ELSE
+\STATE $phase$ $\leftarrow$ $after$
+\ENDIF
+
+\end{algorithmic}
+\end{algorithm}
+
+
+
+
+\begin{algorithm}
+\caption{Determining popolarity phase for the first time access}
+\label{alg3}
+\begin{algorithmic}[2]
+\REQUIRE Sorted PDF of time to peak in the form of list of tuple [(prob,week number),$\cdots$] and $t$ week number of a requested video
+\STATE $n$ $\leftarrow$ $36$ \COMMENT{number of weeks}
+\IF{$t$ $>$ $36$}
+\STATE $phase$ $\leftarrow$ $after$
+\ELSE
+\STATE $result$ $\leftarrow$ $weightedsample(items,n)$
+\ENDIF
+
+\FOR{$i=0$ to $length(result)$}
+\STATE $temp[i]$ $\leftarrow$ $result[i])$ \COMMENT{add every element of result to a list temp}
+\ENDFOR
+\STATE $temp$ $\leftarrow$ $sorted(temp)$ \COMMENT{sort temp} 
+
+\STATE $total$ $\leftarrow$ $0$
+\FOR{$i=0$ to $t$}
+\STATE $number$ $\leftarrow$ $count(temp,i)$ \COMMENT{count how many t's value inside temp}
+\STATE $total$ $\leftarrow$ $total$ $+$ $count(temp,i)$ \COMMENT{add the number to total}
+\ENDFOR
+\STATE $total$ $\leftarrow$ $total/36$ \COMMENT{divide total by total number of week from dataset}
+\IF{$total \le 0.5$}
+\STATE $phase$ $\leftarrow$ $before$
+\ELSIF{$total$ $>$ $0.5$ and $total$ $\le$ $0.75$}
+\STATE $phase$ $\leftarrow$ $at$ 
+\ELSE
+\STATE $phase$ $\leftarrow$ $after$ 
+\ENDIF
+
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Weighted sample (weighted probability sampling with replacement)}
+\label{alg4}
+\begin{algorithmic}[2]
+\REQUIRE Sorted PDF of time to peak in the form of list of tuple [(prob,week number), $\cdots$]
+\STATE $total$  $\leftarrow$ $1$
+\STATE $i$ $\leftarrow$ $0$ 
+\STATE $w$ $\leftarrow$ $items[0][0]$ \COMMENT{the smallest probability}
+\STATE $v$ $\leftarrow$ $items[0][1]$ \COMMENT{week number the pair of the smallest probability}
+
+\WHILE{$n$} 
+\STATE $x$ $\leftarrow$ $total * (1*random() ^ {(1.0/n)})$
+\STATE $total$ $\leftarrow$ $(total - x)$
+\WHILE{$x > w$}
+\STATE $x \leftarrow (x-w)$
+\STATE $i \leftarrow i+1$
+\STATE $w \leftarrow items[i][0]$
+\STATE $v \leftarrow items[i][1]$
+\ENDWHILE
+\STATE $w \leftarrow (w-x)$
+\STATE $b$ $\leftarrow$ $append(v$) \COMMENT{add v value to a list b}
+\STATE $n$ $\leftarrow$ $(n-1)$
+\ENDWHILE
+
+\end{algorithmic}
+\end{algorithm}
+
+As result from shifting the week of the at-peak phase to zero, we get relative week to at-peak phase. 
+Next, we want to determine popularity phase of a requested video.  
+A requested video has week number and view rate record that we can get from CDN. 
+We can determine the popularity phase of a requested video by averaging the relative week to at-peak phase of the nearest points from a requested video.  
+Algorithm to determine the popularity phase is shown in \ref{alg2}. 
+Algorithm \ref{alg2} is only valid when we have view rate.
+Since for the first time a requested video does not has view rate, we have to guess the video popularity phase using time to peak probability distribution function as shown in \ref{alg3}. 
+Algorithm \ref{alg3} requires \textit{weighted sampling} function which is shown in \ref{alg4}.
+
 
 
 %To reveal the distribution of view rate for every video from datasets, we plot view rate versus week where we shift the week of the at-peak phase to zero, as shown in fig.~\ref{fig:viewratedistribution}.
-A simple example of determining the video popularity phase is shown in fig.\ref{fig:transformand2d}.
-In fig.~\ref{fig:viewratedistexample} we have view rate (y-axis) and relative week to at-peak (x-axis).
-Then we add week number as shown in fig.~\ref{fig:viewratedistexample}.
-We make view rate as y-axis, relative week to at-peak as x-axis as shown in fig.~\ref{fig:viewratedistexamplered} denote as box points.
-Assume there is a peer requests a video, we want to estimate what is the phase of that video. 
-Is the video in at-peak phase, before-phase, or after phase.  
-We can estimate that video phase by averaging relative week to peak numbers of the nearest point from datasets. 
-If the average value less than $0$ we estimate the video is at before-peak phase, if the average value equal to $0$ we estimate the video is at at-peak phase,  and if the average value more than $0$ we estimate the video is at after-peak phase.
-For concrete example:   there is a peer that requests a video. 
-The requested video age is four week since upload with the last week view rate $vr=2$ (shown in fig.~\ref{fig:viewratedistexamplered} as circle).
-We want to determine, what's phase the video is. 
-By averaging relative week to peak number of the nearest point of a requested video, we can determine that a requested video is at-peak phase.
+%A simple example of determining the video popularity phase is shown in fig.\ref{fig:transformand2d}.
+%In fig.~\ref{fig:viewratedistexample} we have view rate (y-axis) and relative week to at-peak (x-axis).
+%Then we add week number as shown in fig.~\ref{fig:viewratedistexample}.
+%We make view rate as y-axis, relative week to at-peak as x-axis as shown in fig.~\ref{fig:viewratedistexamplered} denote as box points.
+%Assume there is a peer requests a video, we want to estimate what is the phase of that video. 
+%Is the video in at-peak phase, before-phase, or after phase.  
+%We can estimate that video phase by averaging relative week to peak numbers of the nearest point from datasets. 
+%If the average value less than $0$ we estimate the video is at before-peak phase, if the average value equal to $0$ we estimate the video is at at-peak phase,  and if the average value more than $0$ we estimate the video is at after-peak phase.
+%For concrete example:   there is a peer that requests a video. 
+%The requested video age is four week since upload with the last week view rate $vr=2$ (shown in fig.~\ref{fig:viewratedistexamplered} %as circle).
+%We want to determine, what's phase the video is. 
+%By averaging relative week to peak number of the nearest point of a requested video, we can determine that a requested video is at-peak phase.
 
 %In this case, the nearest points are the point at third week $(2,1,-1)$ and the point at fifth week $(4,1,1)$.  
 %By averaging the points at z-axis of the nearest points $(-1 + 1)/2 = 0$,  we can estimate that video is in at-peak phase.
