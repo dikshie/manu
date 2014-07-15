@@ -612,78 +612,18 @@ The steps to shift the week of the at-peak phase to zero for every video in data
 \STATE ysearch $\leftarrow$ viewrate \COMMENT{view of a requested video}
 
 
-\STATE $x1$ $\leftarrow$ $(xsearch - 1)$ \COMMENT{search the nearest point at one week before}
+\STATE $xs$ $\leftarrow$ $(xsearch - 1)$ \COMMENT{search the nearest point at one week before}
+\STATE $result1$ $\leftarrow$ $findnearestpoints(xs,ysearch,x,y,z)$
 
-%\COMMENT{slice the dataset}
-\STATE $len_1$ $\leftarrow$ $length(x1)$
-\FOR{$i=0$ to $len_1$}
-\IF{$x[i]$ $==$ $x1$} 
-%\COMMENT{get data that only for x1}
-\STATE $tempx[i]$ $\leftarrow$ $x[i]$
-\STATE $tempy[i]$ $\leftarrow$ $y[i]$
-\STATE $tempz[i]$ $\leftarrow$ $z[i]$
-\ENDIF
-\ENDFOR
+\STATE $xs$ $\leftarrow$ $(xsearch)$ \COMMENT{search the nearest point at same week before}
+\STATE $result2$ $\leftarrow$ $findnearestpoints(xs,ysearch,x,y,z)$
 
-\STATE $len_2 \leftarrow length(tempy[i])$
-\FOR{$i=0$ to $len_2$}
-    \IF{$tempy[i]$ $==$ $ysearch$}
-    \STATE $result1[i]$ $\leftarrow$ $tempz[i]$ \COMMENT {get relative week only for ysearch}
-    \ENDIF
-\ENDFOR
-
-
-\STATE $x1$ $\leftarrow$ $(xsearch)$ \COMMENT{search the nearest point at same week}
-
-%\COMMENT{slice the dataset}
-\STATE $len_1$ $\leftarrow$ $length(x1)$
-\FOR{$i=0$ to $len_1$}
-\IF{$x[i]$ $==$ $x1$} 
-%\COMMENT{get data that only for x1}
-\STATE $tempx[i]$ $\leftarrow$ $x[i]$
-\STATE $tempy[i]$ $\leftarrow$ $y[i]$
-\STATE $tempz[i]$ $\leftarrow$ $z[i]$
-\ENDIF
-\ENDFOR
-
-\STATE $len_2 \leftarrow length(tempy)$
-\FOR{$i=0$ to $len_2$}
-    \IF{$tempy[i]$ $==$ $ysearch$}
-    \STATE $result2[i]$ $\leftarrow$ $tempz[i]$ \COMMENT {get relative week only for ysearch}
-    \ENDIF
-\ENDFOR
-
-\algstore{myalg}
-\end{algorithmic}
-\end{algorithm}
-
-\begin{algorithm}
-\begin{algorithmic}[1]
-\algrestore{myalg}
-
-\STATE $x1$ $\leftarrow$ $(xsearch + 1)$ \COMMENT{search the nearest point at one week after}
-
-%\COMMENT{slice the dataset}
-\STATE $len_1$ $\leftarrow$ $length(x1)$
-\FOR{$i=0$ to $len_1$}
-\IF{$x[i]$ $==$ $x1$} 
-%\COMMENT{get data that only for x1}
-\STATE $tempx[i]$ $\leftarrow$ $x[i]$
-\STATE $tempy[i]$ $\leftarrow$ $y[i]$
-\STATE $tempz[i]$ $\leftarrow$ $z[i]$
-\ENDIF
-\ENDFOR
-
-\STATE $len_2 \leftarrow length(tempy[i])$
-\FOR{$i=0$ to $len_2$}
-    \IF{$tempy[i]$ $==$ $ysearch$}
-    \STATE $result3[i]$ $\leftarrow$ $tempz[i]$ \COMMENT {get relative week only for ysearch}
-    \ENDIF
-\ENDFOR
+\STATE $xs$ $\leftarrow$ $(xsearch+1)$ \COMMENT{search the nearest point at one week after}
+\STATE $result3$ $\leftarrow$ $findnearestpoints(xs,ysearch,x,y,z)$
 
 
 \STATE $final$ $\leftarrow$ $average(result1,result2,result3)$
-\IF{$final$ $<$ $0$}
+\IF{$final$ $<$ $0.5$}
 \STATE $phase$ $\leftarrow$ $before$
 \ELSIF{$final$ $==$ $0$}
 \STATE $phase$ $\leftarrow$ $at$
@@ -695,13 +635,42 @@ The steps to shift the week of the at-peak phase to zero for every video in data
 \end{algorithm}
 
 
+\begin{algorithm}
+\caption{Find relative week to at-peak from the nearest neighbor points}
+\label{alg3}
+\begin{algorithmic}[1]
+\REQUIRE {xs, ysearch, x, y, z.}
+
+%\COMMENT{slice the dataset}
+\STATE $len_1$ $\leftarrow$ $length(xs)$
+\FOR{$i=0$ to $len_1$}
+\IF{$x[i]$ $==$ $xs$} 
+%\COMMENT{get data that only for x1}
+\STATE $tempx[i]$ $\leftarrow$ $x[i]$
+\STATE $tempy[i]$ $\leftarrow$ $y[i]$
+\STATE $tempz[i]$ $\leftarrow$ $z[i]$
+\ENDIF
+\ENDFOR
+
+\STATE $len_2 \leftarrow length(tempy[i])$
+\FOR{$i=0$ to $len_2$}
+    \IF{$tempy[i]$ $==$ $ysearch$}
+    \STATE $result[i]$ $\leftarrow$ $tempz[i]$ \COMMENT {get relative week only for ysearch}
+    \ENDIF
+\ENDFOR
+
+\STATE return(result)
+\end{algorithmic}
+\end{algorithm}
+
 
 
 \begin{algorithm}
 \caption{Determining popolarity phase for the first time access}
-\label{alg3}
-\begin{algorithmic}[2]
-\REQUIRE Sorted PDF of time to peak in the form of list of tuple [(prob,week number),$\cdots$] and $t$ week number of a requested video
+\label{alg4}
+\begin{algorithmic}[1]
+\REQUIRE{Sorted PDF of time to peak in the form of list of tuple [(prob,week number),$\cdots$] and $t$ week number of a requested video}
+
 \STATE $n$ $\leftarrow$ $36$ \COMMENT{number of weeks}
 \IF{$t$ $>$ $36$}
 \STATE $phase$ $\leftarrow$ $after$
@@ -716,8 +685,8 @@ The steps to shift the week of the at-peak phase to zero for every video in data
 
 \STATE $total$ $\leftarrow$ $0$
 \FOR{$i=0$ to $t$}
-\STATE $number$ $\leftarrow$ $count(temp,i)$ \COMMENT{count how many t's value inside temp}
-\STATE $total$ $\leftarrow$ $total$ $+$ $count(temp,i)$ \COMMENT{add the number to total}
+\STATE $numbercount$ $\leftarrow$ $count(temp,i)$ \COMMENT{count how many t's value inside temp}
+\STATE $total$ $\leftarrow$ $total$ $+$ $numbercount$ \COMMENT{add the number count to total}
 \ENDFOR
 \STATE $total$ $\leftarrow$ $total/36$ \COMMENT{divide total by total number of week from dataset}
 \IF{$total \le 0.5$}
@@ -733,9 +702,10 @@ The steps to shift the week of the at-peak phase to zero for every video in data
 
 \begin{algorithm}
 \caption{Weighted sample (weighted probability sampling with replacement)}
-\label{alg4}
-\begin{algorithmic}[2]
-\REQUIRE Sorted PDF of time to peak in the form of list of tuple [(prob,week number), $\cdots$]
+\label{alg5}
+\begin{algorithmic}[1]
+\REQUIRE {Sorted PDF of time to peak in the form of list of tuple [(prob,week number), $\cdots$]}
+
 \STATE $total$  $\leftarrow$ $1$
 \STATE $i$ $\leftarrow$ $0$ 
 \STATE $w$ $\leftarrow$ $items[0][0]$ \COMMENT{the smallest probability}
@@ -753,6 +723,7 @@ The steps to shift the week of the at-peak phase to zero for every video in data
 \STATE $w \leftarrow (w-x)$
 \STATE $b$ $\leftarrow$ $append(v$) \COMMENT{add v value to a list b}
 \STATE $n$ $\leftarrow$ $(n-1)$
+\STATE return $b$
 \ENDWHILE
 
 \end{algorithmic}
@@ -762,10 +733,10 @@ As result from shifting the week of the at-peak phase to zero, we get relative w
 Next, we want to determine popularity phase of a requested video.  
 A requested video has week number and view rate record that we can get from CDN. 
 We can determine the popularity phase of a requested video by averaging the relative week to at-peak phase of the nearest points from a requested video.  
-Algorithm to determine the popularity phase is shown in \ref{alg2}. 
-Algorithm \ref{alg2} is only valid when we have view rate.
-Since for the first time a requested video does not has view rate, we have to guess the video popularity phase using time to peak probability distribution function as shown in \ref{alg3}. 
-Algorithm \ref{alg3} requires \textit{weighted sampling} function which is shown in \ref{alg4}.
+Algorithm to determine the popularity phase is shown in \ref{alg2} and \ref{alg3}.
+Algorithm \ref{alg3} and \ref{alg3} is only valid when we have view rate.
+Since for the first time a requested video does not has view rate, we have to guess the video popularity phase using time to peak probability distribution function as shown in \ref{alg4}. 
+Algorithm \ref{alg4} requires \textit{weighted sampling} function which is shown in \ref{alg5}.
 
 
 
@@ -792,12 +763,15 @@ In our work, we use the Youtube VoD view model to aid our work that based from P
 The Youtube VoD view model will be used in our peer-caching strategy to exploit the video popularity while the caching strategy used in the CDN is out of scope for this project. 
 
 \subsection{System Overview}\label{systemoverview}
-The main components of the system are (1) CDN and (2) peers which are selforganized into a P2P overlay network.
-When a video is requested for the first time, the CDN is resposible to fetch the requested video.
+The main components of the system are (1) CDN and (2) peers which are self organized into a P2P overlay network.
+%When a video is requested for the first time, the CDN is resposible to fetch the requested video.
+When a CDN receives a query for a video, a CDN will find suitable peers that currently have a copy os a requested video.
+The CDN then returns information about these peers to the querying peer.
+Peers control the number and utilization of their connection based on current resources availability.
 Each peer in the system has two functionalities.
 First, a peer is a client that requests a video. 
 Second, a peer is a contributor or share the cached video with other peers in the system. 
-In our system, the videos and their corresponding indices are decoupled because in current modern peer-assisted CDN, CDN is responsible for recording each peer activities.  
+In our system, the videos and their corresponding indices are decoupled because in current modern commercial peer-assisted CDN, CDN is responsible for recording each peer activities.  
 This recording is also usefull in CDN for accounting purpose.
 
 
@@ -817,15 +791,14 @@ $\frac{ (f(p) - f(p_{min})) (f(p_{max}) - f(p)) }{r^{\alpha + \beta}}$ is the ut
 $z(t)$ is a function from current time in simulation. 
 $z(t)$ is used for every a requested video. 
 
-
-\[
- z(t) =
+\begin{equation}
+ z(t) = 
   \begin{cases}
    0.15 & \text{if phase estimation is before-peak} \\
    0.47 & \text{if phase estimation is at-peak} \\
    0.38 & \text{if phase estimation is after-peak}
   \end{cases}
-\]
+\end{equation}\label{eq:zfactor}
 
 Following \cite{1613869}, we can calculate $p$ as follows:
 \begin{equation}
@@ -835,7 +808,7 @@ p = min \left(\frac{n_i^r}{t_i^r - t_a^i}  , \frac{1}{t_{cur} - t_i^r}\right)
 Where $n_i^r$ is number of requested video, $t_i^r$ is last time the video is requested, $t_a^i$ is the uploaded time of the video, and $t_{cur}$ is the current time.
 $z(t)$ is proportion of view count that we get from Youtube datasets.  
 The value of $z(t)$ decided after we finish to determine a video popopularity phase.  
-For example: if we determine a video popularity phase is at-peak, then $z(t)=0.47$.
+For example: if we determine a video popularity phase is at-peak, then we assign $z(t)=0.47$.
 To able to track the simulation, we use default value from PROP thus we refer the readers to \cite{1613869}.
 %$p$ represents popularity of the video, $p_{min}$ represents estimation of minimum popularity in P2P system, $p_{max}$ represents estimation of maximum popularity in P2P system, $r$ represents the number of replicas of the video in the system, and $f(p)$ is monotonic non-decreasing function.
 %$\alpha$ and $\beta$ are the adjustment factor.
