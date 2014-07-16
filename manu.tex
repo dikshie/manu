@@ -609,7 +609,7 @@ The steps to shift the week of the at-peak phase to zero for every video in data
 
 %\COMMENT{a requested video has week number and view rate}
 \STATE xsearch $\leftarrow$ weeknumber \COMMENT{week number of a requested video}
-\STATE ysearch $\leftarrow$ viewrate \COMMENT{view of a requested video}
+\STATE ysearch $\leftarrow$ viewrate \COMMENT{view rate of a requested video}
 
 
 \STATE $xs$ $\leftarrow$ $(xsearch - 1)$ \COMMENT{search the nearest point at one week before}
@@ -623,7 +623,7 @@ The steps to shift the week of the at-peak phase to zero for every video in data
 
 
 \STATE $final$ $\leftarrow$ $average(result1,result2,result3)$
-\IF{$final$ $<$ $0.5$}
+\IF{$final$ $<$ $0$}
 \STATE $phase$ $\leftarrow$ $before$
 \ELSIF{$final$ $==$ $0$}
 \STATE $phase$ $\leftarrow$ $at$
@@ -636,7 +636,7 @@ The steps to shift the week of the at-peak phase to zero for every video in data
 
 
 \begin{algorithm}
-\caption{Find relative week to at-peak from the nearest neighbor points}
+\caption{Findnearestpoints function}
 \label{alg3}
 \begin{algorithmic}[1]
 \REQUIRE {xs, ysearch, x, y, z.}
@@ -666,12 +666,13 @@ The steps to shift the week of the at-peak phase to zero for every video in data
 
 
 \begin{algorithm}
-\caption{Determining popolarity phase for the first time access}
+\caption{Determining popularity phase for the first time access}
 \label{alg4}
 \begin{algorithmic}[1]
-\REQUIRE{Sorted PDF of time to peak in the form of list of tuple [(prob,week number),$\cdots$] and $t$ week number of a requested video}
+\REQUIRE{Sorted PDF of time to peak in the form of list of tuple [(prob,week number),$\cdots$] and $t$ which is week number of a requested video}
 
-\STATE $n$ $\leftarrow$ $36$ \COMMENT{number of weeks}
+\STATE $n$ $\leftarrow$ $36$ \COMMENT{number of measurement weeks}
+
 \IF{$t$ $>$ $36$}
 \STATE $phase$ $\leftarrow$ $after$
 \ELSE
@@ -733,11 +734,15 @@ As result from shifting the week of the at-peak phase to zero, we get relative w
 Next, we want to determine popularity phase of a requested video.  
 A requested video has week number and view rate record that we can get from CDN. 
 We can determine the popularity phase of a requested video by averaging the relative week to at-peak phase of the nearest points from a requested video.  
-Algorithm to determine the popularity phase is shown in \ref{alg2} and \ref{alg3}.
-Algorithm \ref{alg3} and \ref{alg3} is only valid when we have view rate.
+Pseudo code to determine the popularity phase is shown in \ref{alg2} and \ref{alg3}.
+Pseudo code in \ref{alg2} and \ref{alg3} is only valid when we have view rate.
 Since for the first time a requested video does not has view rate, we have to guess the video popularity phase using time to peak probability distribution function as shown in \ref{alg4}. 
-Algorithm \ref{alg4} requires \textit{weighted sampling} function which is shown in \ref{alg5}.
-
+Pseudo code in \ref{alg4} requires \textit{weighted sampling} function which is shown in \ref{alg5}.
+\textit{Weighted sampling} does sampling with replacement. 
+The function \textit{weighted sampling} is just algorithm fused with a walk of the items list to pick out the item selected by random numbers.  
+This is work because the probability that $n$ random numbers $0, \cdots, v$ will all happen to be less than $z$ is $P=\frac{z}{v}^n$ and solving for z, we get $z=v P^{1/n}$. 
+Subtituting a random number for $P$ picks the largest number with the correct distribution.
+We repeat the process to select all the other numbers.   
 
 
 %To reveal the distribution of view rate for every video from datasets, we plot view rate versus week where we shift the week of the at-peak phase to zero, as shown in fig.~\ref{fig:viewratedistribution}.
@@ -764,6 +769,11 @@ The Youtube VoD view model will be used in our peer-caching strategy to exploit 
 
 \subsection{System Overview}\label{systemoverview}
 The main components of the system are (1) CDN and (2) peers which are self organized into a P2P overlay network.
+CDN itself consist of edge servers that deliver the videos and control plane servers that coordinate or control between the peers and record peers activities.
+The recording function is basically maintain a database of which videos are currently available on which peers as well as details about the connectivity of these peers.
+Peers appear in control plane database when uploading a video and a peer has a video to share.
+In current peer-assisted CDN practice, the videos and their corresponding indices are decoupled.
+In other words, they are maintained by control plane servers.
 %When a video is requested for the first time, the CDN is resposible to fetch the requested video.
 When a CDN receives a query for a video, a CDN will find suitable peers that currently have a copy os a requested video.
 The CDN then returns information about these peers to the querying peer.
@@ -771,8 +781,7 @@ Peers control the number and utilization of their connection based on current re
 Each peer in the system has two functionalities.
 First, a peer is a client that requests a video. 
 Second, a peer is a contributor or share the cached video with other peers in the system. 
-In our system, the videos and their corresponding indices are decoupled because in current modern commercial peer-assisted CDN, CDN is responsible for recording each peer activities.  
-This recording is also usefull in CDN for accounting purpose.
+%In our system, the videos and their corresponding indices are decoupled because in current modern commercial peer-assisted CDN, CDN is responsible for recording each peer activities.  
 
 
 \subsection{Peer caching strategy}\label{peercachingstrategy}
@@ -819,6 +828,55 @@ In PROP's utility function, the difference between very popular videos and unpop
 For an unpopular video, $f(p)$ will be very close to $f(p_{min})$ thus $f(p) - f(p_{min})$ will be very close to $0$ then the utility function becomes very small.
 For a very popular video, $f(p)$ will be very close to $f(p_{max})$, thus $f(p_{max}) - f(p)$ will be very close to $0$ and the  utility function becomes very small.  
 Linear addition of $z(t)$ factor can help to differentiate the value of utility function.
+We summarize peer's decision for caching in pseudo code \ref{alg6}.
+
+
+
+\begin{algorithm}
+\caption{Peer decision}
+\label{alg6}
+\begin{algorithmic}[1]
+\REQUIRE a requested video popularity phase
+\STATE{calculate $p_{request}$ for a requested video}
+\IF{$phase$ $==$ $before$}
+\STATE{$z$ $\leftarrow$ $0.15$}
+\ELSIF{$phase$ $==$ $at$}
+\STATE{$z$ $\leftarrow$ $0.47$}
+\ELSE
+\STATE{$z$ $\leftarrow$ $0.38$}
+\ENDIF
+
+\STATE{get $p_{min}$ from CDN}
+\STATE{get $p_{max}$ from CDN}
+\STATE{get $r$ from CDN}
+
+\STATE{$u_{request}$ $\leftarrow$ $\frac{ (f(p_{request}) - f(p_{min})) (f(p_{max}) - f(p_{request})) }{r^{\alpha + \beta}} + z(t) $} \COMMENT{calculate u for a requested video}
+
+
+\FOR{every video inside peer's cache}\COMMENT{calculate $p$ and $u$ for every video inside peer's cache}
+\STATE{calculate $p$}
+\STATE{determine video popularity $phase$}
+\STATE{assign $z$ value}
+\STATE{get $r$ from CDN}
+\STATE{$u$ $\leftarrow$ $\frac{ (f(p) - f(p_{min})) (f(p_{max}) - f(p)) }{r^{\alpha + \beta}} + z(t)$ } \COMMENT{calculate u for a video inside peer's cache}
+\ENDFOR
+
+\STATE{$u_{min} \leftarrow min(u)$}
+\IF{$u_{request} > u_{min}$ }
+\IF{space not available}
+\STATE{delete video with $u_{min}$ inside peer's cache}
+\STATE{cache a requested video}
+\ELSE
+\STATE{cache a requested video}
+\ENDIF
+\ELSE
+\STATE{do not cache a requested video}
+\ENDIF
+
+
+\end{algorithmic}
+\end{algorithm}
+
 
 \begin{figure}[!t]
 \begin{center}
