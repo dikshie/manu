@@ -556,24 +556,18 @@ Data from \cite{Borghol:2011:CMP:2039452.2039717}. }
 
 \section{Determining Internet VoD Popularity}\label{popularity}
 
-The objective of estimating the Internet VoD popularity phase is to determing whether a video is before-peak, at-peak, or  after-peak.
+The objective of estimating the Internet VoD popularity phase is to determine whether a video is at before-peak, at-peak, or after-peak phase, to be used by peers in their caching strategy.
+For this purpose we use the Youtube content popularity dataset from Borghol et. al.,\cite{Borghol:2011:CMP:2039452.2039717}  which contains the data of 29000 videos, including the view count and upload time, during 36 weeks of measurements.
+Figure~\ref{fig:timetopeak} is CDF the time-to-peak distribution from Borghol et. al.,\cite{Borghol:2011:CMP:2039452.2039717}  which shows that about three-quarters of the videos peak within the first six weeks after upload.
+The time-to-peak is exponentially distributed up-to the sixth week, and it is uniform beyond the sixth-week.
 Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} define time-to-peak for a video as its age (time since upload) at which its weekly viewing rate is the highest during measurement (from the first week until end of measurement).
-We need those phases because we will use those in peer caching strategy that we will explain in Sec.\ref{peercachingstrategy}. 
-The value of those phase will effect the decision if a peer will cache or not cache the requested video.
-
-We use Youtube as an example of VoD service where we get Youtube content popularity datasets from Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717}.
-The datasets consist of the measurement of 29000 videos, including view count and the time when videos are uploaded, during a period of 36 weeks.
-The time-to-peak distribution is shown in fig.\ref{fig:timetopeak}.
-Figure \ref{fig:timetopeak} shows that around three-quarters of the videos peak within the first six weeks since their upload. 
-Beyond six weeks, we have uniform distribution thus the time-to-peak is exponentially distributed mix with uniform distribution. 
-%To estimate the rate parameter of the exponential part of time-to-peak distribution, we use Maximum Likelihood Estimation (MLE) \cite{clauset2009power}.
-%Using MLE, we get the exponential parameter $\lambda = 0.59$.
 Because we know the peak time (at-peak phase) of every video, we can also find the before-peak phase and after-phase of every video. 
 For detail we refer the readers to \cite{Borghol:2011:CMP:2039452.2039717}.
 
-%From Youtube dataset, we want to know the distribution of view rate that refer to at-peak week, not the time when a video is uploaded,  for every video.
-%For that purpose, we shift the week of the at-peak phase to zero for every video as shown in fig.~\ref{fig:viewratedistribution}.
-The steps to shift the week of the at-peak phase to zero for every video in dataset is shown as pseudo code in \ref{alg1}.
+Suppose a video $v$ in Borghol dataset has a viewing rate $r_v(t)$, $0 <= t < t_f$, and $r_v(t)$ peaks at $t_{vp}$.
+The data is transformed by including the relative time-to-peak, such that each data point is a 2-tuple: video rate and relative time to peak, i.e., $rp_v(t) = ( r_v(t), tp(t) ), tp(t) = t - t_{vp}$.
+Figure~\ref{fig:viewratedistribution} shows the Borghol's dataset with time axis for each video is translated by $t_{vp}$ to the left, such that each video peaks at time $0$.
+The algorithm to shift the week of the at-peak phase to zero for every video in dataset is shown as pseudo code in \ref{alg1}.
 
 %%%%
 \begin{algorithm}
@@ -717,7 +711,7 @@ The steps to shift the week of the at-peak phase to zero for every video in data
 \STATE $total$ $\leftarrow$ $(total - x)$
 \WHILE{$x > w$}
 \STATE $x \leftarrow (x-w)$
-\STATE $i \leftarrow i+1$
+\STATE $i \leftarrow (i+1)$
 \STATE $w \leftarrow items[i][0]$
 \STATE $v \leftarrow items[i][1]$
 \ENDWHILE
@@ -730,19 +724,35 @@ The steps to shift the week of the at-peak phase to zero for every video in data
 \end{algorithmic}
 \end{algorithm}
 
-As result from shifting the week of the at-peak phase to zero, we get relative week to at-peak phase. 
-Next, we want to determine popularity phase of a requested video.  
-A requested video has week number and view rate record that we can get from CDN. 
-We can determine the popularity phase of a requested video by averaging the relative week to at-peak phase of the nearest points from a requested video.  
-Pseudo code to determine the popularity phase is shown in \ref{alg2} and \ref{alg3}.
-Pseudo code in \ref{alg2} and \ref{alg3} is only valid when we have view rate.
-Since for the first time a requested video does not has view rate, we have to guess the video popularity phase using time to peak probability distribution function as shown in \ref{alg4}. 
-Pseudo code in \ref{alg4} requires \textit{weighted sampling} function which is shown in \ref{alg5}.
-\textit{Weighted sampling} does sampling with replacement. 
-The function \textit{weighted sampling} is just algorithm fused with a walk of the items list to pick out the item selected by random numbers.  
-This is work because the probability that $n$ random numbers $0, \cdots, v$ will all happen to be less than $z$ is $P=\frac{z}{v}^n$ and solving for z, we get $z=v P^{1/n}$. 
-Subtituting a random number for $P$ picks the largest number with the correct distribution.
-We repeat the process to select all the other numbers.   
+
+In determining the phase of a requested video $e$ with known age $t_e$ and view rate $r_e$ at $t_e$, we find the three $r_v$ data points whose rates are closest to $r_e$ at $t_e$, $(t_e - 1)$, and $(t_e + 1)$, and then average the $tp$ of the three data points.
+The phase of the requested video $e$ is estimated to be before-peak, at-peak, or after-peak based on whether the average is negative, $0$, or positive.
+The view rate $r_e$ of a video is calculated by substracting the view counts at the time of the current and the previous video requests.
+%The view rate $r_e$  of a video is calculated using the view counts at the time of the current and the previous video requests.
+But when a video is being requested for the first time, the phase can only be estimated using the age of the video.
+
+In this case, we draw 36 random integers $s_i$, $0 <= i <= 35$, between $0$ and $36$, using the time-to-peak distribution in fig.~\ref{fig:timetopeak} then calculate the count of each integers between $0$ and $t_e$ from the drawn numbers then divide the result by 36, i.e., $estphase = \sigma of 0 <= i <= t_e count(i, s)/36$.
+This result represents the estimated phase, where $estphase <= 0.5$ the phase is before-peak; if $0.5 < estphase < 0.75$ the phase is at peak, and $estphase > 0.75$ is after-peak.
+
+
+
+% As result from shifting the week of the at-peak phase to zero, we get relative week to at-peak phase. 
+% Next, we want to determine popularity phase of a requested video.  
+% A requested video has week number and view rate record that we can get from CDN. 
+% We can determine the popularity phase of a requested video by averaging the relative week to at-peak phase of the nearest points from a requested video.  
+% Pseudo code to determine the popularity phase is shown in \ref{alg2} and \ref{alg3}.
+% Pseudo code in \ref{alg2} and \ref{alg3} is only valid when we have view rate.
+
+% Because the first time a requested video does not has view rate, we have to guess the video popularity phase using time to peak probability distribution function (PDF) as shown in \ref{alg4}. 
+% Pseudo code in \ref{alg4} requires \textit{weighted sampling} function which is shown in \ref{alg5}.
+% \textit{Weighted sampling} does sampling with replacement. 
+% The function \textit{weighted sampling} is an algorithm that fused with a walk of the items list to pick out the item selected by random numbers. 
+% Suppose we have $n$ random number  $0, \cdots, v$,  the probability that $n$ random number to be less than $z$ is $P=(z/v)^n$, next solving $z$, we can get $z=v P^{1/n}$.
+
+
+%This is work because the probability that $n$ random numbers $0, \cdots, v$ will all happen to be less than $z$ is $P=\frac{z}{v}^n$ and solving for z, we get $z=v P^{1/n}$. 
+%Subtituting a random number for $P$ picks the largest number with the correct distribution.
+%We repeat the process to select all the other numbers.   
 
 
 %To reveal the distribution of view rate for every video from datasets, we plot view rate versus week where we shift the week of the at-peak phase to zero, as shown in fig.~\ref{fig:viewratedistribution}.
@@ -774,13 +784,14 @@ The recording function is basically maintain a database of which videos are curr
 Peers appear in control plane database when uploading a video and a peer has a video to share.
 In current peer-assisted CDN practice, the videos and their corresponding indices are decoupled.
 In other words, they are maintained by control plane servers.
-%When a video is requested for the first time, the CDN is resposible to fetch the requested video.
-When a CDN receives a query for a video, a CDN will find suitable peers that currently have a copy os a requested video.
-The CDN then returns information about these peers to the querying peer.
-Peers control the number and utilization of their connection based on current resources availability.
 Each peer in the system has two functionalities.
 First, a peer is a client that requests a video. 
 Second, a peer is a contributor or share the cached video with other peers in the system. 
+%When a video is requested for the first time, the CDN is resposible to fetch the requested video.
+
+When a CDN receives a query for a video, a CDN will find suitable peers that currently have a copy os a requested video.
+The CDN then returns information about these peers to the querying peer.
+Peers control the number and utilization of their connection based on current resources availability.
 %In our system, the videos and their corresponding indices are decoupled because in current modern commercial peer-assisted CDN, CDN is responsible for recording each peer activities.  
 
 
@@ -797,8 +808,8 @@ u = \frac{ (f(p) - f(p_{min})) (f(p_{max}) - f(p)) }{r^{\alpha + \beta}} + z(t)
 \end{equation}
 
 $\frac{ (f(p) - f(p_{min})) (f(p_{max}) - f(p)) }{r^{\alpha + \beta}}$ is the utility function from PROP and $z(t)$ is the z factor from our model.
-$z(t)$ is a function from current time in simulation. 
-$z(t)$ is used for every a requested video. 
+%$z(t)$ is a function from current time in simulation. 
+%$z(t)$ is used for every a requested video. 
 
 \begin{equation}
  z(t) = 
