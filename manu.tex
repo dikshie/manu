@@ -879,7 +879,7 @@ Since we can determine before-peak phase, at-peak phase, and after-peak phase of
 $z(t)$ is proportion of view count in before-peak, at-peak, and after-peak to the total view count that we get from Youtube datasets.  
 Because from transformed Youtube dataset we already have before-peak, at-peak, and after-peak phase for each video, we can also calculate how many view count in before-peak phase, at-peak phase, and after-peak phase.  
 However at-peak happens only one week and its view count proportion to the total view count relatively small.
-On the other side, we want to emphasize peer caching of a video during at-peak phase thus proportion of view count of at-peak phase to the total view count is count from $at-peak week - 1$ until $(at-peak week + 1)$. 
+On the other side, we want to emphasize peer caching of a video during at-peak phase thus proportion of view count of at-peak phase to the total view count is count from one week before at-peak until one week after-peak.
 Next we can count proportion of view count of before-peak and after-peak to the total view count.
 The numbers of view count proportion the the total is shown in eq.\ref{eq:zfactor}.
 The value of $z(t)$ is assigned after we finish to determine a video popopularity phase.  
@@ -973,31 +973,45 @@ This simulator follow Sec.\ref{systemoverview}.
 %From above description, we can see that deploying peer-assisted CDN can save some traffic since the clients which form P2P network can sharing the contents or videos.
 
 
-\subsubsection{Catalog Generator}\label{catalog}
-The goal for the catalog generator is to create a catalog video that consist of the video-id, time when a video is uploaded, a video size, and final view count.
-% progress of videos popularity like Youtube service model. 
-We assume that a video is uploaded to the server following Poisson process with mean rate $\lambda=1$. 
-The final view count for every video is assigned randomly uniform from Youtube datasets and video size for every video is assigned randomly uniform between $1$ and $200$MB from Youtube datasets. 
-Because of the very weak relationship betwen filesize and popularity \cite{abhari2010workload} and because our work focuses on the impact of the popularity aspect on the utility function rather than storage optimization we believe that the choice to assign a random uniform file size from the Youtube datasets does not have an effect to our results.
-Finally, we have a catalog that consists of: video-id, time when a video is uploaded, view count terminus, and video size.
+\subsubsection{Video Catalog}\label{catalog}
+Each video in tha catalog has the following properties: 
+video-id,size,upload time, final view count, view count function parameters. 
+The final view count is the total number of views after video at the end of simulation and it is generated using uniform distribution.
+Upload time interval is a Poisson process with $\lambda=1$.
+Video size is generated using a uniform distribution.
+Because of the very weak relationship betwen video size and popularity \cite{abhari2010workload} and because our work focuses on the impact of the popularity aspect on the utility function rather than storage optimization we believe that the choice to assign a random uniform video size from the Youtube dataset does not have an effect to our results. 
+The view rate progression from the upload time until the end of simulation time is modelled using a Beta distribution.
+As Borghol et al.,\cite{Borghol:2011:CMP:2039452.2039717} showed that view rate of a video can be modelled as such. 
+The $\alpha$ and $\beta$ parameters are uniformly distributed. 
+
 
 \subsubsection{Peer Request Generator}\label{peerrequest}
-There are three scenarios for peer request (named as scenario A, B, and C):
-In scenario A, a peer chooses a video that has popularity following Youtube.
-The objective of the first scenario, we want to see the peer requests effect to peer-assisted CDN when the request following Youtube popularity. 
-In scenario B, a peer chooses a video that has popularity following Youtube but we shift the request four weeks later.  
-The objective of the second scenario, we want to see the peer requests effect to peer-assisted CDN when the request from peers are shifted four weeks after popular in Youtube.
-%%why 4 weeks?
-In scenario C, a peer chooses a video that has popularity following zipf distribution with rate$=0.9$ \cite{6654887} thus a peer choose a video that its popularity does not follow Youtube popularity.
-The objective of the third scenario, we want to see the peer request effect to peer-assisted CDN when the requests from peers are totally different from Youtube's videos popularity.
-In all scenarios we assume peer interarrival time request a video following Poisson process with a mean rate $\lambda=1$ \cite{Zink:2009:CYN:1502814.1502987}.
+Peers request videos from the catalog using a Poisson process with $\lambda=1$ \cite{Zink:2009:CYN:1502814.1502987} for the inter-arrival time.
+For the requested videos there are three scenarios namely A,B,and C.
+Scenario A is where the video popularity in the peer-assisted CDN system follows the global popularity of the video.
+Scenario B is where the video popularity in the peer-assisted CDN system lagging four weeks behind the global popularity of the video. 
+We choose four weeks based on probability from time-to-peak distribution that half of videos are already reach peak within four weeks.
+Scenario C is where the video popularity in the peer-assisted CDN system does not follow the global popularity of the video. 
+We use Zipf distribution with rate$=0.9$ for this purpose \cite{6654887}.
+
+
+% \subsubsection{Peer Request Generator}\label{peerrequest}
+% There are three scenarios for peer request (named as scenario A, B, and C):
+% In scenario A, a peer chooses a video that has popularity following Youtube.
+% The objective of the first scenario, we want to see the peer requests effect to peer-assisted CDN when the request following Youtube popularity. 
+% In scenario B, a peer chooses a video that has popularity following Youtube but we shift the request four weeks later.  
+% The objective of the second scenario, we want to see the peer requests effect to peer-assisted CDN when the request from peers are shifted four weeks after popular in Youtube.
+% %%why 4 weeks?
+% In scenario C, a peer chooses a video that has popularity following zipf distribution with rate$=0.9$ \cite{6654887} thus a peer choose a video that its popularity does not follow Youtube popularity.
+% The objective of the third scenario, we want to see the peer request effect to peer-assisted CDN when the requests from peers are totally different from Youtube's videos popularity.
+% In all scenarios we assume peer interarrival time request a video following Poisson process with a mean rate $\lambda=1$ \cite{Zink:2009:CYN:1502814.1502987}.
 
 
 %We assume that a peer choose a video based on a preference from view count and view rate that we can get from catalog generator.  
 %Because peer requests are generate from catalog, the video request will follow global popularity video from YouTube
 
 
-\subsubsection{Simulation Parameters and Scenarios}
+\subsubsection{Simulation Parameters}
 The simulation parameters are follows:
 
 \begin{itemize}
