@@ -1043,19 +1043,19 @@ Finally, we compare our results to PROP \cite{1613869} implementation.
 %%%contribution 
 \begin{figure*}[!t]
 \centering
-\subfloat[Absolute of contribution of peer for scenario A ($y$-axis in log-scale).\label{fig:contribu-normal}]{
+\subfloat[Scenario A.\label{fig:contribu-normal}]{
 \includegraphics[width=5.7cm]{graphs/new/repl/contributioncdnpeermodelsortedabs.eps}
 }
 \hfill
-\subfloat[Absolute of contribution of peer for scenario B ($y$-axis in log-scale).\label{fig:contribu-shift}]{
+\subfloat[Scenario B.\label{fig:contribu-shift}]{
 \includegraphics[width=5.7cm]{graphs/new/shift/contributioncdnpeermodelsortedabs.eps}
 }
 \hfill
-\subfloat[Absolute contribution of peers for scenario C ($y$-axis in log-scale).\label{fig:contribu-zipf}]{
+\subfloat[Scenario C.\label{fig:contribu-zipf}]{
 \includegraphics[width=5.7cm]{graphs/new/zipf/contributioncdnpeermodelsortedabs.eps}
 }
 \vspace{2mm}
-\caption{Peer contributions compared between model and PROP.}
+\caption{Absolute peer contributions compared between CPPro and PROP ($y$-axis in log-scale).}
 \label{fig:peercontribution}
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1064,19 +1064,20 @@ Finally, we compare our results to PROP \cite{1613869} implementation.
 %%%replica
 \begin{figure*}[!t]
 \centering
-\subfloat[Number of a video replicas when a peer request a video for scenario A ($y$ axis in log-scale).\label{fig:atd-normal}]{
+\subfloat[Scenario A.\label{fig:atd-normal}]{
 \includegraphics[width=5.7cm]{graphs/new/repl/atd.eps}
 }
 \hfill
-\subfloat[Number of a video replicas when a peer request a video for scenario B ($y$ axis in log-scale).\label{fig:atd-shift}]{
+\subfloat[Scenario B.\label{fig:atd-shift}]{
 \includegraphics[width=5.7cm]{graphs/new/shift/atd.eps}
 }
 \hfill
-\subfloat[Number of a video replicas when a peer request a video for scenario C ($y$ axis in log-scale). In model we found many zero replica when a peer requests a video. Because we use log-scale in this figure, the zero numbers can not be viewed.\label{fig:atd-zipf}]{
+\subfloat[Scenario C.\label{fig:atd-zipf}]{
 \includegraphics[width=5.7cm]{graphs/new/zipf/atd.eps}
 }
 \vspace{2mm}
-\caption{Comparison of available replicas between model and prop when a peer requests a video.}
+\caption{Comparison of available replicas between model and prop when a peer requests a video ($y$-axis in log-scale).
+In scenario C, we found many zero replica when a peer requests a video for CPPro. Because we use log-scale in this figure, the zero numbers can not be viewed}
 \label{fig:replica}
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1178,13 +1179,17 @@ Peers are ranked by the number of videos served by each one.
 They exhibit a similar pattern and only differ in the tails, where CPPro gives higher contributios, which are not significant to the total results as shown in fig.~\ref{fig:contribu-normal} and \ref{fig:contribu-shift}.
 However, in the scenario C the peer contribution is almost identical in CPPro and PROP. 
 
-The advantage of CPPro to PROP is shown in fig.~\ref{fig:replica}
+The advantage of CPPro to PROP is shown in fig.~\ref{fig:replica} which show the number of replicas the requested videos at each request event.
+We see that CPPro result in fewer replicas comparing to those of PROP.
+Figure~\ref{fig:atd-zipf} that for scenario C,  CPPro has much fewer replicas than those of PROP.
+It shows that many videos are not cached by CPPro.
+That does not affect the peers contribution comparing to PROP.
+
 %Since we only interested in peer performance, we compare peer contribution between PROP and CPPro.
 %Contribution ratio of peer (comparing to CDN contribution) is irrelevant in this case.
 %Figure \ref{fig:contribu-normal}, \ref{fig:contribu-shift}, and \ref{fig:contribu-zipf} show the absolute peer contribution to deliver videos comparing CPPro and PROP. 
 
-%Figure \ref{fig:contribu-normal} and fig.\ref{fig:contribu-shift} exhibit the same pattern, with
-the peers giving more contribution in the tail.
+%Figure \ref{fig:contribu-normal} and fig.\ref{fig:contribu-shift} exhibit the same pattern, with the peers giving more contribution in the tail.
 %A peers can contribute mode because a video has longer duration than other videos in a peer's cache thus other peer's requests are served by the peer. 
 %A video has longer duration than other videos in peer's cache because that a video has higher utility function than other videos for example a video that will enter the cache. 
 
@@ -1267,17 +1272,17 @@ Therefore, we can see in the model that the events when a peer does not cache a 
 \hline
 Scenario & Type & Cached & Not-Cached\\
 \hline
-Scenario 1 & Model & $33.5\%$ & $66.5\%$ \\
+Scenario A & Model & $33.5\%$ & $66.5\%$ \\
 \hline
  & PROP & $52\%$ & $48\%$  \\
 \hline
 
-Scenario 2 & Model & $34.8\%$ & $65.2\%$ \\
+Scenario B & Model & $34.8\%$ & $65.2\%$ \\
 \hline
  & PROP & $52.6\%$ & $47.4\%$  \\
 \hline
 
-Scenario 3 & Model & $32.4\%$ & $67.6\%$  \\
+Scenario C & Model & $32.4\%$ & $67.6\%$  \\
 \hline
  & PROP & $67.7\%$ & $32.3\%$ \\
 \hline
@@ -1299,17 +1304,17 @@ Scenario 3 & Model & $32.4\%$ & $67.6\%$  \\
 \hline
 Scenario & Type/Events & Before-Peak & At-Peak & After-Peak\\
 \hline
-Scenario 1 & Model-Cached & $8.2\%$ & $1.2\%$ & $24.1\%$ \\
+Scenario A & Model-Cached & $8.2\%$ & $1.2\%$ & $24.1\%$ \\
 \hline
  & Model-Not-Cached & $11.2\%$ & $0.8\%$ & $54.5\%$ \\
  \hline
 
-Scenario 2 & Model-Cached & $6.2\%$ & $1.2\%$ & $29.8\%$ \\
+Scenario B & Model-Cached & $6.2\%$ & $1.2\%$ & $29.8\%$ \\
 \hline
  & Model-Not-Cached & $5.2\%$ & $0.8\%$ & $56.8\%$ \\
 \hline
 
-Scenario 3 & Model-Cached & $8.0\%$ & $1.8\%$ & $22.7\%$ \\
+Scenario C & Model-Cached & $8.0\%$ & $1.8\%$ & $22.7\%$ \\
 \hline
  & Model-Not-Cached & $15.1\%$ & $0.8\%$ & $51.6\%$ \\
 \hline
