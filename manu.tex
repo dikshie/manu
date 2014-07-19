@@ -1175,11 +1175,17 @@ It shows that many videos are not cached by CPPro.
 That does not affect the peers contribution comparing to PROP.
 
 We want to know what makes replica of CPPro is lower than PROP.
-For this purpose, we breakdown how many cache events occurs in our simulation as shown in table.\ref{tab:stacked1}.
+For this purpose, we breakdown how many cache events occur in our simulation as shown in table.\ref{tab:stacked1}.
 When a peer requests a video to another peer, a peer has to decide whether a peer wants to cache the video or not to cache the video based on the utility function.  
 If a peer decided to cache a video, we called it cached event.
 If a peer did not decide to cache a video, we called it not-cached event.
 
+From table.\ref{tab:stacked1}, we can see that CPPro cached less videos compared to PROP for all scenarios.
+In scenario A, CPPro are cached $33\%$ of requested video compared to $52\%$ in PROP.  
+In scenario B, we also have similar number where CPPro are cached $34.8\%$ of requested video compared to $52.6\%$. 
+In scenario C, CPPro are cached $32.4\%$ of requested video compared to $67.7\%$ in PROP.
+However, by summing data volume for cached events and no-cached events, CPPro can deliver or contribute of videos delivery more than PROP. 
+These number quantifies our previous analysis. 
 
 %Since we only interested in peer performance, we compare peer contribution between PROP and CPPro.
 %Contribution ratio of peer (comparing to CDN contribution) is irrelevant in this case.
