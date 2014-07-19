@@ -1184,42 +1184,42 @@ That does not affect the peers contribution comparing to PROP.
 %A video has longer duration than other videos in peer's cache because that a video has higher utility function than other videos for example a video that will enter the cache. 
 
 
-Figure \ref{fig:atd-normal}, \ref{fig:atd-shift}, and \ref{fig:atd-normal} show the number of  videos replicas available in system when a peer requests a video.
-As we can see from all figures, the model gives us lower number of replicas than PROP.
-The model gives lower number of replicas than PROP because when a peer requests a video, that peer is not cached the video.
-We can see the proportion of cached and not-cached event in table.\ref{tab:stacked1}. 
-We also present detail of the video phase breakdown in table.\ref{tab:stacked2}.
-In model, not-cached events take around $65\%$ from all events and majority of video phase is  after-peak for both cached events and not-cached events. 
-Because the majority of video phase is  after-peak for both cached events and not-cached events, 
-In PROP, cached events take around $52\%$ from all events for the first scenario and the second scenario, while for the third scenario is $67.7\%$.
-In model not-cached events are higher than PROP, means peers do not cached the videos thus we get lower replicas number than PROP.
+% Figure \ref{fig:atd-normal}, \ref{fig:atd-shift}, and \ref{fig:atd-normal} show the number of  videos replicas available in system when a peer requests a video.
+% As we can see from all figures, the model gives us lower number of replicas than PROP.
+% The model gives lower number of replicas than PROP because when a peer requests a video, that peer is not cached the video.
+% We can see the proportion of cached and not-cached event in table.\ref{tab:stacked1}. 
+% We also present detail of the video phase breakdown in table.\ref{tab:stacked2}.
+% In model, not-cached events take around $65\%$ from all events and majority of video phase is  after-peak for both cached events and not-cached events. 
+% Because the majority of video phase is  after-peak for both cached events and not-cached events, 
+% In PROP, cached events take around $52\%$ from all events for the first scenario and the second scenario, while for the third scenario is $67.7\%$.
+% In model not-cached events are higher than PROP, means peers do not cached the videos thus we get lower replicas number than PROP.
 %If we see eq.\ref{eq:dlms_3} and table.\ref{tab:stacked2}, we found that the majority of video phase is in after-peak for both cached events and not-cached events, then big probability that $z_{ms}$ and $z_{dl}$ are in the same phase which is after-peak phase.
 
 
-Denote $u_{dl}$ is the minimum utility function for a video inside the cache and $u_{ms}$ is utility function for a video that will enter the cache,  $p_{dl}$ is the popularity for a video inside the cache and $p_{ms}$ is the popularity for a video that will enter the cache.
-In order a requested video is cached by a peer, the utility function for $u_{dl}$ must be lower than the utility function for $u_{ms}$.
+% Denote $u_{dl}$ is the minimum utility function for a video inside the cache and $u_{ms}$ is utility function for a video that will enter the cache,  $p_{dl}$ is the popularity for a video inside the cache and $p_{ms}$ is the popularity for a video that will enter the cache.
+% In order a requested video is cached by a peer, the utility function for $u_{dl}$ must be lower than the utility function for $u_{ms}$.
 
-\begin{align}\label{eq:dlms_1}
-u_{dl} < u_{ms}
-\end{align}
+% \begin{align}\label{eq:dlms_1}
+% u_{dl} < u_{ms}
+% \end{align}
 
-\begin{multline}\label{eq:dlms_2}
-\frac{ (f(p_{dl}) - f(p_{min})) (f(p_{max}) - f(p_{dl})) }{r^{\alpha + \beta}_{dl}} + z_{dl} < \\
-\frac{ (f(p_{ms}) - f(p_{min})) (f(p_{max}) - f(p_{ms})) }{r^{\alpha + \beta}_{ms}} + z_{ms}
-%\end{equation}
-\end{multline}
+% \begin{multline}\label{eq:dlms_2}
+% \frac{ (f(p_{dl}) - f(p_{min})) (f(p_{max}) - f(p_{dl})) }{r^{\alpha + \beta}_{dl}} + z_{dl} < \\
+% \frac{ (f(p_{ms}) - f(p_{min})) (f(p_{max}) - f(p_{ms})) }{r^{\alpha + \beta}_{ms}} + z_{ms}
+% %\end{equation}
+% \end{multline}
 
-We assume that numbers of replicas are same, thus:
-\begin{multline}\label{eq:dlms_3}
-(f(p_{dl}) - f(p_{min})) (f(p_{max}) - f(p_{dl})) - \\ 
-(f(p_{ms}) - f(p_{min})) (f(p_{max}) - f(p_{ms})) < \\
-z_{ms} - z_{dl}
-\end{multline}
+% We assume that numbers of replicas are same, thus:
+% \begin{multline}\label{eq:dlms_3}
+% (f(p_{dl}) - f(p_{min})) (f(p_{max}) - f(p_{dl})) - \\ 
+% (f(p_{ms}) - f(p_{min})) (f(p_{max}) - f(p_{ms})) < \\
+% z_{ms} - z_{dl}
+% \end{multline}
 
-Since $p_{min}$ and $p_{max}$ are same for $u_{dl}$ and $u_{ms}$, we can arrange the equation become:
-\begin{align}\label{eq:dlms_4}
-f(p_{ms}) - f(p_{dl}) > z_{dl} - z_{ms}
-\end{align}
+% Since $p_{min}$ and $p_{max}$ are same for $u_{dl}$ and $u_{ms}$, we can arrange the equation become:
+% \begin{align}\label{eq:dlms_4}
+% f(p_{ms}) - f(p_{dl}) > z_{dl} - z_{ms}
+% \end{align}
 
 %comparing with PROP, we can get: 
 %\begin{align}\label{eq:dlms_5}
@@ -1227,11 +1227,11 @@ f(p_{ms}) - f(p_{dl}) > z_{dl} - z_{ms}
 %f(p_{ms}) - f(p_{dl}) > z_{dl} - z_{ms}
 %\end{align}
 
-As we know from table.\ref{tab:stacked2} that the majority of a requested video is after-peak phase and a requested video phase that is  at-peak phase is very small portion, then we can see that $z_{dl} - z_{ms}$ term will be in negative term if $z_{dl}$ is  before-peak phase or $0$ if $z_{dl}$ is  after-peak phase. 
-If $z_{dl} - z_{ms}=0$ then it is same with PROP. 
-Since the not-cached events happen when a requested video phase is after-peak phase, we can get that $f(p_{ms}) - f(p_{dl}) < 0$.
-For the same situation and we compare to the PROP, the probability of $u_{ms}$ less than $u_{dl}$ in the model is higher than PROP. 
-Therefore, we can see in the model that the events when a peer does not cache a video are more often than PROP.
+% As we know from table.\ref{tab:stacked2} that the majority of a requested video is after-peak phase and a requested video phase that is  at-peak phase is very small portion, then we can see that $z_{dl} - z_{ms}$ term will be in negative term if $z_{dl}$ is  before-peak phase or $0$ if $z_{dl}$ is  after-peak phase. 
+% If $z_{dl} - z_{ms}=0$ then it is same with PROP. 
+% Since the not-cached events happen when a requested video phase is after-peak phase, we can get that $f(p_{ms}) - f(p_{dl}) < 0$.
+% For the same situation and we compare to the PROP, the probability of $u_{ms}$ less than $u_{dl}$ in the model is higher than PROP. 
+% Therefore, we can see in the model that the events when a peer does not cache a video are more often than PROP.
 
 %It also means that $p_{ms}$ in after-peak phase less popular than $p_{dl}$.
 %While comparing to PROP, the left term $f(p_{ms}) - f(p_{dl})$ will be equal to $0$ thus as result in CPPro a peer rejects the a requested video to be cached.
