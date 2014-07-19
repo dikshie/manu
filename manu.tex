@@ -1162,7 +1162,6 @@ In scenario C, we found many zero replica when a peer requests a video for CPPro
 
 
 \subsection{Result and Discussion}\label{resultanddiscussion}
-%We define peer contribution as how many times a video is delivered by peer during simulation.
 
 Figure~\ref{fig:peercontribution} shows the peer contribution in each scenario.
 Peers are ranked by the number of videos served by each one.
@@ -1174,6 +1173,13 @@ We see that CPPro result in fewer replicas comparing to those of PROP.
 Figure~\ref{fig:atd-zipf} that for scenario C,  CPPro has much fewer replicas than those of PROP.
 It shows that many videos are not cached by CPPro.
 That does not affect the peers contribution comparing to PROP.
+
+We want to know what makes replica of CPPro is lower than PROP.
+For this purpose, we breakdown how many cache events occurs in our simulation as shown in table.\ref{tab:stacked1}.
+When a peer requests a video to another peer, a peer has to decide whether a peer wants to cache the video or not to cache the video based on the utility function.  
+If a peer decided to cache a video, we called it cached event.
+If a peer did not decide to cache a video, we called it not-cached event.
+
 
 %Since we only interested in peer performance, we compare peer contribution between PROP and CPPro.
 %Contribution ratio of peer (comparing to CDN contribution) is irrelevant in this case.
