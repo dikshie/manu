@@ -845,13 +845,18 @@ The CDN then returns information about these peers to the querying peer.
 
 
 \subsection{Peer caching strategy}\label{peercachingstrategy}
-Since we only discuss peer-to-peer side, the caching strategy used in the CDN is out of scope for this project. 
-For the peer replacement strategy, we introduce \textit{utility function} of a video as:
+A peer stores the requested videos into its cache based on the value of a utility function, i.e., in a peer with a full cache a newly requested video will replace one or more videos in the cache whose utility values are smaller than that of the new video.
+The utility function of a video is :
 \begin{equation}
 u = \frac{ (f(p) - f(p_{min})) (f(p_{max}) - f(p)) }{r^{\alpha + \beta}} + z(t)
 \end{equation}
-where the first term is the utility function from PROP and $z$ is the additional factor for CPPro. 
-$p$ represents the popularity of the video, $p_{min}$ represents minimum popularity in the system, , $p_{max}$ represents maximum popularity in the system, and $r$ represents number of video replica.
+
+where the first term is the utility function of PROP, and the second term, $z(t)$, is the phase factor that we introduced in CPPro, where $z(t)$ is large if the video phase is at-peak.
+$p$, $p_{min}$, and $p_{max}$ are the popularity of the video, the minimum popularity, and the maximum popularity in the system.
+The popularity of a video is the determined by the view rate of the video.
+$r$ is the number of replicas. 
+$alpha$ and $beta$ are adjustment factor \cite{1613869}.
+
 Following \cite{1613869}, we can calculate $p$ as follows:
 \begin{equation}
 p = min \left(\frac{n_i^r}{t_i^r - t_a^i}  , \frac{1}{t_{cur} - t_i^r}\right)
@@ -862,7 +867,8 @@ To able to track the simulation, we use default value from PROP thus we refer th
 The utility function reflects the popularity of a video in the system that considering number of copy of its video or replica. 
 $u$ value itself lies in interval $[0,2]$ Guo et al.,\cite{1613869}.
 We choose video with the smallest utility value as the candidate to be replaced when a peer's cache is full.
-Since we can determine before-peak phase, at-peak phase, and after-peak phase of video, we modified the original utility function from PROP above by adding a $z(t)$ factor as follows:
+The $z(t)$ values are set as follows:
+
 
 \begin{equation}
  z(t) = 
@@ -873,14 +879,8 @@ Since we can determine before-peak phase, at-peak phase, and after-peak phase of
   \end{cases}
 \end{equation}\label{eq:zfactor}
 
-
-$z(t)$ is proportion of view count in before-peak, at-peak, and after-peak to the total view count that we get from Youtube datasets.  
-Because from transformed Youtube dataset we already have before-peak, at-peak, and after-peak phase for each video, we can also calculate how many view count in before-peak phase, at-peak phase, and after-peak phase.  
-However at-peak happens only one week and its view count proportion to the total view count relatively small.
-On the other side, we want to emphasize peer caching of a video during at-peak phase thus proportion of view count of at-peak phase to the total view count is count from one week before at-peak until one week after-peak.
-Next we can count proportion of view count of before-peak and after-peak to the total view count.
-The numbers of view count proportion for $z(t)$ is shown in eq.\ref{eq:zfactor}.
-
+where the numbers are based on the proportion of video counts in the YouTube dataset before the peaks, around the peaks, and after the peaks. 
+$z(t)$ for at-peak is determined by the total proportion of video counts from 1-week-before until 1-week-after the peak, which accounts to almost half of the total.
 The value of $z(t)$ is assigned after we finish to determine a video popularity phase.  
 For example: if we determine a video popularity phase is at-peak, then we assign $z(t)=0.47$.
 %To able to track the simulation, we use default value from PROP thus we refer the readers to \cite{1613869}.
@@ -935,22 +935,128 @@ Linear addition of $z(t)$ factor can help to differentiate the value of utility 
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%contribution 
+\begin{figure*}[!t]
+\centering
+\subfloat[Scenario A.\label{fig:contribu-normal}]{
+\includegraphics[width=5.7cm]{graphs/new/repl/contributioncdnpeermodelsortedabs.eps}
+}
+\hfill
+\subfloat[Scenario B.\label{fig:contribu-shift}]{
+\includegraphics[width=5.7cm]{graphs/new/shift/contributioncdnpeermodelsortedabs.eps}
+}
+\hfill
+\subfloat[Scenario C.\label{fig:contribu-zipf}]{
+\includegraphics[width=5.7cm]{graphs/new/zipf/contributioncdnpeermodelsortedabs.eps}
+}
+\vspace{2mm}
+\caption{Absolute peer contributions compared between CPPro and PROP ($y$-axis in log-scale and $y$-axis unit is times).}
+\label{fig:peercontribution}
+\end{figure*}
+%%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Evaluation}\label{evaluation}
 
-In order to evaluate the proposed peer-caching strategy using our algoritmic designation of the poplarity phase of before-peak, at-peak, and after-peak information from Youtube VoD view model, we have to compare CPPro to the PROP model.
-We evaluate three metrics, which are: (1) peer contribution to delivery contents during simulation,  access frequency of cache during simulation, and number of replicas. 
-We define peer contribution as how many times a video is delivered by peer during simulation.
+We performed simulations to compare the performance of CPPro against PROP in two main metrics: (1) peer contributions in video delivery, and (2) number of video replicas in peers.
+The peer contribution is the number of videos served by a peer instead of by the CDN server.
+The number of video replicas shows how much storage is used in peers to contribute in video delivery.
 The peer contribution metric is related to the byte-hit-ratio. 
 The byte-hit-ratio is defined as the total bytes of content served by peers normalized by the total bytes of video all peers and the CDN consume.
 With more peer contributions, we will have higher byte-hit-ratio because peer can get content from other peers. 
 However, because we only interested in peer performance, we compare peer contribution between PROP and CPPro.
 Contribution ratio of peer to total contribution (comparing to CDN contribution) becomes irrelevant in this case.
-(2) Access frequency of cache reflects the storage utilization. 
-More access means more peer storage utilization.  
-(3) Number of replicas is also related to peer storage utilization.  
-However, too many replicas will waste the storage resources.
-To evaluate these metrics, we developed a peer-assisted CDN simulator. 
+%However, too many replicas will waste the storage resources.
+%To evaluate these metrics, we developed a peer-assisted CDN simulator. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%replica
+\begin{figure*}[!t]
+\centering
+\subfloat[Scenario A.\label{fig:atd-normal}]{
+\includegraphics[width=5.7cm]{graphs/new/repl/atd.eps}
+}
+\hfill
+\subfloat[Scenario B.\label{fig:atd-shift}]{
+\includegraphics[width=5.7cm]{graphs/new/shift/atd.eps}
+}
+\hfill
+\subfloat[Scenario C.\label{fig:atd-zipf}]{
+\includegraphics[width=5.7cm]{graphs/new/zipf/atd.eps}
+}
+\vspace{2mm}
+\caption{Comparison of available replicas between model and prop when a peer requests a video ($y$-axis in log-scale).
+In scenario C, we found many zero replica when a peer requests a video for CPPro. Because we use log-scale in this figure, the zero numbers can not be viewed}
+\label{fig:replica}
+\end{figure*}
+%%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{table*}[!t]
+%% increase table row spacing, adjust to taste
+%\renewcommand{\arraystretch}{1.3}
+% if using array.sty, it might be a good idea to tweak the value of
+% \extrarowheight as needed to properly center the text within the cells
+\caption{Percentage of Cached events and Not-Cached events in CPPro and PROP.}
+\label{tab:stacked1}
+\centering
+%% Some packages, such as MDW tools, offer better commands for making tables
+%% than the plain LaTeX2e tabular which is used here.
+\begin{tabular}{|l|l|c|c|c|c|}
+\hline
+Scenario & Type & Cached (times)& Not-Cached (times) & Cached (PetaByte) & Not-Cached (PetaByte)\\
+\hline
+A & CPPro & $33.5\%$ & $66.5\%$ & $814.4$ & $1616.6$ \\
+\hline
+ & PROP & $52\%$ & $48\%$ & $1264.1$ & $1166.9$\\
+\hline
+
+B & CPPro & $34.8\%$ & $65.2\%$ & $845.9$ & $1585.1$\\
+\hline
+ & PROP & $52.6\%$ & $47.4\%$  &  $1278.7$  &  $1152.3$ \\
+\hline
+%2559751761
+C & CPPro & $32.4\%$ & $67.6\%$  & $829.1$ & $1729.9$ \\
+\hline
+ & PROP & $67.7\%$ & $32.3\%$ &  $1732.4$ & $826.6$ \\
+\hline
+\end{tabular}
+\end{table*}
+
+
+\begin{table*}[!t]
+%% increase table row spacing, adjust to taste
+%\renewcommand{\arraystretch}{1.3}
+% if using array.sty, it might be a good idea to tweak the value of
+% \extrarowheight as needed to properly center the text within the cells
+\caption{Percentage cached and not-cached events for each video popularity phase in CPPro.}
+\label{tab:stacked2}
+\centering
+%% Some packages, such as MDW tools, offer better commands for making tables
+%% than the plain LaTeX2e tabular which is used here.
+\begin{tabular}{|l|l|c|c|c|}
+\hline
+Scenario & Type/Events & Before-Peak & At-Peak  & After-Peak \\
+\hline
+A & CPPro Cached & $8.2\%$ & $1.2\%$ & $24.1\%$  \\
+\hline
+ & CPPro Not-Cached & $11.2\%$ & $0.8\%$ & $54.5\%$ \\
+ \hline
+
+B & CPPro Cached & $6.2\%$ & $1.2\%$ & $29.8\%$ \\
+\hline
+ & CPPro Not-Cached & $5.2\%$ & $0.8\%$ & $56.8\%$ \\
+\hline
+
+C & CPPro Cached & $8.0\%$ & $1.8\%$ & $22.7\%$ \\
+\hline
+ & CPPro Not-Cached & $15.1\%$ & $0.8\%$ & $51.6\%$ \\
+\hline
+\end{tabular}
+\end{table*}
+
+
+
 
 
 \subsection{Simulation Design}\label{simulationdesign}
@@ -1009,7 +1115,6 @@ We use Zipf distribution with rate$=0.9$ for this purpose \cite{6654887}.
 
 \subsubsection{Simulation Parameters}
 The simulation parameters are follows:
-
 \begin{itemize}
 \item Length: $360$ days.
 \item Video size: uniform random between $1$MB and $200$MB.
@@ -1026,52 +1131,6 @@ Finally, we compare our results to PROP \cite{1613869} implementation.
 %Second, peers choose a video that has a popularity following from Youtube data sets and we shift the requests time four weeks.
 %Third, peers choose a video that has a popularity following zipf distribution with rate$=0.9$ \cite{6654887}.
 %We compare our results to original PROP \cite{1613869} implementation.
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%contribution 
-\begin{figure*}[!t]
-\centering
-\subfloat[Scenario A.\label{fig:contribu-normal}]{
-\includegraphics[width=5.7cm]{graphs/new/repl/contributioncdnpeermodelsortedabs.eps}
-}
-\hfill
-\subfloat[Scenario B.\label{fig:contribu-shift}]{
-\includegraphics[width=5.7cm]{graphs/new/shift/contributioncdnpeermodelsortedabs.eps}
-}
-\hfill
-\subfloat[Scenario C.\label{fig:contribu-zipf}]{
-\includegraphics[width=5.7cm]{graphs/new/zipf/contributioncdnpeermodelsortedabs.eps}
-}
-\vspace{2mm}
-\caption{Absolute peer contributions compared between CPPro and PROP ($y$-axis in log-scale and $y$-axis unit is times).}
-\label{fig:peercontribution}
-\end{figure*}
-%%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%replica
-\begin{figure*}[!t]
-\centering
-\subfloat[Scenario A.\label{fig:atd-normal}]{
-\includegraphics[width=5.7cm]{graphs/new/repl/atd.eps}
-}
-\hfill
-\subfloat[Scenario B.\label{fig:atd-shift}]{
-\includegraphics[width=5.7cm]{graphs/new/shift/atd.eps}
-}
-\hfill
-\subfloat[Scenario C.\label{fig:atd-zipf}]{
-\includegraphics[width=5.7cm]{graphs/new/zipf/atd.eps}
-}
-\vspace{2mm}
-\caption{Comparison of available replicas between model and prop when a peer requests a video ($y$-axis in log-scale).
-In scenario C, we found many zero replica when a peer requests a video for CPPro. Because we use log-scale in this figure, the zero numbers can not be viewed}
-\label{fig:replica}
-\end{figure*}
-%%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%replica
@@ -1114,6 +1173,19 @@ In scenario C, we found many zero replica when a peer requests a video for CPPro
 % \caption{Video phase percentage in model for every scenario and percentage of cached and not-cached in PROP for every scenario.}
 % \label{fig:stacked2}
 % \end{figure*}
+
+\begin{figure}[!t]
+\begin{center}
+\includegraphics[scale=0.5]{graphs/new/probability-intuitive.eps}
+\end{center}
+\caption{Process how'ss a video will be cached or not by a peer. Top part for PROP and bottom part for CPPro. 
+$u_r$ is utility function for a requested video.  
+$u_c$min is utility function for a video inside peer's storage.
+}
+\label{fig:cached-notcached}
+\end{figure} 
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -1154,48 +1226,65 @@ In scenario C, we found many zero replica when a peer requests a video for CPPro
 \includegraphics[width=5.7cm]{graphs/new/zipf/duration.eps}
 }
 \vspace{2mm}
-\caption{Duration compared between model and prop.}
+\caption{Cache duration compared between model and prop.}
 \label{fig:duration}
 \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
+%probability-intuitive.eps
+
 \subsection{Result and Discussion}\label{resultanddiscussion}
 
-Figure~\ref{fig:peercontribution} shows the peer contribution in each scenario.
-Peers are ranked by the number of videos served by each one.
-They exhibit a similar pattern and only differ in the tails, where CPPro gives higher contributios, which are not significant to the total results as shown in fig.~\ref{fig:contribu-normal} and \ref{fig:contribu-shift}.
-However, in the scenario C the peer contribution is almost identical in CPPro and PROP. 
 
-The advantage of CPPro to PROP is shown in fig.~\ref{fig:replica} which show the number of replicas the requested videos at each request event.
-We see that CPPro result in fewer replicas comparing to those of PROP.
-Figure~\ref{fig:atd-zipf} that for scenario C,  CPPro has much fewer replicas than those of PROP.
-It shows that many videos are not cached by CPPro.
-That does not affect the peers contribution comparing to PROP.
+Figure~\ref{fig:peercontribution} shows the peer contributions in each scenario ranked by the number of videos served by each peer.
+They exhibit a similar pattern and only differ in the tails (see insets) for Scenarios A and B, where CPPro gives higher, albeit insignificant, results.
+However, in the scenario C the peer contribution is almost identical.
+These results show that the introduction of $z(t)$ component to the utility function does not affect the performance in terms of peer contributions.
 
-We want to know what makes replica of CPPro is lower than PROP.
-For this purpose, we breakdown how many cache events occur in our simulation as shown in table.\ref{tab:stacked1}.
-When a peer requests a video to another peer, a peer has to decide whether a peer wants to cache the video or not to cache the video based on the utility function.  
+The advantage of CPPro to PROP is evident in fig.~\ref{fig:replica} which shows the number of replicas of the requested videos at each request event.
+
+
+% The advantage of CPPro to PROP is shown in fig.~\ref{fig:replica} which show the number of replicas the requested videos at each request event.
+% We see that CPPro result in fewer replicas comparing to those of PROP.
+% Figure~\ref{fig:atd-zipf} that for scenario C,  CPPro has much fewer replicas than those of PROP.
+% It shows that many videos are not cached by CPPro.
+% That does not affect the peers contribution comparing to PROP.
+
+When a peer requests a video from another peer, a peer has to decide whether a peer wants to cache the video or not to cache the video based on the utility function value.  
 If a peer decided to cache a video, we called it cached event.
 If a peer did not decide to cache a video, we called it not-cached event.
+We breakdown how many cache events occur in our simulation as shown in table.\ref{tab:stacked1}.
+Furthermore, we breakdown again by video phase popularity for CPROP's cached and not-cached events as shown in table.~\ref{tab:stacked2}.
 
 From table.\ref{tab:stacked1}, we can see that CPPro cached less videos compared to PROP for all scenarios.
 In scenario A, CPPro are cached $33\%$ of requested video compared to $52\%$ in PROP.  
 In scenario B, we also have similar number where CPPro are cached $34.8\%$ of requested video compared to $52.6\%$. 
 In scenario C, CPPro are cached $32.4\%$ of requested video compared to $67.7\%$ in PROP.
-However, by summing data volume for cached events and no-cached events, CPPro can deliver or contribute of videos delivery more than PROP. 
+However, by summing data volume for cached events and no-cached events, we see that CPPro deliver or contribute of videos delivery more than PROP. 
 These number quantifies our previous analysis. 
+
+In table~\ref{tab:stacked2}, we can see that most of cached events and not-cached events for CPPro occured when a requested video was estimated as after-peak phase.
+In scenario A, cached events occured in after-peak phase around $24.1\%$ from total events (cached events and not-cached events). 
+Similarly in not-cached events, events of a peer was not cache a requested video occured in after-peak phase around $54.5\%$ from total events.
+Scenario B also shows similar result where percentage of cached events occured in after-peak phase is $29.8\%$ from total events and percentage of not-cached events in after-peak phase is $56\%$ from total events.
+Scenario C shows similar result where percentage of cached events occured in after-peak phase is $22.7\%$ from total events and percentage of not-cached events in after-peak phase is $51.6\%$ from total events.
+Intuitively , We learn from these numbers that in at-peak phase, many replicas available thus a peer in CPPro system is decided to cache less video.
+
+As we mentioned before that a peer decision to cache to not-cached a video is based on utility function value.
+We want to know what makes replica in CPPro is lower than PROP.
+Assume a peer requests a video with utility function $u_r$ and the minimum utility function inside peer's cache is $u_c$-min as shown in fig.~\ref{fig:cached-notcached} where we have five videos inside peer's cache.
+Intuitively, When a requested video in after-peak phase, while videos inside peer's storage are in at-peak phase then in CPPro case high probability that a requested video will not be cached.  
+In PROP case, since PROP does not has video popularity phase the probability of a requested video will not be cached is lower than CPPro.
+We also calculate the Kolmogorov-Smirnov statistic on two samples and we find that for all scenarios the $p$-values are less than $0.1$ thus we consider the result are significant. 
 
 %Since we only interested in peer performance, we compare peer contribution between PROP and CPPro.
 %Contribution ratio of peer (comparing to CDN contribution) is irrelevant in this case.
 %Figure \ref{fig:contribu-normal}, \ref{fig:contribu-shift}, and \ref{fig:contribu-zipf} show the absolute peer contribution to deliver videos comparing CPPro and PROP. 
-
 %Figure \ref{fig:contribu-normal} and fig.\ref{fig:contribu-shift} exhibit the same pattern, with the peers giving more contribution in the tail.
 %A peers can contribute mode because a video has longer duration than other videos in a peer's cache thus other peer's requests are served by the peer. 
 %A video has longer duration than other videos in peer's cache because that a video has higher utility function than other videos for example a video that will enter the cache. 
-
-
 % Figure \ref{fig:atd-normal}, \ref{fig:atd-shift}, and \ref{fig:atd-normal} show the number of  videos replicas available in system when a peer requests a video.
 % As we can see from all figures, the model gives us lower number of replicas than PROP.
 % The model gives lower number of replicas than PROP because when a peer requests a video, that peer is not cached the video.
@@ -1259,88 +1348,25 @@ These number quantifies our previous analysis.
 %\item $z_{ms}$ is in after-peak period and $z_{dl}$ is in before-peak period.
 %\end{itemize}
 %When the difference between $z_{ms}$ and $z_{dl}$ is negative, the difference between $p_{dl}$ and $p_{ms}$ is the only factor for utility function.
-
-\begin{table*}[!t]
-%% increase table row spacing, adjust to taste
-%\renewcommand{\arraystretch}{1.3}
-% if using array.sty, it might be a good idea to tweak the value of
-% \extrarowheight as needed to properly center the text within the cells
-\caption{Percentage of Cached events and Not-Cached events in CPPro and PROP}
-\label{tab:stacked1}
-\centering
-%% Some packages, such as MDW tools, offer better commands for making tables
-%% than the plain LaTeX2e tabular which is used here.
-\begin{tabular}{|l|l|c|c|c|c|}
-\hline
-Scenario & Type & Cached (times)& Not-Cached (times) & Cached (PetaByte) & Not-Cached (PetaByte)\\
-\hline
-A & CPPro & $33.5\%$ & $66.5\%$ & $2422$ & $4808$ \\
-\hline
- & PROP & $52\%$ & $48\%$ & $2416$ & $2230$\\
-\hline
-
-B & CPPro & $34.8\%$ & $65.2\%$ & $2423$ & $4540$\\
-\hline
- & PROP & $52.6\%$ & $47.4\%$  &  $2415$  &  $2176$ \\
-\hline
-
-C & CPPro & $32.4\%$ & $67.6\%$  & $2435.5$ & $5079.5$ \\
-\hline
- & PROP & $67.7\%$ & $32.3\%$ &  $2435.3$ & $1161.9$ \\
-\hline
-\end{tabular}
-\end{table*}
-
-
-\begin{table*}[!t]
-%% increase table row spacing, adjust to taste
-%\renewcommand{\arraystretch}{1.3}
-% if using array.sty, it might be a good idea to tweak the value of
-% \extrarowheight as needed to properly center the text within the cells
-\caption{Percentage of Video Phase for Model in cached and not-cached events}
-\label{tab:stacked2}
-\centering
-%% Some packages, such as MDW tools, offer better commands for making tables
-%% than the plain LaTeX2e tabular which is used here.
-\begin{tabular}{|l|l|c|c|c|}
-\hline
-Scenario & Type/Events & Before-Peak & At-Peak  & After-Peak \\
-\hline
-A & CPPro Cached & $8.2\%$ & $1.2\%$ & $24.1\%$  \\
-\hline
- & CPPro Not-Cached & $11.2\%$ & $0.8\%$ & $54.5\%$ \\
- \hline
-
-B & CPPro Cached & $6.2\%$ & $1.2\%$ & $29.8\%$ \\
-\hline
- & CPPro Not-Cached & $5.2\%$ & $0.8\%$ & $56.8\%$ \\
-\hline
-
-C & CPPro Cached & $8.0\%$ & $1.8\%$ & $22.7\%$ \\
-\hline
- & CPPro Not-Cached & $15.1\%$ & $0.8\%$ & $51.6\%$ \\
-\hline
-\end{tabular}
-\end{table*}
-
-Figure \ref{fig:freq-normal}, \ref{fig:freq-shift}, and \ref{fig:freq-zipf} show the frequency of a video stay in peers compared between model and PROP.
-As all figure show the model has higher frequency than PROP to stay in peers except for the beginning rank of data where the model has same frequency with prop in first and second scenario. 
-In the third scenario, in the beginning rank of data the model has lower frequency than PROP, then around rank 1000 the model has higher frequency than prop until the end of data. 
-The frequency a video stay in a video can also be viewed in fig \ref{fig:duration-normal},  \ref{fig:duration-shift}, and \ref{fig:duration-zipf}, where in the model some videos have longer cache duration than PROP, while others have shorter cache duration than PROP.  
+Figure \ref{fig:freq-normal}, \ref{fig:freq-shift}, and \ref{fig:freq-zipf} show the frequency of a video stay in peers compared between CPPro and PROP.
+As all figure show CPPro has higher frequency than PROP to stay in peers except for the beginning rank of data where CPPro has same frequency with PROP in first and second scenario. 
+In the third scenario, in the beginning rank of data CPPro has lower frequency than PROP, then around rank 1000 CPPro has higher frequency than PROP until the end of data. 
+The frequency a video stay in a video can also be viewed in fig \ref{fig:duration-normal},  \ref{fig:duration-shift}, and \ref{fig:duration-zipf}, where in CPPro some videos have longer cache duration than PROP, while others have shorter cache duration than PROP.  
 Thus, we can see the relationship between cache duration and frequency a video stays in peers. 
 
 \section{Conclusion and Future Work}\label{conclusion}
 This paper presents a scheme for peer-to-peer network can help CDN to deliver the content over the Internet. 
-We show that by introducing $z$ factor to utility function we can maintain same peer contribution while reducing number of replicas.
-We found that there are no much different between the first scenario, the second scenario and the third scenario in peer contribution to deliver a video. 
-We found that in the all scenarios, the model gives lower replicas than PROP. 
-This is because in the model, we found that not-cached events are higher than cached events, more specifically, the probability of utility function a requested video in model is lower than PROP.
-Therefore, in the model the numbers of available replicas are lower than PROP. 
+We show that by introducing $z$ factor to utility function CPPro can maintain same peer contribution while reducing number of replicas.
+We found that there are no much different all scenario in term of peer contribution to deliver a video. 
+However, we found that in the all scenarios, CPPro gives lower replicas than PROP. 
+This is because in CPPro, we found intuitively that probability not-cached events occur are higher than cached events, futhermore compared to PROP, probability a peer is not cache a requested video is higher in CPPro compared to PROP.
+Therefore, in CPPro the numbers of available replicas are lower than PROP. 
 We also did the significance test to the number of replicas using the Kolmogorov-Smirnov statistic on two samples and we find that for all scenarios the $p$-values are less than $1$\% thus the results are significant. 
 
-Some areas of improvement that we have identified for future are:
-The energy trade off this peer-assisted CDN architecture in order to know how much energy saving by ISP and how much increase of energy at users home gateway side in this architecture since we have higher peer contribution.   
-More numerical experiments for other zipf shape parameters. 
+Some areas of improvement that we have identified for future are: (1) since we know the CPPro offer a little bit peer contribution with less replica, we are interested to know the energy trade-off of this peer-assisted CDN architecture in order to know how much energy saving by ISP and how much increase of energy at users home gateway side in this architecture since we have higher peer contribution.   
+(2) Involving the different popularity model from different geographically VoD service.
+This is very important to see the system behavior when receiving request from different location with different popularity while still in the same global CDN service. 
+Futhermore, we can exploit this behavior for commercial ads in VoD service.
 
 
 % use section* for acknowledgement
