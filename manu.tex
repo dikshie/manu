@@ -1074,7 +1074,7 @@ Peers request videos from a video catalog where the peer request as well as the 
 
 
 \subsubsection{Video Catalog}\label{catalog}
-Each video in tha catalog has the following properties: 
+Each video in the catalog has the following properties: 
 video-id,size,upload time, final view count, view count function parameters. 
 View count parameters are the distribution parameters.
 The final view count is the total number of views of a video at the end of simulation and it is generated using uniform distribution.
@@ -1084,7 +1084,7 @@ Because of the very weak relationship betwen video size and popularity \cite{abh
 The view rate progression from the upload time until the end of simulation time is modelled using a Beta distribution \cite{Borghol:2011:CMP:2039452.2039717}.
 As Borghol et al.,\cite{Borghol:2011:CMP:2039452.2039717} showed that view rate of a video can be modelled using beta distribution we can calculate $\alpha$ and $\beta$ parameters.
 We can use Beta distribution mode formula $m=\frac{\alpha-1}{\alpha+\beta-2}$ to calculate $\alpha$ or $\beta$. 
-In this case, we choose $\alpha$ random uniform between $1$ and $3$ and $m$ id view rate at-peak, thus we can get $\beta=\frac{\alpha-1}{m}-\alpha-2$.
+In this case, we choose $\alpha$ random uniform between $1$ and $3$ and $m$ is view rate at-peak, thus we can get $\beta=\frac{\alpha-1}{m}-\alpha-2$.
 %The $\alpha$ and $\beta$ parameters are uniformly distributed. 
 
 
@@ -1092,7 +1092,7 @@ In this case, we choose $\alpha$ random uniform between $1$ and $3$ and $m$ id v
 Peers request videos from the catalog using a Poisson process with $\lambda=1$ \cite{Zink:2009:CYN:1502814.1502987} for the inter-arrival time.
 For the requested videos there are three scenarios namely A,B,and C.
 Scenario A is where the video popularity in the peer-assisted CDN system follows the global popularity of the video.
-Scenario B is where the video popularity in the peer-assisted CDN system lagging four weeks behind the global popularity of the video. 
+Scenario B is where the video popularity in the peer-assisted CDN system lag four weeks behind the global popularity of the video. 
 We choose four weeks based on probability from time-to-peak distribution that half of videos are already reach peak within four weeks.
 Scenario C is where the video popularity in the peer-assisted CDN system does not follow the global popularity of the video. 
 We use Zipf distribution with rate$=0.9$ for this purpose \cite{6654887}.
@@ -1191,23 +1191,23 @@ $u_c$min is utility function for a video inside peer's storage.
 
 %%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%freq
-\begin{figure*}[!t]
-\centering
-\subfloat[Scenario A.\label{fig:freq-normal}]{
-\includegraphics[width=5.7cm]{graphs/new/repl/freq.eps}
-}
-\hfill
-\subfloat[Scenario B.\label{fig:freq-shift}]{
-\includegraphics[width=5.7cm]{graphs/new/shift/freq.eps}
-}
-\hfill
-\subfloat[Scenario C.\label{fig:freq-zipf}]{
-\includegraphics[width=5.7cm]{graphs/new/zipf/freq.eps}
-}
-\vspace{2mm}
-\caption{Frequency a video stays in peers compared between model and prop.}
-\label{fig:freq}
-\end{figure*}
+% \begin{figure*}[!t]
+% \centering
+% \subfloat[Scenario A.\label{fig:freq-normal}]{
+% \includegraphics[width=5.7cm]{graphs/new/repl/freq.eps}
+% }
+% \hfill
+% \subfloat[Scenario B.\label{fig:freq-shift}]{
+% \includegraphics[width=5.7cm]{graphs/new/shift/freq.eps}
+% }
+% \hfill
+% \subfloat[Scenario C.\label{fig:freq-zipf}]{
+% \includegraphics[width=5.7cm]{graphs/new/zipf/freq.eps}
+% }
+% \vspace{2mm}
+% \caption{Frequency a video stays in peers compared between model and prop.}
+% \label{fig:freq}
+% \end{figure*}
 %%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1347,11 +1347,17 @@ We also calculate the Kolmogorov-Smirnov statistic on two samples and we find th
 %\item $z_{ms}$ is in after-peak period and $z_{dl}$ is in before-peak period.
 %\end{itemize}
 %When the difference between $z_{ms}$ and $z_{dl}$ is negative, the difference between $p_{dl}$ and $p_{ms}$ is the only factor for utility function.
-Figure \ref{fig:freq-normal}, \ref{fig:freq-shift}, and \ref{fig:freq-zipf} show the frequency of a video stay in peers compared between CPPro and PROP.
-As all figure show CPPro has higher frequency than PROP to stay in peers except for the beginning rank of data where CPPro has same frequency with PROP in first and second scenario. 
-In the third scenario, in the beginning rank of data CPPro has lower frequency than PROP, then around rank 1000 CPPro has higher frequency than PROP until the end of data. 
-The frequency a video stay in a video can also be viewed in fig \ref{fig:duration-normal},  \ref{fig:duration-shift}, and \ref{fig:duration-zipf}, where in CPPro some videos have longer cache duration than PROP, while others have shorter cache duration than PROP.  
-Thus, we can see the relationship between cache duration and frequency a video stays in peers. 
+%Figure \ref{fig:freq-normal}, \ref{fig:freq-shift}, and \ref{fig:freq-zipf} show the frequency of a video stay in peers compared between CPPro and PROP.
+%As all figure show CPPro has higher frequency than PROP to stay in peers except for the beginning rank of data where CPPro has same frequency with PROP in first and second scenario. 
+%In the third scenario, in the beginning rank of data CPPro has lower frequency than PROP, then around rank 1000 CPPro has higher frequency than PROP until the end of data. 
+%The frequency a video stay in a video can also be viewed in fig \ref{fig:duration-normal},  \ref{fig:duration-shift}, and \ref{fig:duration-zipf}, where in CPPro some videos have longer cache duration than PROP, while others have shorter cache duration than PROP.  
+%Thus, we can see the relationship between cache duration and frequency a video stays in peers. 
+
+Figure~\ref{fig:duration} shows cache duration from all scenarios.  
+If a video stays longer than another video, big probability that video will be requested by another peer.
+In other words, the availability of that video increase.
+
+
 
 \section{Conclusion and Future Work}\label{conclusion}
 This paper presents a scheme for peer-to-peer network can help CDN to deliver the content over the Internet. 
