@@ -551,12 +551,26 @@ Figure~\ref{fig:timetopeak} is the cumulative distribution function (CDF) of the
 The time-to-peak is exponentially distributed up to the sixth week, and it is uniform beyond the sixth week.
 Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} define time-to-peak for a video as its age (time since upload) at which its weekly viewing rate is the highest during measurement (from the first week until end of measurement).
 Because we know the peak time (at-peak phase) of every video, we can also find the before-peak phase and after-phase of every video. 
+Borghol et al., \cite{Borghol:2011:CMP:2039452.2039717} mentioned that view count evolution follows beta distribution.
 For detail we refer the readers to \cite{Borghol:2011:CMP:2039452.2039717}.
 
+Our algorithm for determining a requested video is quite simple.  
+As we know the age of a requested video in week number and its view rate, the algorithms looks for Borghol dataset with the same week, one week before, and one week after for the same view rate.  
+We are averaging the relative week to at-peak values in the same week, one week before, and one week after. 
+
 Suppose a video $v$ in the Borghol dataset has a viewing rate $r_v(t)$, $0 <= t < t_f$, and $r_v(t)$ peaks at $t_{vp}$.
-The data is transformed by including the relative time-to-peak, such that each data point is a 2-tuple: video rate and relative time to peak, i.e., $rp_v(t) =$ < $r_v(t), tp(t)$ >, $tp(t) = t - t_{vp}$.
+%The data is transformed by including the relative time-to-peak, such that each data point is a 2-tuple: video rate and relative time to peak:, i.e., $rp_v(t) =$ < $r_v(t), t_p(t)$ >, $t_p(t) = t - t_{vp}$.
+The data is transformed by including the relative time-to-peak, such that each data point is a 2-tuple: video rate and relative time to peak:
+\begin{equation}
+\label{eq:rp}
+r_p^v(t) = \langle r_v(t), t_p(t) \rangle
+\end{equation}
+\begin{equation}
+\label{eq:tp}
+t_p(t) = t - t_{vp}.
+\end{equation}
 Figure~\ref{fig:viewratedistribution} shows the Borghol's dataset with time axis for each video is translated by $t_{vp}$ to the left, such that each video peaks at time $0$.
-%The algorithm to shift the week of the at-peak phase to zero for every video in dataset is shown as pseudo code in \ref{alg1}.
+
 
 %%%% tandai %%%%%%
 % \begin{algorithm}
@@ -586,28 +600,47 @@ Figure~\ref{fig:viewratedistribution} shows the Borghol's dataset with time axis
 \begin{algorithmic}[1]
 \REQUIRE {dataset that consist of weeknumber, viewrate, and relative week to at peak.}
 
-\STATE $t$ $\leftarrow$ read(weeknumber) \COMMENT{read week number from dataset}
-\STATE $r_v$ $\leftarrow$ read(viewrate) \COMMENT{read view rate from dataset}
-\STATE $tp$ $\leftarrow$ read(relativeweeksatpeak) \COMMENT{read relative week at peak from dataset}
+\STATE $t, r_v, t_p$ $\leftarrow$ read Borghol's dataset \COMMENT{where $t$ is week number (1st column), $r_v$ is view rate (2nd column), and $t_p$ is relative week to at-peak values (3rd column).}
+\STATE $len$ $\leftarrow$ $29791*36$ \COMMENT{we have 29791 videos * 36 weeks thus we have 1072476 rows and 3 columns of Borghol's dataset.}
+
+%\STATE $t$ $\leftarrow$ read(weeknumber) \COMMENT{read week number from dataset}
+%\STATE $r_v$ $\leftarrow$ read(viewrate) \COMMENT{read view rate from dataset}
+%\STATE $tp$ $\leftarrow$ read(relativeweeksatpeak) \COMMENT{read relative week at peak from dataset}
 
 %\COMMENT{a requested video has week number and view rate}
-\STATE $t_e$ \COMMENT{week number of a requested video}
-\STATE $r_e$ \COMMENT{view rate of a requested video}
+\STATE $t_e$ $\leftarrow$ $time_{cur} - time_{upload}$ \COMMENT{calculate week number of a requested video which is current time a requested video substract by upload time of a requested video.}
+\STATE $r_e$ $\leftarrow$ $viewcount_{cur} - viewcount_{lastweek}$ \COMMENT{calculate view rate of a requested video which is current view count of a requested video substract by last week view count of a requested video.}
 
-\STATE $t_e^{before}$ $\leftarrow$ $(t_e - 1)$ \COMMENT{at one week before}
-\STATE $tp_{before}$ $\leftarrow$ $find\_tp(t_e^{before},r_e,t,r_v,tp)$
 
-\STATE $t_e^{at}$ $\leftarrow$ $(t_e)$ \COMMENT{at same week}
-\STATE $tp_{at}$ $\leftarrow$ $find\_tp(t_e^{at},r_e,t,r_v,tp)$
+\STATE $t_e^{before}$ $\leftarrow$ $(t_e - 1)$ \COMMENT{at one week before.}
+%\STATE $tp_{before}$ $\leftarrow$ $find\_tp(t_e^{before},r_e,t,r_v,tp)$
+\FOR{$i=0$ to $len$}
+\IF {$t == t_e$ and $r_v == r_e$ }
+\STATE $t_p^{before}$ $\leftarrow$ $t_p$  \COMMENT{put $t_p$ value into $t_p^{before}$ list.}
+\ENDIF
+\ENDFOR
 
-\STATE $t_e^{after}$ $\leftarrow$ $(t_e+1)$ \COMMENT{at one week after}
-\STATE $tp_{after}$ $\leftarrow$ $find\_tp(t_e^{after},r_e,t,r_v,tp)$
+\STATE $t_e^{at}$ $\leftarrow$ $(t_e)$ \COMMENT{at same week.}
+%\STATE $tp_{at}$ $\leftarrow$ $find\_tp(t_e^{at},r_e,t,r_v,tp)$
+\FOR{$i=0$ to $len$}
+\IF {$t == t_e$ and $r_v == r_e$ }
+\STATE $t_p^{at}$ $\leftarrow$ $t_p$  \COMMENT{put $t_p$ value into $t_p^{at}$ list.}
+\ENDIF
+\ENDFOR
 
-\STATE $tp\_final$ $\leftarrow$ $average(tp_{before}, tp_{at}, tp_{after})$
-\IF{$tp\_final$ $<$ $0$}
+\STATE $t_e^{after}$ $\leftarrow$ $(t_e+1)$ \COMMENT{at one week after.}
+%\STATE $tp_{after}$ $\leftarrow$ $find\_tp(t_e^{after},r_e,t,r_v,tp)$
+\FOR{$i=0$ to $len$}
+\IF {$t == t_e$ and $r_v == r_e$ }
+\STATE $t_p^{after}$ $\leftarrow$ $t_p$  \COMMENT{put $t_p$ value into $t_p^{after}$ list.}
+\ENDIF
+\ENDFOR
+
+\STATE $t_p^{final}$ $\leftarrow$ $average(t_p^{before}, t_p^{at}, t_p^{after})$
+\IF{$t_p^{final}$ $<$ $0$} \COMMENT{if relative week to at-peak value is less than 0, estimate a requested video as before-peak.}
 \STATE $phase$ $\leftarrow$ $before$
-\ELSIF{$tp\_final$ $==$ $0$}
-\STATE $phase$ $\leftarrow$ $at$
+\ELSIF{$t_p^{final}$ $==$ $0$} \COMMENT{if relative week to at-peak value is equal to 0, estimate a requested video as at-peak.}
+\STATE $phase$ $\leftarrow$ $at$ \COMMENT{if relative week to at-peak value is more than 0, estimate a requested video as after-peak.}
 \ELSE
 \STATE $phase$ $\leftarrow$ $after$
 \ENDIF
@@ -738,15 +771,17 @@ $d$ $\leftarrow$ $draw\_integer\_random\_number()$
 \end{algorithmic}
 \end{algorithm}
 
-In determining the phase of a requested video $e$ with known age $t_e$ and view rate $r_e$ at $t_e$, we find the three $r_v$ data points whose rates are closest to $r_e$ at $t_e$, $t_e - 1$, and $t_e + 1$, and then average the $tp$ of the three data points.
+In determining the phase of a requested video $e$ with known age $t_e$ and view rate $r_e$ at $t_e$, we find the three $r_v$ data points whose rates are closest to $r_e$ at $t_e$, $(t_e - 1)$, and $(t_e + 1)$ for all videos from Borghol dataset, and then average the $t_p$ of the three data points.
 The phase of the requested video $e$ is estimated to be before-peak, at-peak, or after-peak based on whether the average is negative, $0$, or positive.
 The view rate $r_e$ of a video is calculated by substracting the view counts at the time of the current and the previous video requests.
-The pseudo code for averaging the $tp$ is shown in algorithm \ref{alg2}.
+The pseudo code for averaging the $t_p$ is shown in algorithm \ref{alg2}.
 %The view rate $r_e$  of a video is calculated using the view counts at the time of the current and the previous video requests.
+
 But when a video is being requested for the first time, the phase can only be estimated using the age of the video.
-In this case, we draw 36 random integer numbers $s_i$, $0 <= i <= 35$, come from the duration of measurement and each week has its own probability as we shown in fig.~\ref{fig:timetopeak}, then calculate the count of each integers between $0$ and $t_e$ from the drawn numbers then divide the result by 36, 
+In this case, we draw 36 weighted random integer numbers $s_i$, $0 <= i <= 35$ where the weighted factor is from time-to-peak phase CDF as shown in fig.~\ref{fig:timetopeak} then calculate the count of each integers between $0$ and $t_e$ from the drawn numbers then divide the result by 36, 
 %i.e., $estphase = \sum$ of $0 <= i <= t_e$ , $count(i, s)/36$.
-i.e., $estphase = \sum_{i=0}^{t_e} \frac{count(i,s)}{36}$.
+i.e., $estphase = \sum_{0}^{t_e} \frac{count(i,s)}{36}$.
+The number 36 come from the duration of measurement and each week has its own probability as we shown in fig.~\ref{fig:timetopeak}.
 %This result represents the estimated phase, where $estphase \leq 0.5$ the phase is before-peak; if $0.5 < estphase \leq 0.75$ the phase is at peak, and $estphase > 0.75$ is after-peak.
 %From fig.~\ref{fig:timetopeak} since from first week until sixth week the time 
 This result represents the estimated phase. 
@@ -757,6 +792,7 @@ Still from the same time to peak distribution $75\%$ of video reach peak within 
 In other words, beyond six weeks we consider videos reach after-peak phase. 
 Therefore we put $0.75$ as high threshold.
 The pseudo code for this purpose is shown in algorithm \ref{alg3}.
+
 
 % As result from shifting the week of the at-peak phase to zero, we get relative week to at-peak phase. 
 % Next, we want to determine popularity phase of a requested video.  
@@ -813,8 +849,6 @@ A peer then can request the video to other peer and get the video (step 5 and st
 
 
 \section{System Description}\label{systemdescription}
-%In our work, we use the Youtube VoD view model to aid our work that based from PROP. 
-%The Youtube VoD view model will be used in our peer-caching strategy to exploit the video popularity while the caching strategy used in the CDN is out of scope for this project. 
 
 \subsection{System Overview}\label{systemoverview}
 The main components of the system are: (1) a CDN and (2) a set of peers which are self organized into a P2P overlay network.
@@ -836,13 +870,16 @@ The CDN then returns information about these peers to the querying peer.
 
 \subsection{Peer caching strategy}\label{peercachingstrategy}
 A peer stores the requested videos into its cache based on the value of a utility function, i.e., in a peer with a full cache a newly requested video will replace one or more videos in the cache whose utility values are smaller than that of the new video.
-The utility function of a video is :
+The utility function reflects the popularity of a video in the system that considering number of copy of its video or replica. 
+PROP's $u$ value itself lies in interval $[0,2]$ Guo et al.,\cite{1613869}.
+Our utility function $u$ is:
 \begin{equation}
 u = \frac{ (f(p) - f(p_{min})) (f(p_{max}) - f(p)) }{r^{\alpha + \beta}} + z(t)
 \end{equation}
 
 where the first term is the utility function of PROP, and the second term, $z(t)$, is the phase factor that we introduced in CPPro, where $z(t)$ is large if the video phase is at-peak.
 $p$, $p_{min}$, and $p_{max}$ are the popularity of the video, the minimum popularity, and the maximum popularity in the system.
+We follow \cite{1613869} for $f(p) = log(p)$.
 The popularity of a video is the determined by the view rate of the video.
 $r$ is the number of replicas. 
 $\alpha$ and $\beta$ are adjustment factor \cite{1613869}.
@@ -854,11 +891,10 @@ p = min \left(\frac{n_i^r}{t_i^r - t_a^i}  , \frac{1}{t_{cur} - t_i^r}\right)
 Where $n_i^r$ is number of requested video, $t_i^r$ is last time the video is requested, $t_a^i$ is the time when the video is accessed for the first time, and $t_{cur}$ is the current time.
 To able to track the simulation, we use default value from PROP thus we refer the readers to \cite{1613869} for the details.
 
-The utility function reflects the popularity of a video in the system that considering number of copy of its video or replica. 
-$u$ value itself lies in interval $[0,2]$ Guo et al.,\cite{1613869}.
-We choose video with the smallest utility value as the candidate to be replaced when a peer's cache is full.
+%The utility function reflects the popularity of a video in the system that considering number of copy of its video or replica. 
+%$u$ value itself lies in interval $[0,2]$ Guo et al.,\cite{1613869}.
+%We choose video with the smallest utility value as the candidate to be replaced when a peer's cache is full.
 The $z(t)$ values are set as follows:
-
 
 \begin{equation}
  z(t) = 
@@ -1067,7 +1103,7 @@ Peers request videos from a video catalog where the peer request as well as the 
 Each video in the catalog has the following properties: 
 video-id,size,upload time, final view count, view count function parameters. 
 View count parameters are the distribution parameters.
-The final view count is the total number of views of a video at the end of simulation and it is generated using uniform distribution.
+The final view count is the total number of views of a video at the end of simulation and it is generated using uniform distribution sampling from Borghol dataset ranging from 27 until 1069385.
 The upload time interval is a Poisson process with $\lambda=1$.
 The video size is generated using a uniform distribution.
 Because of the very weak relationship betwen video size and popularity \cite{abhari2010workload} and because our work focuses on the impact of the popularity aspect on the utility function rather than storage optimization we believe that the choice to assign a random uniform video size from the Youtube dataset does not have an effect to our results. 
