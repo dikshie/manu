@@ -447,6 +447,9 @@ A user may cache the content after download to serve requests from other users.
 Due to the complexity of the behavior of peers, the processing should be done in the home gateway user where the ISP can control it.
 
 In this work, we will revisit Guo et al.'s PROP, \cite{1613869} as a basis to evaluate peer-assisted CDN and propose an improvement to the model for the PROP called CPPro (this system is called CPPro abbreviated from our technical term "CDN-P2P Project").
+In PROP's utility function, the difference between very popular videos and unpopular video is very difficult to differentiate. 
+For an unpopular video, $f(p)$ will be very close to $f(p_{min})$ thus $f(p) - f(p_{min})$ will be very close to $0$ then the utility function becomes very small.
+For a very popular video, $f(p)$ will be very close to $f(p_{max})$, thus $f(p_{max}) - f(p)$ will be very close to $0$ and the  utility function becomes very small.  
 We will take Youtube as an example of an Internet VoD service model.
 In the Youtube service model, we can get data such as (1) the time when a video is uploaded and (2) the number of accesses or number of views.
 We can get such data using Youtube's API.
@@ -773,7 +776,7 @@ $d$ $\leftarrow$ $draw\_integer\_random\_number()$
 
 In determining the phase of a requested video $e$ with known age $t_e$ and view rate $r_e$ at $t_e$, we find the three $r_v$ data points whose rates are closest to $r_e$ at $t_e$, $(t_e - 1)$, and $(t_e + 1)$ for all videos from Borghol dataset, and then average the $t_p$ of the three data points.
 The phase of the requested video $e$ is estimated to be before-peak, at-peak, or after-peak based on whether the average is negative, $0$, or positive.
-The view rate $r_e$ of a video is calculated by substracting the view counts at the time of the current and the previous video requests.
+The view rate $r_e$ of a video is calculated by subtracting the view counts at the time of the current and the previous video requests.
 The pseudo code for averaging the $t_p$ is shown in algorithm \ref{alg2}.
 %The view rate $r_e$  of a video is calculated using the view counts at the time of the current and the previous video requests.
 
@@ -872,9 +875,11 @@ The CDN then returns information about these peers to the querying peer.
 
 
 \subsection{Peer caching strategy}\label{peercachingstrategy}
+
 A peer stores the requested videos into its cache based on the value of a utility function, i.e., in a peer with a full cache a newly requested video will replace one or more videos in the cache whose utility values are smaller than that of the new video.
 The utility function reflects the popularity of a video in the system that considering number of copy of its video or replica. 
 PROP's $u$ value itself lies in interval $[0,2]$ Guo et al.,\cite{1613869}.
+%We choose video with the smallest utility value as the candidate to be replaced when a peer's cache is full.
 Our utility function $u$ is:
 \begin{equation}
 u = \frac{ (f(p) - f(p_{min})) (f(p_{max}) - f(p)) }{r^{\alpha + \beta}} + z(t)
@@ -894,11 +899,7 @@ p = min \left(\frac{n_i^r}{t_i^r - t_a^i}  , \frac{1}{t_{cur} - t_i^r}\right)
 Where $n_i^r$ is number of requested video, $t_i^r$ is last time the video is requested, $t_a^i$ is the time when the video is accessed for the first time, and $t_{cur}$ is the current time.
 To able to track the simulation, we use default value from PROP thus we refer the readers to \cite{1613869} for the details.
 
-%The utility function reflects the popularity of a video in the system that considering number of copy of its video or replica. 
-%$u$ value itself lies in interval $[0,2]$ Guo et al.,\cite{1613869}.
-%We choose video with the smallest utility value as the candidate to be replaced when a peer's cache is full.
 The $z(t)$ values are set as follows:
-
 \begin{equation}
  z(t) = 
   \begin{cases}
@@ -918,10 +919,10 @@ For example: if we determine a video popularity phase is at-peak, then we assign
 %The CDN can calculate $p_{min}$ and $p_{max}$ then propagate to the P2P system.
 %To able to track the simulation, we use default value from PROP for $\alpha=\beta=1$ and $f(p)=log (p)$.
 %We choose the video with the smallest $u$ value as the candidate to be replaced when a peer's cache capacity is full.
-In PROP's utility function, the difference between very popular videos and unpopular video is very difficult to differentiate. 
-For an unpopular video, $f(p)$ will be very close to $f(p_{min})$ thus $f(p) - f(p_{min})$ will be very close to $0$ then the utility function becomes very small.
-For a very popular video, $f(p)$ will be very close to $f(p_{max})$, thus $f(p_{max}) - f(p)$ will be very close to $0$ and the  utility function becomes very small.  
-Linear addition of $z(t)$ factor can help to differentiate the value of utility function.
+% In PROP's utility function, the difference between very popular videos and unpopular video is very difficult to differentiate. 
+% For an unpopular video, $f(p)$ will be very close to $f(p_{min})$ thus $f(p) - f(p_{min})$ will be very close to $0$ then the utility function becomes very small.
+% For a very popular video, $f(p)$ will be very close to $f(p_{max})$, thus $f(p_{max}) - f(p)$ will be very close to $0$ and the  utility function becomes very small.  
+% Linear addition of $z(t)$ factor can help to differentiate the value of utility function.
 %We summarize peer's decision for caching in pseudo code \ref{alg6}.
 
 % \begin{algorithm}
@@ -965,159 +966,197 @@ Linear addition of $z(t)$ factor can help to differentiate the value of utility 
 %PARAMETER A
 %%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%contribution 
-\begin{figure*}[!t]
-\centering
-\subfloat[Scenario A.\label{fig:contribu-normala}]{
-\includegraphics[width=5.7cm]{graphs/REPLICA/PARAMETER-A/contributioncdnpeermodelsortedabs.eps}
-}
-\hfill
-\subfloat[Scenario B.\label{fig:contribu-shifta}]{
-\includegraphics[width=5.7cm]{graphs/SHIFT/PARAMETER-A/contributioncdnpeermodelsortedabs.eps}
-}
-\hfill
-\subfloat[Scenario C.\label{fig:contribu-zipfa}]{
-\includegraphics[width=5.7cm]{graphs/ZIPF/PARAMETER-A/contributioncdnpeermodelsortedabs.eps}
-}
-\vspace{2mm}
-\caption{Videos rank distribution delivered by peer compared between CPPro and PROP ($y$-axis in log-scale and $y$-axis unit is times) for parameter-A.}
-\label{fig:peercontributiona}
-\end{figure*}
-%%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure*}[!t]
-\centering
-\subfloat[Scenario A.\label{fig:atd-normala}]{
-\includegraphics[width=5.7cm]{graphs/REPLICA/PARAMETER-A/atd.eps}
-}
-\hfill
-\subfloat[Scenario B.\label{fig:atd-shifta}]{
-\includegraphics[width=5.7cm]{graphs/SHIFT/PARAMETER-A/atd.eps}
-}
-\hfill
-\subfloat[Scenario C.\label{fig:atd-zipfa}]{
-\includegraphics[width=5.7cm]{graphs/ZIPF/PARAMETER-A/atd.eps}
-}
-\vspace{2mm}
-\caption{Comparison of available replicas between CPPro and PROP when a peer requests a video ($y$-axis in log-scale) for parameter A.}
-\label{fig:replicaa}
-\end{figure*}
-%%%%%
+% \begin{figure*}[!t]
+% \centering
+% \subfloat[Scenario A.\label{fig:contribu-normala}]{
+% \includegraphics[width=5.7cm]{graphs/REPLICA/PARAMETER-A/contributioncdnpeermodelsortedabs.eps}
+% }
+% \hfill
+% \subfloat[Scenario B.\label{fig:contribu-shifta}]{
+% \includegraphics[width=5.7cm]{graphs/SHIFT/PARAMETER-A/contributioncdnpeermodelsortedabs.eps}
+% }
+% \hfill
+% \subfloat[Scenario C.\label{fig:contribu-zipfa}]{
+% \includegraphics[width=5.7cm]{graphs/ZIPF/PARAMETER-A/contributioncdnpeermodelsortedabs.eps}
+% }
+% \vspace{2mm}
+% \caption{Videos rank distribution delivered by peer compared between CPPro and PROP ($y$-axis in log-scale and $y$-axis unit is times) for parameter-A.}
+% \label{fig:peercontributiona}
+% \end{figure*}
+% %%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{figure*}[!t]
+% \centering
+% \subfloat[Scenario A.\label{fig:atd-normala}]{
+% \includegraphics[width=5.7cm]{graphs/REPLICA/PARAMETER-A/atd.eps}
+% }
+% \hfill
+% \subfloat[Scenario B.\label{fig:atd-shifta}]{
+% \includegraphics[width=5.7cm]{graphs/SHIFT/PARAMETER-A/atd.eps}
+% }
+% \hfill
+% \subfloat[Scenario C.\label{fig:atd-zipfa}]{
+% \includegraphics[width=5.7cm]{graphs/ZIPF/PARAMETER-A/atd.eps}
+% }
+% \vspace{2mm}
+% \caption{Comparison of available replicas between CPPro and PROP when a peer requests a video ($y$-axis in log-scale) for parameter A.}
+% \label{fig:replicaa}
+% \end{figure*}
+% %%%%%
 
 
 
-%PARAMETER-B
-%%%contribution 
+% %PARAMETER-B
+% %%%contribution 
+% \begin{figure*}[!t]
+% \centering
+% \subfloat[Scenario A.\label{fig:contribu-normalb}]{
+% \includegraphics[width=5.7cm]{graphs/REPLICA/PARAMETER-B/contributioncdnpeermodelsortedabs.eps}
+% }
+% \hfill
+% \subfloat[Scenario B.\label{fig:contribu-shiftb}]{
+% \includegraphics[width=5.7cm]{graphs/SHIFT/PARAMETER-B/contributioncdnpeermodelsortedabs.eps}
+% }
+% \hfill
+% \subfloat[Scenario C.\label{fig:contribu-zipfb}]{
+% \includegraphics[width=5.7cm]{graphs/ZIPF/PARAMETER-B/contributioncdnpeermodelsortedabs.eps}
+% }
+% \vspace{2mm}
+% \caption{Videos rank distribution delivered by peer compared between CPPro and PROP ($y$-axis in log-scale and $y$-axis unit is times) for parameter-B.}
+% \label{fig:peercontributionb}
+% \end{figure*}
+% %%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{figure*}[!t]
+% \centering
+% \subfloat[Scenario A.\label{fig:atd-normalb}]{
+% \includegraphics[width=5.7cm]{graphs/REPLICA/PARAMETER-B/atd.eps}
+% }
+% \hfill
+% \subfloat[Scenario B.\label{fig:atd-shiftb}]{
+% \includegraphics[width=5.7cm]{graphs/SHIFT/PARAMETER-B/atd.eps}
+% }
+% \hfill
+% \subfloat[Scenario C.\label{fig:atd-zipfb}]{
+% \includegraphics[width=5.7cm]{graphs/ZIPF/PARAMETER-B/atd.eps}
+% }
+% \vspace{2mm}
+% \caption{Comparison of available replicas between CPPro and PROP when a peer requests a video ($y$-axis in log-scale) for parameter B.}
+% \label{fig:replicab}
+% \end{figure*}
+
+% %PARAMETER-C
+% %%%contribution 
+% \begin{figure*}[!t]
+% \centering
+% \subfloat[Scenario A.\label{fig:contribu-normalc}]{
+% \includegraphics[width=5.7cm]{graphs/REPLICA/PARAMETER-C/contributioncdnpeermodelsortedabs.eps}
+% }
+% \hfill
+% \subfloat[Scenario B.\label{fig:contribu-shiftc}]{
+% \includegraphics[width=5.7cm]{graphs/SHIFT/PARAMETER-C/contributioncdnpeermodelsortedabs.eps}
+% }
+% \hfill
+% \subfloat[Scenario C.\label{fig:contribu-zipfc}]{
+% \includegraphics[width=5.7cm]{graphs/ZIPF/PARAMETER-C/contributioncdnpeermodelsortedabs.eps}
+% }
+% \vspace{2mm}
+% \caption{Videos rank distribution delivered by peer compared between CPPro and PROP ($y$-axis in log-scale and $y$-axis unit is times) for parameter-C.}
+% \label{fig:peercontributionc}
+% \end{figure*}
+% %%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{figure*}[!t]
+% \centering
+% \subfloat[Scenario A.\label{fig:atd-normalc}]{
+% \includegraphics[width=5.7cm]{graphs/REPLICA/PARAMETER-C/atd.eps}
+% }
+% \hfill
+% \subfloat[Scenario B.\label{fig:atd-shiftc}]{
+% \includegraphics[width=5.7cm]{graphs/SHIFT/PARAMETER-C/atd.eps}
+% }
+% \hfill
+% \subfloat[Scenario C.\label{fig:atd-zipfc}]{
+% \includegraphics[width=5.7cm]{graphs/ZIPF/PARAMETER-C/atd.eps}
+% }
+% \vspace{2mm}
+% \caption{Comparison of available replicas between CPPro and PROP when a peer requests a video ($y$-axis in log-scale) for parameter C.}
+% \label{fig:replicac}
+% \end{figure*}
+
+% %PARAMETER-D
+% %%%contribution 
+% \begin{figure*}[!t]
+% \centering
+% \subfloat[Scenario A.\label{fig:contribu-normald}]{
+% \includegraphics[width=5.7cm]{graphs/REPLICA/PARAMETER-D/contributioncdnpeermodelsortedabs.eps}
+% }
+% \hfill
+% \subfloat[Scenario B.\label{fig:contribu-shiftd}]{
+% \includegraphics[width=5.7cm]{graphs/SHIFT/PARAMETER-D/contributioncdnpeermodelsortedabs.eps}
+% }
+% \hfill
+% \subfloat[Scenario C.\label{fig:contribu-zipfd}]{
+% \includegraphics[width=5.7cm]{graphs/ZIPF/PARAMETER-D/contributioncdnpeermodelsortedabs.eps}
+% }
+% \vspace{2mm}
+% \caption{Videos rank distribution delivered by peer compared between CPPro and PROP ($y$-axis in log-scale and $y$-axis unit is times) for parameter-D.}
+% \label{fig:peercontributiond}
+% \end{figure*}
+% %%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{figure*}[!t]
+% \centering
+% \subfloat[Scenario A.\label{fig:atd-normald}]{
+% \includegraphics[width=5.7cm]{graphs/REPLICA/PARAMETER-D/atd.eps}
+% }
+% \hfill
+% \subfloat[Scenario B.\label{fig:atd-shiftd}]{
+% \includegraphics[width=5.7cm]{graphs/SHIFT/PARAMETER-D/atd.eps}
+% }
+% \hfill
+% \subfloat[Scenario C.\label{fig:atd-zipfd}]{
+% \includegraphics[width=5.7cm]{graphs/ZIPF/PARAMETER-D/atd.eps}
+% }
+% \vspace{2mm}
+% \caption{Comparison of available replicas between CPPro and PROP when a peer requests a video ($y$-axis in log-scale) for parameter D.}
+% \label{fig:replicad}
+% \end{figure*}
+
+
+%SCENARIO A B C utk semua parameter dalam satu gambar
 \begin{figure*}[!t]
 \centering
-\subfloat[Scenario A.\label{fig:contribu-normalb}]{
-\includegraphics[width=5.7cm]{graphs/REPLICA/PARAMETER-B/contributioncdnpeermodelsortedabs.eps}
+\subfloat[Scenario A.\label{fig:contribu-normal}]{
+\includegraphics[width=5.7cm]{graphs/NEW5/SCE-A/contributioncdnpeermodelsortedabs.eps}
 }
 \hfill
-\subfloat[Scenario B.\label{fig:contribu-shiftb}]{
-\includegraphics[width=5.7cm]{graphs/SHIFT/PARAMETER-B/contributioncdnpeermodelsortedabs.eps}
+\subfloat[Scenario B.\label{fig:contribu-shift}]{
+\includegraphics[width=5.7cm]{graphs/NEW5/SCE-B/contributioncdnpeermodelsortedabs.eps}
 }
 \hfill
-\subfloat[Scenario C.\label{fig:contribu-zipfb}]{
-\includegraphics[width=5.7cm]{graphs/ZIPF/PARAMETER-B/contributioncdnpeermodelsortedabs.eps}
+\subfloat[Scenario C.\label{fig:contribu-zipf}]{
+\includegraphics[width=5.7cm]{graphs/NEW5/SCE-C/contributioncdnpeermodelsortedabs.eps}
 }
 \vspace{2mm}
-\caption{Videos rank distribution delivered by peer compared between CPPro and PROP ($y$-axis in log-scale and $y$-axis unit is times) for parameter-B.}
-\label{fig:peercontributionb}
-\end{figure*}
-%%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure*}[!t]
-\centering
-\subfloat[Scenario A.\label{fig:atd-normalb}]{
-\includegraphics[width=5.7cm]{graphs/REPLICA/PARAMETER-B/atd.eps}
-}
-\hfill
-\subfloat[Scenario B.\label{fig:atd-shiftb}]{
-\includegraphics[width=5.7cm]{graphs/SHIFT/PARAMETER-B/atd.eps}
-}
-\hfill
-\subfloat[Scenario C.\label{fig:atd-zipfb}]{
-\includegraphics[width=5.7cm]{graphs/ZIPF/PARAMETER-B/atd.eps}
-}
-\vspace{2mm}
-\caption{Comparison of available replicas between CPPro and PROP when a peer requests a video ($y$-axis in log-scale) for parameter B.}
-\label{fig:replicab}
+\caption{Videos rank distribution delivered by peer compared between CPPro and PROP ($y$-axis in log-scale and $y$-axis unit is times).}
+\label{fig:peercontribution}
 \end{figure*}
 
-%PARAMETER-C
-%%%contribution 
+%REPLICA SCENARIO A,B,C utk semua parameter
 \begin{figure*}[!t]
 \centering
-\subfloat[Scenario A.\label{fig:contribu-normalc}]{
-\includegraphics[width=5.7cm]{graphs/REPLICA/PARAMETER-C/contributioncdnpeermodelsortedabs.eps}
+\subfloat[Scenario A.\label{fig:atd-normal}]{
+\includegraphics[width=5.7cm]{graphs/NEW5/SCE-A/atd.eps}
 }
 \hfill
-\subfloat[Scenario B.\label{fig:contribu-shiftc}]{
-\includegraphics[width=5.7cm]{graphs/SHIFT/PARAMETER-C/contributioncdnpeermodelsortedabs.eps}
+\subfloat[Scenario B.\label{fig:atd-shift}]{
+\includegraphics[width=5.7cm]{graphs/NEW5/SCE-B/atd.eps}
 }
 \hfill
-\subfloat[Scenario C.\label{fig:contribu-zipfc}]{
-\includegraphics[width=5.7cm]{graphs/ZIPF/PARAMETER-C/contributioncdnpeermodelsortedabs.eps}
+\subfloat[Scenario C.\label{fig:atd-zipf}]{
+\includegraphics[width=5.7cm]{graphs/NEW5/SCE-C/atd.eps}
 }
 \vspace{2mm}
-\caption{Videos rank distribution delivered by peer compared between CPPro and PROP ($y$-axis in log-scale and $y$-axis unit is times) for parameter-C.}
-\label{fig:peercontributionc}
+\caption{Comparison of available replicas between CPPro and PROP when a peer requests a video ($y$-axis in log-scale).}
+\label{fig:replica}
 \end{figure*}
-%%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure*}[!t]
-\centering
-\subfloat[Scenario A.\label{fig:atd-normalc}]{
-\includegraphics[width=5.7cm]{graphs/REPLICA/PARAMETER-C/atd.eps}
-}
-\hfill
-\subfloat[Scenario B.\label{fig:atd-shiftc}]{
-\includegraphics[width=5.7cm]{graphs/SHIFT/PARAMETER-C/atd.eps}
-}
-\hfill
-\subfloat[Scenario C.\label{fig:atd-zipfc}]{
-\includegraphics[width=5.7cm]{graphs/ZIPF/PARAMETER-C/atd.eps}
-}
-\vspace{2mm}
-\caption{Comparison of available replicas between CPPro and PROP when a peer requests a video ($y$-axis in log-scale) for parameter C.}
-\label{fig:replicac}
-\end{figure*}
-
-%PARAMETER-D
-%%%contribution 
-\begin{figure*}[!t]
-\centering
-\subfloat[Scenario A.\label{fig:contribu-normald}]{
-\includegraphics[width=5.7cm]{graphs/REPLICA/PARAMETER-D/contributioncdnpeermodelsortedabs.eps}
-}
-\hfill
-\subfloat[Scenario B.\label{fig:contribu-shiftd}]{
-\includegraphics[width=5.7cm]{graphs/SHIFT/PARAMETER-D/contributioncdnpeermodelsortedabs.eps}
-}
-\hfill
-\subfloat[Scenario C.\label{fig:contribu-zipfd}]{
-\includegraphics[width=5.7cm]{graphs/ZIPF/PARAMETER-D/contributioncdnpeermodelsortedabs.eps}
-}
-\vspace{2mm}
-\caption{Videos rank distribution delivered by peer compared between CPPro and PROP ($y$-axis in log-scale and $y$-axis unit is times) for parameter-D.}
-\label{fig:peercontributiond}
-\end{figure*}
-%%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure*}[!t]
-\centering
-\subfloat[Scenario A.\label{fig:atd-normald}]{
-\includegraphics[width=5.7cm]{graphs/REPLICA/PARAMETER-D/atd.eps}
-}
-\hfill
-\subfloat[Scenario B.\label{fig:atd-shiftd}]{
-\includegraphics[width=5.7cm]{graphs/SHIFT/PARAMETER-D/atd.eps}
-}
-\hfill
-\subfloat[Scenario C.\label{fig:atd-zipfd}]{
-\includegraphics[width=5.7cm]{graphs/ZIPF/PARAMETER-D/atd.eps}
-}
-\vspace{2mm}
-\caption{Comparison of available replicas between CPPro and PROP when a peer requests a video ($y$-axis in log-scale) for parameter D.}
-\label{fig:replicad}
-\end{figure*}
-
 
 
 
@@ -1290,9 +1329,9 @@ View count parameters are the distribution parameters.
 The final view count is the total number of views of a video at the end of simulation and it is generated using uniform distribution sampling from Borghol dataset ranging from 27 until 1069385.
 The upload time interval is a Poisson process with $\lambda=1$.
 The video size is generated using a uniform distribution.
-Because of the very weak relationship betwen video size and popularity \cite{abhari2010workload} and because our work focuses on the impact of the popularity aspect on the utility function rather than storage optimization we believe that the choice to assign a random uniform video size from the Youtube dataset does not have an effect to our results. 
-The view rate progression from the upload time until the end of simulation time is modelled using a Beta distribution \cite{Borghol:2011:CMP:2039452.2039717}.
-As Borghol et al.,\cite{Borghol:2011:CMP:2039452.2039717} showed that view rate of a video can be modelled using beta distribution we can calculate $\alpha$ and $\beta$ parameters.
+Because of the very weak relationship between video size and popularity \cite{abhari2010workload} and because our work focuses on the impact of the popularity aspect on the utility function rather than storage optimization we believe that the choice to assign a random uniform video size from the Youtube dataset does not have an effect to our results. 
+The view rate progression from the upload time until the end of simulation time is modeled using a Beta distribution \cite{Borghol:2011:CMP:2039452.2039717}.
+As Borghol et al.,\cite{Borghol:2011:CMP:2039452.2039717} showed that view rate of a video can be modeled using beta distribution we can calculate $\alpha$ and $\beta$ parameters.
 We can use Beta distribution mode formula $m=\frac{\alpha-1}{\alpha+\beta-2}$ to calculate $\alpha$ or $\beta$. 
 In this case, we choose $\alpha$ random uniform between $1$ and $3$ and $m$ is view rate at-peak, thus we can get $\beta=\frac{\alpha-1}{m}-\alpha-2$.
 %The $\alpha$ and $\beta$ parameters are uniformly distributed. 
@@ -1300,12 +1339,14 @@ In this case, we choose $\alpha$ random uniform between $1$ and $3$ and $m$ is v
 
 \subsubsection{Peer Request Generator}\label{peerrequest}
 Peers request videos from the catalog using a Poisson process with $\lambda=1$ \cite{Zink:2009:CYN:1502814.1502987} for the inter-arrival time.
-For the requested videos there are three scenarios namely A,B,and C.
-Scenario A is where the video popularity in the peer-assisted CDN system follows the global popularity of the video.
-Scenario B is where the video popularity in the peer-assisted CDN system lag four weeks behind the global popularity of the video. 
-We choose four weeks based on probability from time-to-peak distribution that half of videos are already reach peak within four weeks.
-Scenario C is where the video popularity in the peer-assisted CDN system does not follow the global popularity of the video. 
-We use Zipf distribution with rate$=0.9$ for this purpose \cite{6654887}.
+For the requested videos there are three scenarios A,B,and C.
+In Scenario A, the video popularity in the peer-assisted CDN system follows the global popularity of the video.
+In Scenario B, the video popularity in the peer-assisted CDN system lags four weeks behind the global popularity of the video. 
+We choose four weeks lags based on the probability from time-to-peak distribution that half of videos are already reach peak within four weeks.
+In Scenario C, the video popularity in the peer-assisted CDN system does not follow the global popularity of the video. 
+We use a Zipf distribution with rate$=0.9$ for this purpose \cite{6654887}.
+
+
 
 % \subsubsection{Peer Request Generator}\label{peerrequest}
 % There are three scenarios for peer request (named as scenario A, B, and C):
@@ -1383,239 +1424,6 @@ We also have several fixed value for other parameters as follows:
 \end{itemize}
 Finally, we compare our results to PROP \cite{1613869} implementation.
 
-
-
-%table utk SCENARIO A
-\begin{table}[!t]
-%% increase table row spacing, adjust to taste
-%\renewcommand{\arraystretch}{1.3}
-% if using array.sty, it might be a good idea to tweak the value of
-% \extrarowheight as needed to properly center the text within the cells
-\caption{Percentage of Cached events and Not-Cached events in CPPro and PROP for Scenario A.}
-\label{tab:stacked1sca}
-%\centering
-%% Some packages, such as MDW tools, offer better commands for making tables
-%% than the plain LaTeX2e tabular which is used here.
-\begin{tabular}{|l|l|l|c|c|}
-\hline
-Scenario & Parameter & Type & Cached (times)& Not-Cached (times) \\ % & Cached (PetaByte) & Not-Cached (PetaByte)\\
-\hline
-A & Parameter A & CPPro &  $48\%$ & $52\%$ \\%& $814.4$ & $1616.6$ \\
-\hline
- &  & PROP & $68\%$ & $32\%$ \\ %& $1264.1$ & $1166.9$\\
-\hline
-
-& Parameter B & CPPro & $20\%$ & $80\%$ \\ %& $845.9$ & $1585.1$\\
-\hline
-& & PROP & $72\%$ & $28\%$ \\% &  $1278.7$  &  $1152.3$ \\
-\hline
-%2559751761
-& Parameter C & CPPro & $26\%$ & $74\%$  \\%& $829.1$ & $1729.9$ \\
-\hline
- & & PROP & $69\%$ & $31\%$ \\%&  $1732.4$ & $826.6$ \\
-\hline
-
-& Parameter D & CPPro & $27\%$ & $73\%$  \\%& $829.1$ & $1729.9$ \\
-\hline
- & & PROP & $73\%$ & $27\%$ \\%&  $1732.4$ & $826.6$ \\
-\hline
-
-\end{tabular}
-\end{table}
-
-
-%table utk SCENARIO B
-\begin{table}[!t]
-%% increase table row spacing, adjust to taste
-%\renewcommand{\arraystretch}{1.3}
-% if using array.sty, it might be a good idea to tweak the value of
-% \extrarowheight as needed to properly center the text within the cells
-\caption{Percentage of Cached events and Not-Cached events in CPPro and PROP for Scenario B.}
-\label{tab:stacked1scb}
-%\centering
-%% Some packages, such as MDW tools, offer better commands for making tables
-%% than the plain LaTeX2e tabular which is used here.
-\begin{tabular}{|l|l|l|c|c|}
-\hline
-Scenario & Parameter & Type & Cached (times)& Not-Cached (times) \\ % & Cached (PetaByte) & Not-Cached (PetaByte)\\
-\hline
-B & Parameter A & CPPro &  $15\%$ & $85\%$ \\%& $814.4$ & $1616.6$ \\
-\hline
- &  & PROP & $68\%$ & $32\%$ \\ %& $1264.1$ & $1166.9$\\
-\hline
-
-& Parameter B & CPPro & $10\%$ & $90\%$ \\ %& $845.9$ & $1585.1$\\
-\hline
-& & PROP & $72\%$ & $28\%$ \\% &  $1278.7$  &  $1152.3$ \\
-\hline
-%2559751761
-& Parameter C & CPPro & $11\%$ & $89\%$  \\%& $829.1$ & $1729.9$ \\
-\hline
- & & PROP & $69\%$ & $31\%$ \\%&  $1732.4$ & $826.6$ \\
-\hline
-
-& Parameter D & CPPro & $15\%$ & $85\%$  \\%& $829.1$ & $1729.9$ \\
-\hline
- & & PROP & $73\%$ & $27\%$ \\%&  $1732.4$ & $826.6$ \\
-\hline
-
-\end{tabular}
-\end{table}
-
-
-%table utk SCENARIO C
-\begin{table}[!t]
-%% increase table row spacing, adjust to taste
-%\renewcommand{\arraystretch}{1.3}
-% if using array.sty, it might be a good idea to tweak the value of
-% \extrarowheight as needed to properly center the text within the cells
-\caption{Percentage of Cached events and Not-Cached events in CPPro and PROP for Scenario C.}
-\label{tab:stacked1scc}
-\centering
-%% Some packages, such as MDW tools, offer better commands for making tables
-%% than the plain LaTeX2e tabular which is used here.
-\begin{tabular}{|l|l|l|c|c|}
-\hline
-Scenario & Parameter & Type & Cached (times)& Not-Cached (times) \\ % & Cached (PetaByte) & Not-Cached (PetaByte)\\
-\hline
-C & Parameter A & CPPro &  $30\%$ & $70\%$ \\%& $814.4$ & $1616.6$ \\
-\hline
- &  & PROP & $66\%$ & $34\%$ \\ %& $1264.1$ & $1166.9$\\
-\hline
-
-& Parameter B & CPPro & $26\%$ & $74\%$ \\ %& $845.9$ & $1585.1$\\
-\hline
-& & PROP & $71\%$ & $29\%$ \\% &  $1278.7$  &  $1152.3$ \\
-\hline
-%2559751761
-& Parameter C & CPPro & $40\%$ & $60\%$  \\%& $829.1$ & $1729.9$ \\
-\hline
- & & PROP & $67\%$ & $33\%$ \\%&  $1732.4$ & $826.6$ \\
-\hline
-
-& Parameter D & CPPro & $30\%$ & $70\%$  \\%& $829.1$ & $1729.9$ \\
-\hline
- & & PROP & $73\%$ & $27\%$ \\%&  $1732.4$ & $826.6$ \\
-\hline
-
-\end{tabular}
-\end{table}
-
-
-\begin{table*}[!t]
-%% increase table row spacing, adjust to taste
-%\renewcommand{\arraystretch}{1.3}
-% if using array.sty, it might be a good idea to tweak the value of
-% \extrarowheight as needed to properly center the text within the cells
-\caption{Percentage cached and not-cached events for each video popularity phase in CPPro for Scenario A.}
-\label{tab:stacked2a}
-\centering
-%% Some packages, such as MDW tools, offer better commands for making tables
-%% than the plain LaTeX2e tabular which is used here.
-\begin{tabular}{|l|l|l|c|c|c|}
-\hline
-Scenario & Parameter & Type/Events & Before-Peak & At-Peak  & After-Peak \\
-\hline
-A & Parameter A & CPPro Cached & $2.2\%$ & $0.6\%$ & $45.8\%$  \\
-\hline
- & & CPPro Not-Cached & $2.6\%$ & $0.7\%$ & $48.1\%$ \\
- \hline
-
-A & Parameter B & CPPro Cached & $0.9\%$ & $0.2\%$ & $19.4\%$ \\
-\hline
- & & CPPro Not-Cached & $1.9\%$ & $0.6\%$ & $77\%$ \\
-\hline
-
-A & Parameter C & CPPro Cached & $0.1\%$ & $0.06\%$ & $25.21\%$ \\
-\hline
- & & CPPro Not-Cached & $0.8\%$ & $0.03\%$ & $73.8\%$ \\
-\hline
-
-A & Parameter D & CPPro Cached & $1.6\%$ & $0.3\%$ & $24\%$ \\
-\hline
- & & CPPro Not-Cached & $2.5\%$ & $0.6\%$ & $71\%$ \\
-\hline
-
-\end{tabular}
-\end{table*}
-
-
-
-
-\begin{table*}[!t]
-%% increase table row spacing, adjust to taste
-%\renewcommand{\arraystretch}{1.3}
-% if using array.sty, it might be a good idea to tweak the value of
-% \extrarowheight as needed to properly center the text within the cells
-\caption{Percentage cached and not-cached events for each video popularity phase in CPPro for Scenario B.}
-\label{tab:stacked2b}
-\centering
-%% Some packages, such as MDW tools, offer better commands for making tables
-%% than the plain LaTeX2e tabular which is used here.
-\begin{tabular}{|l|l|l|c|c|c|}
-\hline
-Scenario & Parameter & Type/Events & Before-Peak & At-Peak  & After-Peak \\
-\hline
-B & Parameter A & CPPro Cached & $0.3\%$ & $0.1\%$ & $13\%$  \\
-\hline
- & & CPPro Not-Cached & $1.4\%$ & $0.6\%$ & $84.6\%$ \\
- \hline
-
-B & Parameter B & CPPro Cached & $0.07\%$ & $0.04\%$ & $9.7\%$ \\
-\hline
- & & CPPro Not-Cached & $1.3\%$ & $0.5\%$ & $88.39\%$ \\
-\hline
-
-B & Parameter C & CPPro Cached & $0.02\%$ & $0.08\%$ & $4.2\%$ \\
-\hline
- & & CPPro Not-Cached & $0.07\%$ & $0.02\%$ & $95.61\%$ \\
-\hline
-
-B & Parameter D & CPPro Cached & $0.3\%$ & $0.1\%$ & $15.3\%$ \\
-\hline
- & & CPPro Not-Cached & $1.7\%$ & $0.6\%$ & $82\%$ \\
-\hline
-
-\end{tabular}
-\end{table*}
-
-
-\begin{table*}[!t]
-%% increase table row spacing, adjust to taste
-%\renewcommand{\arraystretch}{1.3}
-% if using array.sty, it might be a good idea to tweak the value of
-% \extrarowheight as needed to properly center the text within the cells
-\caption{Percentage cached and not-cached events for each video popularity phase in CPPro for Scenario C.}
-\label{tab:stacked2c}
-\centering
-%% Some packages, such as MDW tools, offer better commands for making tables
-%% than the plain LaTeX2e tabular which is used here.
-\begin{tabular}{|l|l|l|c|c|c|}
-\hline
-Scenario & Parameter & Type/Events & Before-Peak & At-Peak  & After-Peak \\
-\hline
-C & Parameter A & CPPro Cached & $6.5\%$ & $0.7\%$ & $23.4\%$  \\
-\hline
- & & CPPro Not-Cached & $17.7\%$ & $2.2\%$ & $49.5\%$ \\
- \hline
-
-C & Parameter B & CPPro Cached & $6.9\%$ & $1.0\%$ & $17.8\%$ \\
-\hline
- & & CPPro Not-Cached & $6.1\%$ & $1.1\%$ & $67.1$\% \\
-\hline
-
-C & Parameter C & CPPro Cached & $0.4\%$ & $0.2\%$ & $39\%$ \\
-\hline
- & & CPPro Not-Cached & $0.3\%$ & $0.2\%$ & $59.9\%$ \\
-\hline
-
-C & Parameter D & CPPro Cached & $9.3\%$ & $1.0\%$ & $19.0\%$ \\
-\hline
- & & CPPro Not-Cached & $7.2\%$ & $1.0\%$ & $62.5\%$ \\
-\hline
-
-\end{tabular}
-\end{table*}
 
 
 
@@ -1743,12 +1551,251 @@ C & Parameter D & CPPro Cached & $9.3\%$ & $1.0\%$ & $19.0\%$ \\
 
 \subsection{Result and Discussion}\label{resultanddiscussion}
 
-Figure~\ref{fig:peercontributiona} shows the peer contributions in each scenario ranked by the number of videos served by each peer for parameter A.
+Figure~\ref{fig:peercontribution} shows the peer contributions in each scenario ranked by the number of videos served by each peer for parameter A, B, C, and D.
 They exhibit a similar pattern and only differ in the tails for all scenarios, where CPPro gives higher, albeit insignificant, results.
-The difference between CPPro and PROP in scenario A is $1.0\%$, $1.2\%$ in scenario B, and $1.7\%$ for scenario C.
-These results show that the introduction of $z(t)$ component to the utility function does not affect the performance in terms of peer contributions.
-The advantage of CPPro to PROP is evident in fig.~\ref{fig:replicaa} which shows the number of replicas of the requested videos at each request event.
+The difference between CPPro and PROP for parameter A,B,C,and D are shown in table \ref{}.
 
+\begin{table}[!t]
+\caption{The difference of request satisfied by peer between CPPro and PROP.}
+\label{tab:peercontributions}
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Scenario & Parameter & Difference \\
+\hline
+A & Parameter A & $1.0$\%\\
+\hline
+A & Parameter B & $2.0$\%\\
+\hline
+A & Parameter C & $1.9$\%\\
+\hline
+A & Parameter D & $1.2$\%\\
+\hline
+B & Parameter A & $1.2$\%\\
+\hline
+B & Parameter B & $2.3$\%\\
+\hline
+B & Parameter C & $0.6$\%\\
+\hline
+B & Parameter D & $1.4$\%\\
+\hline
+C & Parameter A & $1.7$\%\\
+\hline
+C & Parameter B & $3.5$\%\\
+\hline
+C & Parameter C & $1.0$\%\\
+\hline
+C & Parameter D & $2.1$\%\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!t]
+\caption{The difference of replicas between CPPro and PROP.}
+\label{tab:replicas}
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Scenario & Parameter & Difference \\
+\hline
+A & Parameter A & $13$\%\\
+\hline
+A & Parameter B & $9.4$\%\\
+\hline
+A & Parameter C & $16.0$\%\\
+\hline
+A & Parameter D & $0.7$\%\\
+\hline
+B & Parameter A & $6.5$\%\\
+\hline
+B & Parameter B & $1.4$\%\\
+\hline
+B & Parameter C & $11.5$\%\\
+\hline
+B & Parameter D & $1.8$\%\\
+\hline
+C & Parameter A & $13$\%\\
+\hline
+C & Parameter B & $4.4$\%\\
+\hline
+C & Parameter C & $4.5$\%\\
+\hline
+C & Parameter D & $1.6$\%\\
+\hline
+\end{tabular}
+\end{table}
+
+
+%table utk SCENARIO A
+\begin{table}[!t]
+\caption{Percentage of Cached events and Not-Cached events in CPPro and PROP for Scenario A, B, and C.}
+\label{tab:stacked1sca}
+\centering
+\begin{tabular}{|l|l|l|c|c|}
+\hline
+Scenario & Parameter & Type & Cached (times)& Not-Cached (times) \\ % & Cached (PetaByte) & Not-Cached (PetaByte)\\
+\hline
+A & Parameter A & CPPro &  $48\%$ & $52\%$ \\%& $814.4$ & $1616.6$ \\
+\hline
+ &  & PROP & $68\%$ & $32\%$ \\ %& $1264.1$ & $1166.9$\\
+\hline
+
+& Parameter B & CPPro & $20\%$ & $80\%$ \\ %& $845.9$ & $1585.1$\\
+\hline
+& & PROP & $72\%$ & $28\%$ \\% &  $1278.7$  &  $1152.3$ \\
+\hline
+%2559751761
+& Parameter C & CPPro & $26\%$ & $74\%$  \\%& $829.1$ & $1729.9$ \\
+\hline
+ & & PROP & $69\%$ & $31\%$ \\%&  $1732.4$ & $826.6$ \\
+\hline
+
+& Parameter D & CPPro & $27\%$ & $73\%$  \\%& $829.1$ & $1729.9$ \\
+\hline
+ & & PROP & $73\%$ & $27\%$ \\%&  $1732.4$ & $826.6$ \\
+\hline
+
+B & Parameter A & CPPro &  $15\%$ & $85\%$ \\%& $814.4$ & $1616.6$ \\
+\hline
+ &  & PROP & $68\%$ & $32\%$ \\ %& $1264.1$ & $1166.9$\\
+\hline
+
+& Parameter B & CPPro & $10\%$ & $90\%$ \\ %& $845.9$ & $1585.1$\\
+\hline
+& & PROP & $72\%$ & $28\%$ \\% &  $1278.7$  &  $1152.3$ \\
+\hline
+%2559751761
+& Parameter C & CPPro & $11\%$ & $89\%$  \\%& $829.1$ & $1729.9$ \\
+\hline
+ & & PROP & $69\%$ & $31\%$ \\%&  $1732.4$ & $826.6$ \\
+\hline
+
+& Parameter D & CPPro & $15\%$ & $85\%$  \\%& $829.1$ & $1729.9$ \\
+\hline
+ & & PROP & $73\%$ & $27\%$ \\%&  $1732.4$ & $826.6$ \\
+\hline
+
+C & Parameter A & CPPro &  $30\%$ & $70\%$ \\%& $814.4$ & $1616.6$ \\
+\hline
+ &  & PROP & $66\%$ & $34\%$ \\ %& $1264.1$ & $1166.9$\\
+\hline
+
+& Parameter B & CPPro & $26\%$ & $74\%$ \\ %& $845.9$ & $1585.1$\\
+\hline
+& & PROP & $71\%$ & $29\%$ \\% &  $1278.7$  &  $1152.3$ \\
+\hline
+%2559751761
+& Parameter C & CPPro & $40\%$ & $60\%$  \\%& $829.1$ & $1729.9$ \\
+\hline
+ & & PROP & $67\%$ & $33\%$ \\%&  $1732.4$ & $826.6$ \\
+\hline
+
+& Parameter D & CPPro & $30\%$ & $70\%$  \\%& $829.1$ & $1729.9$ \\
+\hline
+ & & PROP & $73\%$ & $27\%$ \\%&  $1732.4$ & $826.6$ \\
+\hline
+
+\end{tabular}
+\end{table}
+
+
+\begin{table*}[!t]
+\caption{Percentage cached and not-cached events for each video popularity phase in CPPro for Scenario A, B, and C.}
+\label{tab:stacked2a}
+\centering
+\begin{tabular}{|l|l|l|c|c|c|}
+\hline
+Scenario & Parameter & Type/Events & Before-Peak & At-Peak  & After-Peak \\
+\hline
+A & Parameter A & CPPro Cached & $2.2\%$ & $0.6\%$ & $45.8\%$  \\
+\hline
+ & & CPPro Not-Cached & $2.6\%$ & $0.7\%$ & $48.1\%$ \\
+ \hline
+
+A & Parameter B & CPPro Cached & $0.9\%$ & $0.2\%$ & $19.4\%$ \\
+\hline
+ & & CPPro Not-Cached & $1.9\%$ & $0.6\%$ & $77\%$ \\
+\hline
+
+A & Parameter C & CPPro Cached & $0.1\%$ & $0.06\%$ & $25.21\%$ \\
+\hline
+ & & CPPro Not-Cached & $0.8\%$ & $0.03\%$ & $73.8\%$ \\
+\hline
+
+A & Parameter D & CPPro Cached & $1.6\%$ & $0.3\%$ & $24\%$ \\
+\hline
+ & & CPPro Not-Cached & $2.5\%$ & $0.6\%$ & $71\%$ \\
+\hline
+
+B & Parameter A & CPPro Cached & $0.3\%$ & $0.1\%$ & $13\%$  \\
+\hline
+ & & CPPro Not-Cached & $1.4\%$ & $0.6\%$ & $84.6\%$ \\
+ \hline
+
+B & Parameter B & CPPro Cached & $0.07\%$ & $0.04\%$ & $9.7\%$ \\
+\hline
+ & & CPPro Not-Cached & $1.3\%$ & $0.5\%$ & $88.39\%$ \\
+\hline
+
+B & Parameter C & CPPro Cached & $0.02\%$ & $0.08\%$ & $4.2\%$ \\
+\hline
+ & & CPPro Not-Cached & $0.07\%$ & $0.02\%$ & $95.61\%$ \\
+\hline
+
+B & Parameter D & CPPro Cached & $0.3\%$ & $0.1\%$ & $15.3\%$ \\
+\hline
+ & & CPPro Not-Cached & $1.7\%$ & $0.6\%$ & $82\%$ \\
+\hline
+
+C & Parameter A & CPPro Cached & $6.5\%$ & $0.7\%$ & $23.4\%$  \\
+\hline
+ & & CPPro Not-Cached & $17.7\%$ & $2.2\%$ & $49.5\%$ \\
+ \hline
+
+C & Parameter B & CPPro Cached & $6.9\%$ & $1.0\%$ & $17.8\%$ \\
+\hline
+ & & CPPro Not-Cached & $6.1\%$ & $1.1\%$ & $67.1$\% \\
+\hline
+
+C & Parameter C & CPPro Cached & $0.4\%$ & $0.2\%$ & $39\%$ \\
+\hline
+ & & CPPro Not-Cached & $0.3\%$ & $0.2\%$ & $59.9\%$ \\
+\hline
+
+C & Parameter D & CPPro Cached & $9.3\%$ & $1.0\%$ & $19.0\%$ \\
+\hline
+ & & CPPro Not-Cached & $7.2\%$ & $1.0\%$ & $62.5\%$ \\
+\hline
+
+\end{tabular}
+\end{table*}
+
+
+
+
+
+
+
+
+The difference between CPPro and PROP for parameter A in scenario A is $1.0\%$, $1.2\%$ in scenario B, and $1.7\%$ for scenario C.
+The difference between CPPro and PROP for parameter B in scenario A is $2.0\%$, $2.3\%$ in scenario B, and $3.5\%$ for scenario C.
+The difference between CPPro and PROP in scenario A is $1.9\%$, $0.6\%$ in scenario B, and $1.0\%$ for scenario C.
+
+
+
+
+%These results show that the introduction of $z(t)$ component to the utility function does not affect the performance in terms of peer contributions.
+%The advantage of CPPro to PROP is evident in fig.~\ref{fig:replicaa} which shows the number of replicas of the requested videos at each request event.
+
+%Figure~\ref{fig:peercontributionb} shows the peer contributions in each scenario ranked by the number of videos served by each peer for parameter B.
+%They exhibit a similar pattern and only differ in the tails for all scenarios, where CPPro gives higher, albeit insignificant, results.
+%The difference between CPPro and PROP for parameter B in scenario A is $2.0\%$, $2.3\%$ in scenario B, and $3.5\%$ for scenario C.
+%The advantage of CPPro to PROP is evident in fig.~\ref{fig:replicab} which shows the number of replicas of the requested videos at each request event.
+
+%The difference between parameter A and B is number of videos while the number of requests are same.
+%In parameter B, number of videos are three times number of videos in parameter A.  
+F%rom fig.\ref{fig:replicaa} and \ref{fig:replicab}, number of replicas of CPPRO in parameter B converge to PROP earlier than parameter A. 
+%This is because three times number of videos available in parameter B compared to parameter A makes a peer can cache 
 
 % The advantage of CPPro to PROP is shown in fig.~\ref{fig:replica} which show the number of replicas the requested videos at each request event.
 % We see that CPPro result in fewer replicas comparing to those of PROP.
@@ -1797,15 +1844,16 @@ Maximum replica for PROP is around three times from CPPro in scenario A and B, w
 Number of replicas for each scenario are different between CPPro and PROP in the head of distribution and similar in the body and the tail of distribution. 
 The difference of replica between PROP and CPPRO in scenario A is $13\%$, $6.5\%$ in scenario B, and $13\%$ in scenario C.
 
-Figure~\ref{fig:peercontributionb} shows the peer contributions in each scenario ranked by the number of videos served by each peer for parameter B.
-They exhibit a similar pattern and only differ in the tails for all scenarios, where CPPro gives higher, albeit insignificant, results.
-The difference between CPPro and PROP in scenario A is $2.0\%$, $2.3\%$ in scenario B, and $3.5\%$ for scenario C.
-The advantage of CPPro to PROP is evident in fig.~\ref{fig:replicab} which shows the number of replicas of the requested videos at each request event.
+
+%Figure~\ref{fig:peercontributionb} shows the peer contributions in each scenario ranked by the number of videos served by each peer for parameter B.
+%They exhibit a similar pattern and only differ in the tails for all scenarios, where CPPro gives higher, albeit insignificant, results.
+%The difference between CPPro and PROP in scenario A is $2.0\%$, $2.3\%$ in scenario B, and $3.5\%$ for scenario C.
+%The advantage of CPPro to PROP is evident in fig.~\ref{fig:replicab} which shows the number of replicas of the requested videos at each request event.
 
 In fig.~\ref{fig:replicab} shows number of replicas available for each scenario when a peer request a video in parameter A.
 The difference of replica between PROP and CPPRO in scenario A is $9\%$, $1.4\%$ in scenario B, and $4.4\%$ in scenario C.
 
-Figure~\ref{fig:peercontributionc} shows the peer contributions in each scenario ranked by the number of videos served by each peer for parameter B.
+Figure~\ref{fig:peercontributionc} shows the peer contributions in each scenario ranked by the number of videos served by each peer for parameter C.
 They exhibit a similar pattern and only differ in the tails for all scenarios, where CPPro gives higher, albeit insignificant, results.
 The difference between CPPro and PROP in scenario A is $1.9\%$, $0.6\%$ in scenario B, and $1.0\%$ for scenario C.
 The advantage of CPPro to PROP is evident in fig.~\ref{fig:replicac} which shows the number of replicas of the requested videos at each request event.
@@ -1814,7 +1862,7 @@ In fig.~\ref{fig:replicac} shows number of replicas available for each scenario 
 The difference of replica between PROP and CPPRO in scenario A is $16\%$, $11.5\%$ in scenario B, and $4\%$ in scenario C.
 
 
-Figure~\ref{fig:peercontributiond} shows the peer contributions in each scenario ranked by the number of videos served by each peer for parameter B.
+Figure~\ref{fig:peercontributiond} shows the peer contributions in each scenario ranked by the number of videos served by each peer for parameter D.
 They exhibit a similar pattern and only differ in the tails for all scenarios, where CPPro gives higher, albeit insignificant, results.
 The difference between CPPro and PROP in scenario A is $1.2\%$, $1.4\%$ in scenario B, and $2.1\%$ for scenario C.
 The advantage of CPPro to PROP is evident in fig.~\ref{fig:replicad} which shows the number of replicas of the requested videos at each request event.
