@@ -1547,228 +1547,281 @@ Finally, we compare our results to PROP \cite{1613869} implementation.
 %kenapa at peak kecil -> estimasi tepat 0 rata-rata
 %before di cached lebih banyak 
 
+\begin{figure*}[!t]
+\centering
+\subfloat[The difference of request satisfied by peer between PROP and CPPro.\label{fig:peerdiff}]{
+\includegraphics[width=5.7cm]{graphs/NEW5/peer-diff.eps}
+}
+\hfill
+\subfloat[The difference number of replicas between PROP and CPPro.\label{fig:replicadiff}]{
+\includegraphics[width=5.7cm]{graphs/NEW5/replica-diff.eps}
+}
+\vspace{2mm}
+\caption{Percentage different between PROP and CPPROP for request satisfied by peer and number of replicas.
+ }
+\label{fig:diff}
+\end{figure*}
+
+
+\begin{figure*}[!t]
+\centering
+\subfloat[Scenario A.\label{fig:cacheeventsa}]{
+\includegraphics[width=5.7cm]{graphs/NEW5/SCE-A/sce-a-cached-not-cached.eps}
+}
+\hfill
+\subfloat[Scenario B.\label{fig:cacheeventsb}]{
+\includegraphics[width=5.7cm]{graphs/NEW5/SCE-B/sce-b-cached-not-cached.eps}
+}
+\hfill
+\subfloat[Scenario C.\label{fig:cacheeventsc}]{
+\includegraphics[width=5.7cm]{graphs/NEW5/SCE-C/sce-c-cached-not-cached.eps}
+}
+\vspace{2mm}
+\caption{Percentage of cached events and not-cached events in PROP and CPPro.}
+\label{fig:cacheevents}
+\end{figure*}
+
+\begin{figure*}[!t]
+\centering
+\subfloat[Scenario A.\label{fig:cacheeventsphasea}]{
+\includegraphics[width=5.7cm]{graphs/NEW5/SCE-A/sce-a-cache-not-cache-phase.eps}
+}
+\hfill
+\subfloat[Scenario B.\label{fig:cacheeventsphaseb}]{
+\includegraphics[width=5.7cm]{graphs/NEW5/SCE-B/sce-b-cache-not-cache-phase.eps}
+}
+\hfill
+\subfloat[Scenario C.\label{fig:cacheeventsphasec}]{
+\includegraphics[width=5.7cm]{graphs/NEW5/SCE-C/sce-c-cache-not-cache-phase.eps}
+}
+\vspace{2mm}
+\caption{Percentage cached and not-cached events for each video popularity phase in CPPro.}
+\label{fig:cacheeventsphase}
+\end{figure*}
+
+
 
 
 \subsection{Result and Discussion}\label{resultanddiscussion}
 
 Figure~\ref{fig:peercontribution} shows the peer contributions in each scenario ranked by the number of videos served by each peer for parameter A, B, C, and D.
 They exhibit a similar pattern and only differ in the tails for all scenarios, where CPPro gives higher, albeit insignificant, results.
-The difference between CPPro and PROP for parameter A,B,C,and D are shown in table \ref{tab:peercontributions}.
+The difference between CPPro and PROP for parameter A,B,C,and D are shown in table \ref{fig:peerdiff}.
 
-\begin{table}[!t]
-\caption{The difference of request satisfied by peer between CPPro and PROP.}
-\label{tab:peercontributions}
-\centering
-\begin{tabular}{|l|l|l|}
-\hline
-Scenario & Parameter & Difference \\
-\hline
-A & Parameter A & $1.0$\%\\
-\hline
-A & Parameter B & $2.0$\%\\
-\hline
-A & Parameter C & $1.9$\%\\
-\hline
-A & Parameter D & $1.2$\%\\
-\hline
-B & Parameter A & $1.2$\%\\
-\hline
-B & Parameter B & $2.3$\%\\
-\hline
-B & Parameter C & $0.6$\%\\
-\hline
-B & Parameter D & $1.4$\%\\
-\hline
-C & Parameter A & $1.7$\%\\
-\hline
-C & Parameter B & $3.5$\%\\
-\hline
-C & Parameter C & $1.0$\%\\
-\hline
-C & Parameter D & $2.1$\%\\
-\hline
-\end{tabular}
-\end{table}
+% \begin{table}[!t]
+% \caption{The difference of request satisfied by peer between CPPro and PROP.}
+% \label{tab:peercontributions}
+% \centering
+% \begin{tabular}{|l|l|l|}
+% \hline
+% Scenario & Parameter & Difference \\
+% \hline
+% A & Parameter A & $1.0$\%\\
+% \hline
+% A & Parameter B & $2.0$\%\\
+% \hline
+% A & Parameter C & $1.9$\%\\
+% \hline
+% A & Parameter D & $1.2$\%\\
+% \hline
+% B & Parameter A & $1.2$\%\\
+% \hline
+% B & Parameter B & $2.3$\%\\
+% \hline
+% B & Parameter C & $0.6$\%\\
+% \hline
+% B & Parameter D & $1.4$\%\\
+% \hline
+% C & Parameter A & $1.7$\%\\
+% \hline
+% C & Parameter B & $3.5$\%\\
+% \hline
+% C & Parameter C & $1.0$\%\\
+% \hline
+% C & Parameter D & $2.1$\%\\
+% \hline
+% \end{tabular}
+% \end{table}
 
-\begin{table}[!t]
-\caption{The difference of replicas between CPPro and PROP.}
-\label{tab:replicas}
-\centering
-\begin{tabular}{|l|l|l|}
-\hline
-Scenario & Parameter & Difference \\
-\hline
-A & Parameter A & $13$\%\\
-\hline
-A & Parameter B & $9.4$\%\\
-\hline
-A & Parameter C & $16.0$\%\\
-\hline
-A & Parameter D & $0.7$\%\\
-\hline
-B & Parameter A & $6.5$\%\\
-\hline
-B & Parameter B & $1.4$\%\\
-\hline
-B & Parameter C & $11.5$\%\\
-\hline
-B & Parameter D & $1.8$\%\\
-\hline
-C & Parameter A & $13$\%\\
-\hline
-C & Parameter B & $4.4$\%\\
-\hline
-C & Parameter C & $4.5$\%\\
-\hline
-C & Parameter D & $1.6$\%\\
-\hline
-\end{tabular}
-\end{table}
+% \begin{table}[!t]
+% \caption{The difference of replicas between CPPro and PROP.}
+% \label{tab:replicas}
+% \centering
+% \begin{tabular}{|l|l|l|}
+% \hline
+% Scenario & Parameter & Difference \\
+% \hline
+% A & Parameter A & $13$\%\\
+% \hline
+% A & Parameter B & $9.4$\%\\
+% \hline
+% A & Parameter C & $16.0$\%\\
+% \hline
+% A & Parameter D & $0.7$\%\\
+% \hline
+% B & Parameter A & $6.5$\%\\
+% \hline
+% B & Parameter B & $1.4$\%\\
+% \hline
+% B & Parameter C & $11.5$\%\\
+% \hline
+% B & Parameter D & $1.8$\%\\
+% \hline
+% C & Parameter A & $13$\%\\
+% \hline
+% C & Parameter B & $4.4$\%\\
+% \hline
+% C & Parameter C & $4.5$\%\\
+% \hline
+% C & Parameter D & $1.6$\%\\
+% \hline
+% \end{tabular}
+% \end{table}
 
 
 %table utk SCENARIO A
-\begin{table}[!t]
-\caption{Percentage of Cached events and Not-Cached events in CPPro and PROP for Scenario A, B, and C.}
-\label{tab:stacked1}
-\centering
-\begin{tabular}{|l|l|l|c|c|}
-\hline
-Scenario & Parameter & Type & Cached (times)& Not-Cached (times) \\ % & Cached (PetaByte) & Not-Cached (PetaByte)\\
-\hline
-A & Parameter A & CPPro &  $48\%$ & $52\%$ \\%& $814.4$ & $1616.6$ \\
-\hline
- &  & PROP & $68\%$ & $32\%$ \\ %& $1264.1$ & $1166.9$\\
-\hline
+% \begin{table}[!t]
+% \caption{Percentage of Cached events and Not-Cached events in CPPro and PROP for Scenario A, B, and C.}
+% \label{tab:stacked1}
+% \centering
+% \begin{tabular}{|l|l|l|c|c|}
+% \hline
+% Scenario & Parameter & Type & Cached (times)& Not-Cached (times) \\ % & Cached (PetaByte) & Not-Cached (PetaByte)\\
+% \hline
+% A & Parameter A & CPPro &  $48\%$ & $52\%$ \\%& $814.4$ & $1616.6$ \\
+% \hline
+%  &  & PROP & $68\%$ & $32\%$ \\ %& $1264.1$ & $1166.9$\\
+% \hline
 
-& Parameter B & CPPro & $20\%$ & $80\%$ \\ %& $845.9$ & $1585.1$\\
-\hline
-& & PROP & $72\%$ & $28\%$ \\% &  $1278.7$  &  $1152.3$ \\
-\hline
-%2559751761
-& Parameter C & CPPro & $26\%$ & $74\%$  \\%& $829.1$ & $1729.9$ \\
-\hline
- & & PROP & $69\%$ & $31\%$ \\%&  $1732.4$ & $826.6$ \\
-\hline
+% & Parameter B & CPPro & $20\%$ & $80\%$ \\ %& $845.9$ & $1585.1$\\
+% \hline
+% & & PROP & $72\%$ & $28\%$ \\% &  $1278.7$  &  $1152.3$ \\
+% \hline
+% %2559751761
+% & Parameter C & CPPro & $26\%$ & $74\%$  \\%& $829.1$ & $1729.9$ \\
+% \hline
+%  & & PROP & $69\%$ & $31\%$ \\%&  $1732.4$ & $826.6$ \\
+% \hline
 
-& Parameter D & CPPro & $27\%$ & $73\%$  \\%& $829.1$ & $1729.9$ \\
-\hline
- & & PROP & $73\%$ & $27\%$ \\%&  $1732.4$ & $826.6$ \\
-\hline
+% & Parameter D & CPPro & $27\%$ & $73\%$  \\%& $829.1$ & $1729.9$ \\
+% \hline
+%  & & PROP & $73\%$ & $27\%$ \\%&  $1732.4$ & $826.6$ \\
+% \hline
 
-B & Parameter A & CPPro &  $15\%$ & $85\%$ \\%& $814.4$ & $1616.6$ \\
-\hline
- &  & PROP & $68\%$ & $32\%$ \\ %& $1264.1$ & $1166.9$\\
-\hline
+% B & Parameter A & CPPro &  $15\%$ & $85\%$ \\%& $814.4$ & $1616.6$ \\
+% \hline
+%  &  & PROP & $68\%$ & $32\%$ \\ %& $1264.1$ & $1166.9$\\
+% \hline
 
-& Parameter B & CPPro & $10\%$ & $90\%$ \\ %& $845.9$ & $1585.1$\\
-\hline
-& & PROP & $72\%$ & $28\%$ \\% &  $1278.7$  &  $1152.3$ \\
-\hline
-%2559751761
-& Parameter C & CPPro & $11\%$ & $89\%$  \\%& $829.1$ & $1729.9$ \\
-\hline
- & & PROP & $69\%$ & $31\%$ \\%&  $1732.4$ & $826.6$ \\
-\hline
+% & Parameter B & CPPro & $10\%$ & $90\%$ \\ %& $845.9$ & $1585.1$\\
+% \hline
+% & & PROP & $72\%$ & $28\%$ \\% &  $1278.7$  &  $1152.3$ \\
+% \hline
+% %2559751761
+% & Parameter C & CPPro & $11\%$ & $89\%$  \\%& $829.1$ & $1729.9$ \\
+% \hline
+%  & & PROP & $69\%$ & $31\%$ \\%&  $1732.4$ & $826.6$ \\
+% \hline
 
-& Parameter D & CPPro & $15\%$ & $85\%$  \\%& $829.1$ & $1729.9$ \\
-\hline
- & & PROP & $73\%$ & $27\%$ \\%&  $1732.4$ & $826.6$ \\
-\hline
+% & Parameter D & CPPro & $15\%$ & $85\%$  \\%& $829.1$ & $1729.9$ \\
+% \hline
+%  & & PROP & $73\%$ & $27\%$ \\%&  $1732.4$ & $826.6$ \\
+% \hline
 
-C & Parameter A & CPPro &  $30\%$ & $70\%$ \\%& $814.4$ & $1616.6$ \\
-\hline
- &  & PROP & $66\%$ & $34\%$ \\ %& $1264.1$ & $1166.9$\\
-\hline
+% C & Parameter A & CPPro &  $30\%$ & $70\%$ \\%& $814.4$ & $1616.6$ \\
+% \hline
+%  &  & PROP & $66\%$ & $34\%$ \\ %& $1264.1$ & $1166.9$\\
+% \hline
 
-& Parameter B & CPPro & $26\%$ & $74\%$ \\ %& $845.9$ & $1585.1$\\
-\hline
-& & PROP & $71\%$ & $29\%$ \\% &  $1278.7$  &  $1152.3$ \\
-\hline
-%2559751761
-& Parameter C & CPPro & $40\%$ & $60\%$  \\%& $829.1$ & $1729.9$ \\
-\hline
- & & PROP & $67\%$ & $33\%$ \\%&  $1732.4$ & $826.6$ \\
-\hline
+% & Parameter B & CPPro & $26\%$ & $74\%$ \\ %& $845.9$ & $1585.1$\\
+% \hline
+% & & PROP & $71\%$ & $29\%$ \\% &  $1278.7$  &  $1152.3$ \\
+% \hline
+% %2559751761
+% & Parameter C & CPPro & $40\%$ & $60\%$  \\%& $829.1$ & $1729.9$ \\
+% \hline
+%  & & PROP & $67\%$ & $33\%$ \\%&  $1732.4$ & $826.6$ \\
+% \hline
 
-& Parameter D & CPPro & $30\%$ & $70\%$  \\%& $829.1$ & $1729.9$ \\
-\hline
- & & PROP & $73\%$ & $27\%$ \\%&  $1732.4$ & $826.6$ \\
-\hline
+% & Parameter D & CPPro & $30\%$ & $70\%$  \\%& $829.1$ & $1729.9$ \\
+% \hline
+%  & & PROP & $73\%$ & $27\%$ \\%&  $1732.4$ & $826.6$ \\
+% \hline
 
-\end{tabular}
-\end{table}
+% \end{tabular}
+% \end{table}
 
 
-\begin{table*}[!t]
-\caption{Percentage cached and not-cached events for each video popularity phase in CPPro for Scenario A, B, and C.}
-\label{tab:stacked2}
-\centering
-\begin{tabular}{|l|l|l|c|c|c|}
-\hline
-Scenario & Parameter & Type/Events & Before-Peak & At-Peak  & After-Peak \\
-\hline
-A & Parameter A & CPPro Cached & $2.2\%$ & $0.6\%$ & $45.8\%$  \\
-\hline
- & & CPPro Not-Cached & $2.6\%$ & $0.7\%$ & $48.1\%$ \\
- \hline
+% \begin{table*}[!t]
+% \caption{Percentage cached and not-cached events for each video popularity phase in CPPro for Scenario A, B, and C.}
+% \label{tab:stacked2}
+% \centering
+% \begin{tabular}{|l|l|l|c|c|c|}
+% \hline
+% Scenario & Parameter & Type/Events & Before-Peak & At-Peak  & After-Peak \\
+% \hline
+% A & Parameter A & CPPro Cached & $2.2\%$ & $0.6\%$ & $45.8\%$  \\
+% \hline
+%  & & CPPro Not-Cached & $2.6\%$ & $0.7\%$ & $48.1\%$ \\
+%  \hline
 
-A & Parameter B & CPPro Cached & $0.9\%$ & $0.2\%$ & $19.4\%$ \\
-\hline
- & & CPPro Not-Cached & $1.9\%$ & $0.6\%$ & $77\%$ \\
-\hline
+% A & Parameter B & CPPro Cached & $0.9\%$ & $0.2\%$ & $19.4\%$ \\
+% \hline
+%  & & CPPro Not-Cached & $1.9\%$ & $0.6\%$ & $77\%$ \\
+% \hline
 
-A & Parameter C & CPPro Cached & $0.1\%$ & $0.06\%$ & $25.21\%$ \\
-\hline
- & & CPPro Not-Cached & $0.8\%$ & $0.03\%$ & $73.8\%$ \\
-\hline
+% A & Parameter C & CPPro Cached & $0.1\%$ & $0.06\%$ & $25.21\%$ \\
+% \hline
+%  & & CPPro Not-Cached & $0.8\%$ & $0.03\%$ & $73.8\%$ \\
+% \hline
 
-A & Parameter D & CPPro Cached & $1.6\%$ & $0.3\%$ & $24\%$ \\
-\hline
- & & CPPro Not-Cached & $2.5\%$ & $0.6\%$ & $71\%$ \\
-\hline
+% A & Parameter D & CPPro Cached & $1.6\%$ & $0.3\%$ & $24\%$ \\
+% \hline
+%  & & CPPro Not-Cached & $2.5\%$ & $0.6\%$ & $71\%$ \\
+% \hline
 
-B & Parameter A & CPPro Cached & $0.3\%$ & $0.1\%$ & $13\%$  \\
-\hline
- & & CPPro Not-Cached & $1.4\%$ & $0.6\%$ & $84.6\%$ \\
- \hline
+% B & Parameter A & CPPro Cached & $0.3\%$ & $0.1\%$ & $13\%$  \\
+% \hline
+%  & & CPPro Not-Cached & $1.4\%$ & $0.6\%$ & $84.6\%$ \\
+%  \hline
 
-B & Parameter B & CPPro Cached & $0.07\%$ & $0.04\%$ & $9.7\%$ \\
-\hline
- & & CPPro Not-Cached & $1.3\%$ & $0.5\%$ & $88.39\%$ \\
-\hline
+% B & Parameter B & CPPro Cached & $0.07\%$ & $0.04\%$ & $9.7\%$ \\
+% \hline
+%  & & CPPro Not-Cached & $1.3\%$ & $0.5\%$ & $88.39\%$ \\
+% \hline
 
-B & Parameter C & CPPro Cached & $0.02\%$ & $0.08\%$ & $4.2\%$ \\
-\hline
- & & CPPro Not-Cached & $0.07\%$ & $0.02\%$ & $95.61\%$ \\
-\hline
+% B & Parameter C & CPPro Cached & $0.02\%$ & $0.08\%$ & $4.2\%$ \\
+% \hline
+%  & & CPPro Not-Cached & $0.07\%$ & $0.02\%$ & $95.61\%$ \\
+% \hline
 
-B & Parameter D & CPPro Cached & $0.3\%$ & $0.1\%$ & $15.3\%$ \\
-\hline
- & & CPPro Not-Cached & $1.7\%$ & $0.6\%$ & $82\%$ \\
-\hline
+% B & Parameter D & CPPro Cached & $0.3\%$ & $0.1\%$ & $15.3\%$ \\
+% \hline
+%  & & CPPro Not-Cached & $1.7\%$ & $0.6\%$ & $82\%$ \\
+% \hline
 
-C & Parameter A & CPPro Cached & $6.5\%$ & $0.7\%$ & $23.4\%$  \\
-\hline
- & & CPPro Not-Cached & $17.7\%$ & $2.2\%$ & $49.5\%$ \\
- \hline
+% C & Parameter A & CPPro Cached & $6.5\%$ & $0.7\%$ & $23.4\%$  \\
+% \hline
+%  & & CPPro Not-Cached & $17.7\%$ & $2.2\%$ & $49.5\%$ \\
+%  \hline
 
-C & Parameter B & CPPro Cached & $6.9\%$ & $1.0\%$ & $17.8\%$ \\
-\hline
- & & CPPro Not-Cached & $6.1\%$ & $1.1\%$ & $67.1$\% \\
-\hline
+% C & Parameter B & CPPro Cached & $6.9\%$ & $1.0\%$ & $17.8\%$ \\
+% \hline
+%  & & CPPro Not-Cached & $6.1\%$ & $1.1\%$ & $67.1$\% \\
+% \hline
 
-C & Parameter C & CPPro Cached & $0.4\%$ & $0.2\%$ & $39\%$ \\
-\hline
- & & CPPro Not-Cached & $0.3\%$ & $0.2\%$ & $59.9\%$ \\
-\hline
+% C & Parameter C & CPPro Cached & $0.4\%$ & $0.2\%$ & $39\%$ \\
+% \hline
+%  & & CPPro Not-Cached & $0.3\%$ & $0.2\%$ & $59.9\%$ \\
+% \hline
 
-C & Parameter D & CPPro Cached & $9.3\%$ & $1.0\%$ & $19.0\%$ \\
-\hline
- & & CPPro Not-Cached & $7.2\%$ & $1.0\%$ & $62.5\%$ \\
-\hline
+% C & Parameter D & CPPro Cached & $9.3\%$ & $1.0\%$ & $19.0\%$ \\
+% \hline
+%  & & CPPro Not-Cached & $7.2\%$ & $1.0\%$ & $62.5\%$ \\
+% \hline
 
-\end{tabular}
-\end{table*}
+% \end{tabular}
+% \end{table*}
 
 
 These results show that the introduction of $z(t)$ component to the utility function does not affect the performance in terms of peer contributions.
@@ -1811,10 +1864,38 @@ This is due to different popularity of video choice that a requested video is es
 %kenapa at peak kecil -> estimasi tepat 0 rata-rata
 %before di cached lebih banyak 
 
+%REPLICA SCENARIO A,B,C utk semua parameter
+\begin{figure*}[!t]
+\centering
+\subfloat[Scenario A.\label{fig:cdfutil-normal}]{
+\includegraphics[width=5.7cm]{graphs/NEW5/SCE-A/sce-a.eps}
+}
+\hfill
+\subfloat[Scenario B.\label{fig:cdfutil-shift}]{
+\includegraphics[width=5.7cm]{graphs/NEW5/SCE-B/sce-b.eps}
+}
+\hfill
+\subfloat[Scenario C.\label{fig:cdfutil-zipf}]{
+\includegraphics[width=5.7cm]{graphs/NEW5/SCE-C/sce-c.eps}
+}
+\vspace{2mm}
+\caption{CDF utility value for scenario A,B,and C.
+AA = parameter A, deleted video without $z$, AB = parameter A, deleted video with $z$,  
+AC = parameter A, requested video without $z$, AD = parameter A, requested video with $z$,  
+BA = parameter B, deleted video without $z$, BB = parameter B, deleted video with $z$,  
+BC = parameter B, requested video without $z$, BD = parameter B, requested video with $z$,  
+CA = parameter C, deleted video without $z$, CB = parameter C, deleted video with $z$,  
+CC = parameter C, requested video without $z$, CD = parameter A, requested video with $z$,  
+ }
+\label{fig:cdfutil}
+\end{figure*}
+
+
 In fig.~\ref{fig:replica} shows number of replicas available for each scenario when a peer request a video in parameter A.
 Maximum replica for PROP is around three times from CPPro in scenario A and B, while in scenario C the maximum value for PROP is around two times from CPPro.
 Number of replicas for each scenario are different between CPPro and PROP in the head of distribution and similar in the body and the tail of distribution. 
-The difference numbers of replicas for scenario A,B,C,D for each parameters are shown in table \ref{tab:replicas}.
+The difference numbers of replicas for scenario A,B,C,D for each parameters are shown in table \ref{fig:replicadiff}.
+
 
 
 
